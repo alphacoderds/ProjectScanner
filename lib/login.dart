@@ -39,18 +39,22 @@ class _loginpageState extends State<loginpage> {
             ),
             const SizedBox(height: 40),
             Container(
-                width: 300,
-                decoration: BoxDecoration(color: Color.fromRGBO(96, 13, 33, 1)),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 20),
-                    _inputField("NIP", NIPController),
-                    const SizedBox(height: 20),
-                    _inputField("Password", passwordController,
-                        isPassword: true),
-                    const SizedBox(height: 20),
-                  ],
-                )),
+              width: 300,
+              decoration: BoxDecoration(
+                  color: Color.fromRGBO(96, 13, 33, 1),
+                  borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  _inputField("NIP", NIPController,
+                      backgroundColor: Colors.white),
+                  const SizedBox(height: 20),
+                  _inputField("Password", passwordController,
+                      isPassword: true, backgroundColor: Colors.white),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
             const SizedBox(height: 50),
             _loginBtn(),
           ],
@@ -66,11 +70,7 @@ class _loginpageState extends State<loginpage> {
   }
 
   Widget _inputField(String hintText, TextEditingController controller,
-      {isPassword = false}) {
-    // var border = OutlineInputBorder(
-    //     borderRadius: BorderRadius.circular(20),
-    //     borderSide: const BorderSide(color: Colors.white));
-
+      {bool isPassword = false, Color? backgroundColor}) {
     return SizedBox(
       width: 200,
       child: TextField(
@@ -79,8 +79,11 @@ class _loginpageState extends State<loginpage> {
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: const TextStyle(color: Colors.white),
-          fillColor: Colors.blueGrey[50],
-          borderRadius: BorderRadius.circular(20),
+          fillColor: backgroundColor,
+          filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
         obscureText: isPassword,
       ),
@@ -91,7 +94,7 @@ class _loginpageState extends State<loginpage> {
     return ElevatedButton(
       onPressed: () {},
       child: const SizedBox(
-          width: double.infinity,
+          width: 200,
           child: Text(
             "Sign In",
             textAlign: TextAlign.center,
@@ -99,8 +102,8 @@ class _loginpageState extends State<loginpage> {
           )),
       style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
-          primary: Colors.white,
-          onPrimary: Colors.blue,
+          primary: Color.fromRGBO(96, 13, 33, 1),
+          onPrimary: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16)),
     );
   }
