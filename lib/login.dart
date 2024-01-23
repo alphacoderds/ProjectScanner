@@ -74,15 +74,15 @@ class _loginpageState extends State<loginpage> {
     return SizedBox(
       width: 200,
       child: TextField(
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: Color.fromARGB(255, 8, 8, 8)),
         controller: controller,
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: const TextStyle(color: Colors.white),
+          hintStyle: const TextStyle(color: Color.fromARGB(255, 62, 61, 61)),
           fillColor: backgroundColor,
           filled: true,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(50),
           ),
         ),
         obscureText: isPassword,
