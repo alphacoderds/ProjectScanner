@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 
 class loginpage extends StatefulWidget {
   @override
@@ -30,15 +31,26 @@ class _loginpageState extends State<loginpage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _icon(),
-            const SizedBox(height: 50),
+            const SizedBox(height: 20),
             Text(
               "LOGIN",
               textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 50),
-            _inputField("NIP", NIPController),
-            const SizedBox(height: 50),
-            _inputField("Password", passwordController, isPassword: true),
+            const SizedBox(height: 40),
+            Container(
+                width: 300,
+                decoration: BoxDecoration(color: Color.fromRGBO(96, 13, 33, 1)),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    _inputField("NIP", NIPController),
+                    const SizedBox(height: 20),
+                    _inputField("Password", passwordController,
+                        isPassword: true),
+                    const SizedBox(height: 20),
+                  ],
+                )),
             const SizedBox(height: 50),
             _loginBtn(),
           ],
@@ -49,29 +61,29 @@ class _loginpageState extends State<loginpage> {
 
   Widget _icon() {
     return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.white, width: 2),
-          shape: BoxShape.circle),
-      child: const Icon(Icons.person, color: Colors.white, size: 120),
+      child: Image.asset('assets/images/PT-Rekaindo-Global-Jasa 1.png'),
     );
   }
 
   Widget _inputField(String hintText, TextEditingController controller,
       {isPassword = false}) {
-    var border = OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20),
-        borderSide: const BorderSide(color: Colors.white));
+    // var border = OutlineInputBorder(
+    //     borderRadius: BorderRadius.circular(20),
+    //     borderSide: const BorderSide(color: Colors.white));
 
-    return TextField(
-      style: const TextStyle(color: Colors.white),
-      controller: controller,
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: const TextStyle(color: Colors.white),
-        enabledBorder: border,
-        focusedBorder: border,
+    return SizedBox(
+      width: 200,
+      child: TextField(
+        style: const TextStyle(color: Colors.white),
+        controller: controller,
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: const TextStyle(color: Colors.white),
+          fillColor: Colors.blueGrey[50],
+          borderRadius: BorderRadius.circular(20),
+        ),
+        obscureText: isPassword,
       ),
-      obscureText: isPassword,
     );
   }
 
