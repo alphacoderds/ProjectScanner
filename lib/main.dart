@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/login.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,20 +11,20 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.blue,
       ),
-      home: loginpage(),
+      home: MyHomePage(),
     );
   }
 }
 
-// class MyHomePage extends StatefulWidget {
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
 
-// class _MyHomePageState extends State<MyHomePage> {
-//   final _formKey = GlobalKey<FormState>();
+class _MyHomePageState extends State<MyHomePage> {
+  final _formKey = GlobalKey<FormState>();
 
 //   @override
 //   Widget build(BuildContext context) {
