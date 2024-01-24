@@ -28,6 +28,7 @@ class _loginpageState extends State<loginpage> {
         children: [
           Positioned(
             top: 0,
+            left: 345,
             right: 0,
             child: Image(
               image: AssetImage('assets/images/bolder31.png'),
@@ -37,9 +38,9 @@ class _loginpageState extends State<loginpage> {
           ),
           Center(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 100), // Beri ruang untuk gambar
+                const SizedBox(height: 100),
                 Image.asset(
                   'assets/images/logoREKA.png',
                   width: 200,
@@ -73,7 +74,7 @@ class _loginpageState extends State<loginpage> {
             ),
           ),
           Positioned(
-            bottom: 0,
+            bottom: -10,
             left: 0,
             child: Image(
               image: AssetImage('assets/images/Bolder21.png'),
@@ -106,6 +107,7 @@ class _loginpageState extends State<loginpage> {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
             ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 12),
           ),
           obscureText: isPassword,
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/login.dart';
+import 'package:flutter_scanner/riwayat_proses.dart';
 
 void main() {
   runApp(MyApp());
