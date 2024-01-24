@@ -38,7 +38,7 @@ class _loginpageState extends State<loginpage> {
           ),
           Center(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 100),
                 Image.asset(
@@ -57,19 +57,20 @@ class _loginpageState extends State<loginpage> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 40),
-                Text("Username",
+                Text("Username :",
                     style: TextStyle(fontSize: 15), textAlign: TextAlign.left),
                 const SizedBox(height: 5),
                 _inputField("Username", NIPController,
                     backgroundColor: Colors.white),
                 const SizedBox(height: 10),
-                Text("Password",
+                Text("Password :",
                     style: TextStyle(fontSize: 15), textAlign: TextAlign.left),
                 const SizedBox(height: 5),
                 _inputField("Password", passwordController,
                     isPassword: true, backgroundColor: Colors.white),
                 const SizedBox(height: 50),
                 _loginBtn(),
+                Expanded(child: Container())
               ],
             ),
           ),
@@ -132,6 +133,7 @@ class _loginpageState extends State<loginpage> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           primary: Color.fromRGBO(43, 56, 86, 1),
           onPrimary: Colors.white,
-        ));
+        )
+        );
   }
 }
