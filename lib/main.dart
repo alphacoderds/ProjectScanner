@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/login.dart';
-import 'package:flutter_scanner/riwayat_proses.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: loginpage(),
+      home: MenuUtama(),
     );
   }
 }
