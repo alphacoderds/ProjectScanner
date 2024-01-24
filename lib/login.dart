@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
 
 class loginpage extends StatefulWidget {
   @override
@@ -17,94 +16,120 @@ class _loginpageState extends State<loginpage> {
         color: Colors.yellow,
       ),
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+        backgroundColor: Colors.white,
         body: _page(),
       ),
     );
   }
 
   Widget _page() {
-    return Padding(
-      padding: const EdgeInsets.all(32.0),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _icon(),
-            const SizedBox(height: 20),
-            Text(
-              "LOGIN",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return Container(
+      child: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            right: 0,
+            child: Image(
+              image: AssetImage('assets/images/bolder31.png'),
+              width: 150,
+              height: 100,
             ),
-            const SizedBox(height: 40),
-            Container(
-              width: 300,
-              decoration: BoxDecoration(
-                  color: Color.fromRGBO(96, 13, 33, 1),
-                  borderRadius: BorderRadius.circular(20)),
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  _inputField("NIP", NIPController,
-                      backgroundColor: Colors.white),
-                  const SizedBox(height: 20),
-                  _inputField("Password", passwordController,
-                      isPassword: true, backgroundColor: Colors.white),
-                  const SizedBox(height: 20),
-                ],
-              ),
+          ),
+          Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 100), // Beri ruang untuk gambar
+                Image.asset(
+                  'assets/images/logoREKA.png',
+                  width: 200,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  "REKA CHAIN",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "PT. REKAINDO GLOBAL JASA",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 40),
+                Text("Username",
+                    style: TextStyle(fontSize: 15), textAlign: TextAlign.left),
+                const SizedBox(height: 5),
+                _inputField("Username", NIPController,
+                    backgroundColor: Colors.white),
+                const SizedBox(height: 10),
+                Text("Password",
+                    style: TextStyle(fontSize: 15), textAlign: TextAlign.left),
+                const SizedBox(height: 5),
+                _inputField("Password", passwordController,
+                    isPassword: true, backgroundColor: Colors.white),
+                const SizedBox(height: 50),
+                _loginBtn(),
+              ],
             ),
-            const SizedBox(height: 50),
-            _loginBtn(),
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            child: Image(
+              image: AssetImage('assets/images/Bolder21.png'),
+              width: 150,
+              height: 100,
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _icon() {
-    return Container(
-      child: Image.asset('assets/images/PT-Rekaindo-Global-Jasa 1.png'),
-    );
-  }
-
-  Widget _inputField(String hintText, TextEditingController controller,
+  Widget _inputField(String hintText, controller,
       {bool isPassword = false, Color? backgroundColor}) {
     return SizedBox(
-      width: 200,
-      child: TextField(
-        style: const TextStyle(color: Color.fromARGB(255, 8, 8, 8)),
-        controller: controller,
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: const TextStyle(color: Color.fromARGB(255, 62, 61, 61)),
-          fillColor: backgroundColor,
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50),
+      width: 270,
+      height: 40,
+      child: Center(
+        child: TextField(
+          style: const TextStyle(color: Color.fromARGB(255, 8, 8, 8)),
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: TextStyle(
+              color: Color.fromARGB(255, 73, 72, 72),
+              fontSize: 15,
+            ),
+            fillColor: backgroundColor,
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
           ),
+          obscureText: isPassword,
         ),
-        obscureText: isPassword,
       ),
     );
   }
 
   Widget _loginBtn() {
     return ElevatedButton(
-      onPressed: () {},
-      child: const SizedBox(
-          width: 200,
-          child: Text(
-            "Sign In",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20),
-          )),
-      style: ElevatedButton.styleFrom(
-          shape: const StadiumBorder(),
-          primary: Color.fromRGBO(96, 13, 33, 1),
+        onPressed: () {},
+        child: const SizedBox(
+            width: 200,
+            height: 40,
+            child: Center(
+              child: Text(
+                "Sign In",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+            )),
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          primary: Color.fromRGBO(43, 56, 86, 1),
           onPrimary: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 16)),
-    );
+        ));
   }
 }
