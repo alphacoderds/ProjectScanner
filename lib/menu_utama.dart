@@ -12,9 +12,9 @@ class MenuUtama extends StatelessWidget {
             Row(
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("REKA CHAN",
+                    Text("REKA CHAIN",
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                     Text(
