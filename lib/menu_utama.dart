@@ -11,7 +11,9 @@ class MenuUtama extends StatelessWidget {
           children: [
             Row(
               children: [
-                Column(
+                Expanded(
+                  child:
+                  Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text("REKA CHAN",
@@ -23,6 +25,7 @@ class MenuUtama extends StatelessWidget {
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     )
                   ],
+                  ),
                 ),
                 Image.asset(
                   'assets/images/bolder32.png',

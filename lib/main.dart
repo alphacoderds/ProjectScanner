@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/login.dart';
+import 'package:flutter_scanner/menu_utama.dart';
 
 void main() {
   runApp(MyApp());
