@@ -133,7 +133,6 @@ class _loginpageState extends State<loginpage> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           primary: Color.fromRGBO(43, 56, 86, 1),
           onPrimary: Colors.white,
-        )
-        );
+        ));
   }
 }
