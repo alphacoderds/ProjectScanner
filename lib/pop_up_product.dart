@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PopUpProdukScreen extends StatelessWidget {
+class PopUpProduk extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,9 +25,7 @@ class PopUpProdukScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {
-                      // Fungsi yang akan dijalankan ketika 'Hapus Catatan' ditekan
-                    },
+                    onTap: () {},
                     child: Container(
                       margin: EdgeInsets.only(top: 15, bottom: 15),
                       padding: EdgeInsets.symmetric(horizontal: 10),
@@ -52,9 +50,7 @@ class PopUpProdukScreen extends StatelessWidget {
                 SizedBox(width: 20),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {
-                      // Fungsi yang akan dijalankan ketika 'Batal' ditekan
-                    },
+                    onTap: () {},
                     child: Container(
                       margin: EdgeInsets.only(top: 15, bottom: 15),
                       padding: EdgeInsets.symmetric(horizontal: 10),
