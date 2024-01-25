@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 void main() {
-  runApp(MyApp());
+  runApp(updateprofil());
 }
 
-class MyApp extends StatelessWidget {
+class updateprofil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
