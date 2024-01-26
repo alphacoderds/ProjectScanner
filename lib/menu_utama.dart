@@ -12,23 +12,24 @@ class _MenuUtamaState extends State<MenuUtama> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            children: [
-              Row(children: [
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            Row(
+              children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("REKA CHAIN",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(
+                      "REKA CHAIN",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
                     Text(
                       "Selamat Datang...",
                       style:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
@@ -36,10 +37,10 @@ class _MenuUtamaState extends State<MenuUtama> {
               Padding(
                 padding: EdgeInsets.only(right: -20),
                 child: Image.asset(
-                  'assets/images/bolder32.png',
-                  width: 200,
-                  alignment: Alignment.topRight,
-                ),
+                'assets/images/bolder32.png',
+                width: 200,
+                alignment: Alignment.topRight,
+              ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -81,7 +82,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                       )
                     ],
                   ),
-                  SizedBox(width: 30),
+                    SizedBox(width: 30),
                   Column(
                     children: [
                       Container(
@@ -103,7 +104,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                 ],
               ),
               SizedBox(height: 30),
-              Row(
+              Row( 
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
