@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:flutter_scanner/login.dart';
 import 'package:flutter_scanner/menu_utama.dart';
 import 'package:flutter_scanner/profile.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MenuUtama(),
+      home: NavBar(),
     );
   }
 }
