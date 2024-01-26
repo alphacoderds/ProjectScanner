@@ -8,12 +8,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyHomePage(),
+      home: scan(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class scan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
