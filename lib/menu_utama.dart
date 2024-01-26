@@ -13,6 +13,7 @@ class _MenuUtamaState extends State<MenuUtama> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
           child: Column(
@@ -27,15 +28,18 @@ class _MenuUtamaState extends State<MenuUtama> {
                     Text(
                       "Selamat Datang...",
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
               ]),
-              Image.asset(
-                'assets/images/bolder32.png',
-                width: 200,
-                alignment: Alignment.topRight,
+              Padding(
+                padding: EdgeInsets.only(right: -20),
+                child: Image.asset(
+                  'assets/images/bolder32.png',
+                  width: 200,
+                  alignment: Alignment.topRight,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +62,26 @@ class _MenuUtamaState extends State<MenuUtama> {
                       )
                     ],
                   ),
-                  SizedBox(width: 60),
+                  SizedBox(width: 30),
+                  Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        color: Color.fromRGBO(85, 100, 136, 1),
+                        child: Icon(
+                          Icons.move_to_inbox_rounded,
+                          color: Color.fromRGBO(43, 56, 86, 1),
+                          size: 70,
+                        ),
+                      ),
+                      Text(
+                        "Scan Produk",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                  SizedBox(width: 30),
                   Column(
                     children: [
                       Container(
@@ -79,8 +102,9 @@ class _MenuUtamaState extends State<MenuUtama> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
@@ -95,13 +119,32 @@ class _MenuUtamaState extends State<MenuUtama> {
                         ),
                       ),
                       Text(
-                        "Download Document",
+                        "Download \nDocument",
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 30),
+                  Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        color: Color.fromRGBO(85, 100, 136, 1),
+                        child: Icon(
+                          Icons.headset_mic,
+                          color: Color.fromRGBO(43, 56, 86, 1),
+                          size: 70,
+                        ),
+                      ),
+                      Text(
+                        "After Seles",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                  SizedBox(width: 30),
                   Column(
                     children: [
                       Container(
@@ -114,7 +157,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                         ),
                       ),
                       Text(
-                        "Cek Status Produk",
+                        "Cek Status \n   Produk",
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold),
                       )
