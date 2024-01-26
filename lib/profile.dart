@@ -1,33 +1,19 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
+class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Row(
-            children: [
-              IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  // Add logic for back button here
-                  Navigator.pop(context);
-                },
-              ),
-              SizedBox(width: 8.0), // Adjust the spacing as needed
-              Text('Profile'),
-            ],
-          ),
-        ),
-        body: Center(
-          child: ProfileCard(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
+      body: ProfileCard(),
     );
   }
 }
@@ -35,30 +21,41 @@ class MyApp extends StatelessWidget {
 class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 8.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildHelloText(),
-            _buildAvatar(),
-            SizedBox(height: 16.0),
-            _buildTextView('Nama',
-                text: 'John Doe'), // Set the text accordingly
-            _buildDivider(),
-            _buildTextView('NIP',
-                text: '123456789'), // Set the text accordingly
-            _buildDivider(),
-            _buildTextView('Unit Kerja',
-                text: 'Sample Unit'), // Set the text accordingly
-            SizedBox(height: 16.0),
-            _buildElevatedButton(),
-          ],
+      body: Card(
+        elevation: 8.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildHelloText(),
+              _buildAvatar(),
+              SizedBox(height: 16.0),
+              _buildTextView('Nama',
+                  text: 'John Doe'), // Set the text accordingly
+              _buildDivider(),
+              _buildTextView('NIP',
+                  text: '123456789'), // Set the text accordingly
+              _buildDivider(),
+              _buildTextView('Unit Kerja',
+                  text: 'Sample Unit'), // Set the text accordingly
+              SizedBox(height: 16.0),
+              _buildElevatedButton(),
+            ],
+          ),
         ),
       ),
     );
