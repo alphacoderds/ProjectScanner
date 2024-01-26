@@ -55,7 +55,6 @@ class Keterangan extends StatelessWidget {
             right: 15,
             child: FloatingActionButton(
               onPressed: () {
-                // Navigasi ke halaman TambahKeterangan.dart
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => TambahKeterangan()),
