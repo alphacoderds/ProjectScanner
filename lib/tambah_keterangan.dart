@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/tambah_keterangan.dart';
+import 'package:flutter_scanner/keterangan.dart';
 
-class Keterangan extends StatelessWidget {
+class TambahKeterangan extends StatelessWidget {
+  // Function to handle save button press
+  void _saveData(BuildContext context) {
+    // Implement your save logic here
+    // This function will be called when the save button is pressed
+    print('Data saved!');
+
+    // Navigasi kembali ke halaman Keterangan.dart
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => Keterangan()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +30,9 @@ class Keterangan extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 0.0),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                _saveData(context); // Panggil fungsi save saat ikon ditekan
+              },
               child: Image.asset(
                 'assets/images/bolder32.png',
                 width: 60,
@@ -44,8 +59,13 @@ class Keterangan extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
+                // Remove the additional AppBar here
                 Container(
                   margin: EdgeInsets.only(top: 20),
+                  child: Text(
+                    'Your content goes here', // Tambahkan konten Anda di sini
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
               ],
             ),
@@ -55,11 +75,7 @@ class Keterangan extends StatelessWidget {
             right: 15,
             child: FloatingActionButton(
               onPressed: () {
-                // Navigasi ke halaman TambahKeterangan.dart
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => TambahKeterangan()),
-                );
+                _saveData(context); // Panggil fungsi save saat tombol ditekan
               },
               child: Icon(Icons.add),
               backgroundColor: Colors.white,
