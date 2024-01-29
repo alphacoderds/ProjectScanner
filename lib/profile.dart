@@ -77,22 +77,42 @@ class _ProfileCardState extends State<ProfileCard> {
     );
   }
 
+  Widget _buildHelloText() {
+    return Text(
+      'Hallo!',
+      style: TextStyle(
+        color: Color.fromRGBO(43, 56, 86, 1),
+        fontSize: 32.0,
+        fontWeight: FontWeight.bold,
+      ),
+      textAlign: TextAlign.start,
+    );
+  }
+
   Widget _buildAvatar() {
-    return Container(
-      width: 150,
-      height: 150,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-        border: Border.all(
-          color: Colors.black, // Border color
-          width: 2.0, // Border width
+    return Stack(
+      children: [
+        Container(
+          width: 130,
+          height: 130,
+          decoration: BoxDecoration(
+            border: Border.all(width: 4, color: Colors.white),
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: 2,
+                blurRadius: 10,
+                color: Colors.black.withOpacity(0.1),
+              ),
+            ],
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+              image: NetworkImage('assets/images/profile-illustration.png'),
+            ),
+          ),
         ),
-      ),
-      child: CircleAvatar(
-        radius: 50,
-        backgroundImage: AssetImage('assets/images/profile-illustration.png'),
-      ),
+      ],
     );
   }
 
