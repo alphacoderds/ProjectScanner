@@ -72,6 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
               buildTextField('Password', passwordController, obscureText: true),
               buildDivider(),
               buildTextField('Status', statusController),
+              buildDivider(),
               SizedBox(height: 20),
               Align(
                 alignment: Alignment.center,
