@@ -1,23 +1,5 @@
 import 'package:flutter/material.dart';
 
-class ProfileScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: ProfileCard(),
-    );
-  }
-}
-
 class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -31,11 +13,8 @@ class ProfileCard extends StatelessWidget {
           },
         ),
       ),
-      body: Card(
-        elevation: 8.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
+      backgroundColor: Colors.white,
+      body: Container(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -66,7 +45,7 @@ class ProfileCard extends StatelessWidget {
       'Hallo!',
       style: TextStyle(
         color: Color.fromRGBO(43, 56, 86, 1),
-        fontSize: 36.0,
+        fontSize: 32.0,
         fontWeight: FontWeight.bold,
       ),
       textAlign: TextAlign.start, // Align text to the left
@@ -82,7 +61,7 @@ class ProfileCard extends StatelessWidget {
         color: Colors.white,
         border: Border.all(
           color: Colors.black, // Border color
-          width: 2.0, // Border width
+          width: 1.5, // Border width
         ),
       ),
       child: ClipOval(

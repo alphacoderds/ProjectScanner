@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/menu_utama.dart';
+import 'package:flutter_scanner/profile.dart';
 import 'package:flutter_scanner/updateprofile.dart';
 
 class NavBar extends StatefulWidget {
@@ -11,7 +12,11 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
-  List<Widget> _widgetOptions = <Widget>[MenuUtama(), ProfilePage()];
+  List<Widget> _widgetOptions = <Widget>[
+    MenuUtama(),
+    ProfileCard(),
+    updateprofil(),
+  ];
 
   void _onItemTap(int index) {
     setState(() {
