@@ -13,7 +13,6 @@ class ProfileCard extends StatelessWidget {
           },
         ),
       ),
-      backgroundColor: Colors.white,
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -65,8 +64,8 @@ class ProfileCard extends StatelessWidget {
         ),
       ),
       child: ClipOval(
-        child: Image.network(
-          'https://example.com/your_image_url.jpg', // Replace with your image URL
+        child: Image.asset(
+          'assets/images/profile-illustration.png', // Replace with your image URL
           fit: BoxFit.cover,
           width: 100.0,
           height: 100.0,

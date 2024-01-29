@@ -12,11 +12,7 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
-  List<Widget> _widgetOptions = <Widget>[
-    MenuUtama(),
-    ProfileCard(),
-    updateprofil(),
-  ];
+  List<Widget> _widgetOptions = <Widget>[MenuUtama(), ProfileCard()];
 
   void _onItemTap(int index) {
     setState(() {
