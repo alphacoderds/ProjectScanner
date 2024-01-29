@@ -66,6 +66,7 @@ flutter:
     - assets\images\bolder31.png
     - assets\images\Logo-REKA--300x104 1.png
     - assets\images\produk.png
+    - assets\images\profile-illustration.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

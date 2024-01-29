@@ -13,11 +13,7 @@ class ProfileCard extends StatelessWidget {
           },
         ),
       ),
-      body: Card(
-        elevation: 8.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
+      body: Container(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -68,8 +64,8 @@ class ProfileCard extends StatelessWidget {
         ),
       ),
       child: ClipOval(
-        child: Image.network(
-          'https://example.com/your_image_url.jpg', // Replace with your image URL
+        child: Image.asset(
+          'assets/images/profile-illustration.png', // Replace with your image URL
           fit: BoxFit.cover,
           width: 100.0,
           height: 100.0,
