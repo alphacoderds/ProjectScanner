@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scanner/bottomnavbar.dart';
 
 class loginpage extends StatefulWidget {
   @override
@@ -118,7 +119,12 @@ class _loginpageState extends State<loginpage> {
 
   Widget _loginBtn() {
     return ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NavBar()),
+          );
+        },
         child: const SizedBox(
             width: 200,
             height: 40,
