@@ -13,27 +13,22 @@ class ProfileCard extends StatelessWidget {
           },
         ),
       ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildHelloText(),
-              _buildAvatar(),
-              SizedBox(height: 16.0),
-              _buildTextView('Nama',
-                  text: 'John Doe'), // Set the text accordingly
-              _buildDivider(),
-              _buildTextView('NIP',
-                  text: '123456789'), // Set the text accordingly
-              _buildDivider(),
-              _buildTextView('Unit Kerja',
-                  text: 'Sample Unit'), // Set the text accordingly
-              SizedBox(height: 16.0),
-              _buildElevatedButton(),
-            ],
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildHelloText(),
+            _buildAvatar(),
+            SizedBox(height: 16.0),
+            _buildTextView('Nama', text: 'John Doe'), // Set the text accordingly
+            _buildDivider(),
+            _buildTextView('NIP', text: '123456789'), // Set the text accordingly
+            _buildDivider(),
+            _buildTextView('Unit Kerja', text: 'Sample Unit'), // Set the text accordingly
+            SizedBox(height: 16.0),
+            _buildElevatedButton(),
+          ],
         ),
       ),
     );
@@ -47,30 +42,35 @@ class ProfileCard extends StatelessWidget {
         fontSize: 32.0,
         fontWeight: FontWeight.bold,
       ),
-      textAlign: TextAlign.start, // Align text to the left
+      textAlign: TextAlign.start,
     );
   }
 
   Widget _buildAvatar() {
-    return Container(
-      width: 100.0,
-      height: 100.0,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-        border: Border.all(
-          color: Colors.black, // Border color
-          width: 1.5, // Border width
+    return Stack(
+      children: [
+
+        Container(
+          width: 130,
+          height: 130,
+          decoration: BoxDecoration(
+            border: Border.all(width: 4, color: Colors.white),
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: 2,
+                blurRadius: 10,
+                color: Colors.black.withOpacity(0.1),
+              ),
+            ],
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+              image: NetworkImage('assets/images/profile-illustration.png'),
+            ),
+          ),
         ),
-      ),
-      child: ClipOval(
-        child: Image.asset(
-          'assets/images/profile-illustration.png', // Replace with your image URL
-          fit: BoxFit.cover,
-          width: 100.0,
-          height: 100.0,
-        ),
-      ),
+      ],
     );
   }
 
@@ -110,9 +110,10 @@ class ProfileCard extends StatelessWidget {
         // Add logic for "Ubah Profil" button here
       },
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Ubah Profil'),
-          SizedBox(height: 7.0),
+          SizedBox(height: 0),
         ],
       ),
       style: ElevatedButton.styleFrom(
