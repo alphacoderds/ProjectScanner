@@ -134,26 +134,26 @@ class _MenuUtamaState extends State<MenuUtama> {
                   )
                 ],
               ),
-              SizedBox(width: 30),
+              const SizedBox(width: 30),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AfterSales()),
+                    MaterialPageRoute(builder: (context) => const AfterSales()),
                   );
                 },
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(10),
-                      color: Color.fromRGBO(85, 100, 136, 1),
-                      child: Icon(
+                      padding: const EdgeInsets.all(10),
+                      color: const Color.fromRGBO(85, 100, 136, 1),
+                      child: const Icon(
                         Icons.headset_mic,
                         color: Color.fromRGBO(43, 56, 86, 1),
                         size: 70,
                       ),
                     ),
-                    Text(
+                    const Text(
                       "After Seles",
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold),

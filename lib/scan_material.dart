@@ -3,26 +3,24 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scanner(),
+      home: ScannerMaterial(),
     );
   }
 }
 
-class Scanner extends StatefulWidget {
+class ScannerMaterial extends StatefulWidget {
   @override
-  _ScannerState createState() => _ScannerState();
+  _ScannerProdukState createState() => _ScannerProdukState();
 }
 
-class _ScannerState extends State<Scanner> {
+class _ScannerProdukState extends State<ScannerMaterial> {
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     try {
@@ -33,6 +31,14 @@ class _ScannerState extends State<Scanner> {
         ScanMode.BARCODE,
       );
       debugPrint(barcodeScanRes);
+
+      // Tampilkan pesan setelah selesai melakukan scan
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Hasil scan: $barcodeScanRes'),
+          duration: Duration(seconds: 3),
+        ),
+      );
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version';
     }
@@ -63,15 +69,15 @@ class _ScannerState extends State<Scanner> {
           children: [
             ElevatedButton(
               onPressed: () {
-                scanBarcodeNormal(); // Panggil fungsi untuk melakukan pemindaian barcode
+                scanBarcodeNormal();
               },
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
-              child: const Column(
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

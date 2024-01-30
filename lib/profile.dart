@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:flutter_scanner/updateprofile.dart';
@@ -56,16 +57,18 @@ class _ProfileCardState extends State<ProfileCard> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ProfilePage()),
+                    MaterialPageRoute(
+                        builder: (context) => const ProfilePage()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
+                  foregroundColor: Colors.white,
+                  backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 12.0),
                 ),
                 child: const Text('Ubah Profile'),
               ),

@@ -1,14 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/aftersales.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
-import 'package:flutter_scanner/keterangan.dart';
-import 'package:flutter_scanner/login.dart';
-import 'package:flutter_scanner/menu_utama.dart';
-import 'package:flutter_scanner/profile.dart';
-import 'package:flutter_scanner/pop_up_product.dart';
-import 'package:flutter_scanner/riwayat_proses.dart';
-import 'package:flutter_scanner/riwayat_scan.dart';
-import 'package:flutter_scanner/scan.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,9 +16,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+<<<<<<< HEAD
       home: NavBar(),
+=======
+      home: const NavBar(),
+>>>>>>> 1536c39295a60b2005d6152117f56d3ea1e1af35
     );
   }
 }
-
-

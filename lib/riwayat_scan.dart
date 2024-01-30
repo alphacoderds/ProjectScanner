@@ -12,17 +12,17 @@ class _RiwayatScanState extends State<RiwayatScan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text('Riwayat Scan'),
-            const SizedBox(width: 10.0),
+            Text('Riwayat Scan'),
+            SizedBox(width: 10.0),
             Expanded(
               child: Align(
                 alignment: Alignment.centerRight,
                 child: FractionalTranslation(
-                  translation: const Offset(
+                  translation: Offset(
                       0.37, 0.10), // Sesuaikan offset sesuai kebutuhan
                   child: AspectRatio(
                     aspectRatio: 11 / 8,
@@ -61,17 +61,17 @@ class _RiwayatScanState extends State<RiwayatScan> {
                 children: [
                   Text(
                     'Riwayat Proses ${index + 1}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     'Deskripsi riwayat proses ${index + 1}', // Ganti dengan deskripsi sesuai kebutuhan
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontFamily: 'Inter',

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scanner/keterangan.dart';
 
 class TambahKeterangan extends StatelessWidget {
+  const TambahKeterangan({super.key});
+
   void _saveData(BuildContext context) {
     print('Data saved!');
     Navigator.pushReplacement(
@@ -55,8 +57,8 @@ class TambahKeterangan extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 20),
-                  child: Text(
+                  margin: const EdgeInsets.only(top: 20),
+                  child: const Text(
                     'Your content goes here',
                     style: TextStyle(fontSize: 18),
                   ),
