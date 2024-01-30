@@ -64,9 +64,9 @@ class _AfterSalesState extends State<AfterSales> {
                     Text(
                       'Apakah produk berjalan sesuai dengan semestinya?',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                      ),
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 25),
@@ -86,7 +86,7 @@ class _AfterSalesState extends State<AfterSales> {
                             height: 30,
                             child: Center(
                               child: Text(
-                                "ya",
+                                "Ya",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 15,
@@ -118,7 +118,7 @@ class _AfterSalesState extends State<AfterSales> {
                             height: 30,
                             child: Center(
                               child: Text(
-                                "tidak",
+                                "Tidak",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 15,
@@ -162,15 +162,21 @@ class _AfterSalesState extends State<AfterSales> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 40),
+            SizedBox(height: 20),
+            Icon(
+              Icons.check_circle_outline_rounded,
+              color: Colors.white,
+              size: 100,
+            ),
+            SizedBox(height: 10),
             Text(
               'Menyimpan data!',
               style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-              ),
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18),
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -181,11 +187,11 @@ class _AfterSalesState extends State<AfterSales> {
                 );
               },
               child: const SizedBox(
-                width: 60,
+                width: 30,
                 height: 30,
                 child: Center(
                   child: Text(
-                    "Kembali",
+                    "OK",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
@@ -202,7 +208,7 @@ class _AfterSalesState extends State<AfterSales> {
                 primary: Colors.white,
               ),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 20),
           ],
         ),
       ),
