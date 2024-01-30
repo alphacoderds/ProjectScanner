@@ -69,7 +69,7 @@ class _AfterSalesState extends State<AfterSales> {
                           fontSize: 18),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 25),
+                    SizedBox(height: 40),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -137,7 +137,7 @@ class _AfterSalesState extends State<AfterSales> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 40),
                   ],
                 ),
               ),
@@ -153,7 +153,6 @@ class _AfterSalesState extends State<AfterSales> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-        width: 500,
         decoration: BoxDecoration(
           color: Color.fromRGBO(43, 56, 86, 1),
           borderRadius: BorderRadius.circular(30),
@@ -179,6 +178,7 @@ class _AfterSalesState extends State<AfterSales> {
             SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
+                Navigator.of(context).pop();
                 Navigator.push(
                   context,
                   MaterialPageRoute(

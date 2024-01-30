@@ -36,7 +36,7 @@ class _ProfileCardState extends State<ProfileCard> {
                 'Hallo!',
                 style: TextStyle(
                   color: Color.fromRGBO(43, 56, 86, 1),
-                  fontSize: 36.0,
+                  fontSize: 33.0,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.start, // Align text to the left
