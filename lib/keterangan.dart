@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scanner/tambah_keterangan.dart';
 
 class Keterangan extends StatelessWidget {
+  const Keterangan({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Keterangan'),
+        title: const Text('Keterangan'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -32,7 +34,7 @@ class Keterangan extends StatelessWidget {
           Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -41,11 +43,11 @@ class Keterangan extends StatelessWidget {
             ),
           ),
           SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 20),
                 ),
               ],
             ),
@@ -57,11 +59,11 @@ class Keterangan extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TambahKeterangan()),
+                  MaterialPageRoute(builder: (context) => const TambahKeterangan()),
                 );
               },
-              child: Icon(Icons.add),
               backgroundColor: Colors.white,
+              child: const Icon(Icons.add),
             ),
           ),
         ],

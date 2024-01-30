@@ -3,19 +3,23 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Scanner(),
     );
   }
 }
 
 class Scanner extends StatefulWidget {
+  const Scanner({super.key});
+
   @override
   _ScannerState createState() => _ScannerState();
 }
@@ -42,7 +46,7 @@ class _ScannerState extends State<Scanner> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           children: [
             Icon(
               Icons.arrow_back,
@@ -54,7 +58,7 @@ class _ScannerState extends State<Scanner> {
         ),
       ),
       body: Align(
-        alignment: Alignment(0, -0.5),
+        alignment: const Alignment(0, -0.5),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,12 +68,12 @@ class _ScannerState extends State<Scanner> {
                 scanBarcodeNormal(); // Panggil fungsi untuk melakukan pemindaian barcode
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
-              child: Column(
+              child: const Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

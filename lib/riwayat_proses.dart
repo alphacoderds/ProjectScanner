@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class RiwayatProsesScreen extends StatelessWidget {
+  const RiwayatProsesScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
         width: 428,
         height: 926,
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Stack(
           children: [
             Positioned(
@@ -17,14 +19,14 @@ class RiwayatProsesScreen extends StatelessWidget {
                 width: 375,
                 height: 544,
                 decoration: ShapeDecoration(
-                  color: Color(0xBF2B3856),
+                  color: const Color(0xBF2B3856),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 174,
               top: 800,
               child: Text(
@@ -46,7 +48,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 width: 363,
                 height: 49,
                 decoration: ShapeDecoration(
-                  color: Color(0xFF2B3856),
+                  color: const Color(0xFF2B3856),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -60,7 +62,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 width: 363,
                 height: 49,
                 decoration: ShapeDecoration(
-                  color: Color(0xFF2B3856),
+                  color: const Color(0xFF2B3856),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -74,7 +76,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 width: 363,
                 height: 49,
                 decoration: ShapeDecoration(
-                  color: Color(0xFF2B3856),
+                  color: const Color(0xFF2B3856),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -88,7 +90,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 width: 363,
                 height: 49,
                 decoration: ShapeDecoration(
-                  color: Color(0xFF2B3856),
+                  color: const Color(0xFF2B3856),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -102,7 +104,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 width: 363,
                 height: 49,
                 decoration: ShapeDecoration(
-                  color: Color(0xFF2B3856),
+                  color: const Color(0xFF2B3856),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -116,7 +118,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 width: 363,
                 height: 49,
                 decoration: ShapeDecoration(
-                  color: Color(0xFF2B3856),
+                  color: const Color(0xFF2B3856),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -130,7 +132,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 width: 363,
                 height: 49,
                 decoration: ShapeDecoration(
-                  color: Color(0xFF2B3856),
+                  color: const Color(0xFF2B3856),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -144,14 +146,14 @@ class RiwayatProsesScreen extends StatelessWidget {
                 width: 363,
                 height: 49,
                 decoration: ShapeDecoration(
-                  color: Color(0xFF2B3856),
+                  color: const Color(0xFF2B3856),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 132,
               top: 168,
               child: Text(
@@ -166,7 +168,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 131,
               top: 236,
               child: Text(
@@ -181,7 +183,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 130,
               top: 304,
               child: Text(
@@ -196,7 +198,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 128,
               top: 369,
               child: Text(
@@ -211,7 +213,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 130,
               top: 436,
               child: Text(
@@ -226,7 +228,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 130,
               top: 505,
               child: Text(
@@ -241,7 +243,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 129,
               top: 570,
               child: Text(
@@ -256,7 +258,7 @@ class RiwayatProsesScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 130,
               top: 633,
               child: Text(
@@ -271,10 +273,10 @@ class RiwayatProsesScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 0,
               top: 0,
-              child: Container(
+              child: SizedBox(
                 width: 50,
                 height: 41.23,
                 child: Stack(children: []),

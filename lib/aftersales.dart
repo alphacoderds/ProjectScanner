@@ -11,94 +11,99 @@ class AfterSales extends StatefulWidget {
 class _AfterSalesState extends State<AfterSales> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Future.delayed(Duration(seconds: 1)),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return Dialog(
-            alignment: Alignment.center,
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Color.fromRGBO(43, 56, 86, 1),
-                  borderRadius: BorderRadius.circular(30)),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 40),
-                  Text(
-                    'Apakah produk berjalan sesuai dengan semestinya?',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(height: 40),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return _dialog2();
-                              },
-                            );
-                          },
-                          child: const SizedBox(
-                              width: 40,
-                              height: 30,
-                              child: Center(
-                                child: Text(
-                                  "ya",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            onPrimary: Color.fromRGBO(43, 56, 86, 1),
-                            primary: Colors.white,
-                          )),
-                      SizedBox(width: 50),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => NavBar()),
-                            );
-                          },
-                          child: const SizedBox(
-                              width: 40,
-                              height: 30,
-                              child: Center(
-                                child: Text(
-                                  "tidak",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            onPrimary: Color.fromRGBO(43, 56, 86, 1),
-                            primary: Colors.white,
-                          ))
-                    ],
-                  ),
-                  SizedBox(height: 40),
-                ],
+    return Scaffold(
+      body: FutureBuilder(
+        future: Future.delayed(const Duration(seconds: 1)),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Dialog(
+              alignment: Alignment.center,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: const Color.fromRGBO(43, 56, 86, 1),
+                    borderRadius: BorderRadius.circular(30)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 40),
+                    const Text(
+                      'Apakah produk berjalan sesuai dengan semestinya?',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(height: 40),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return _dialog2();
+                                },
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor:
+                                  const Color.fromRGBO(43, 56, 86, 1),
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                            ),
+                            child: const SizedBox(
+                                width: 40,
+                                height: 30,
+                                child: Center(
+                                  child: Text(
+                                    "Ya",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ))),
+                        const SizedBox(width: 50),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const NavBar()),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor:
+                                  const Color.fromRGBO(43, 56, 86, 1),
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                            ),
+                            child: const SizedBox(
+                                width: 40,
+                                height: 30,
+                                child: Center(
+                                  child: Text(
+                                    "Tidak",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )))
+                      ],
+                    ),
+                    const SizedBox(height: 40),
+                  ],
+                ),
               ),
-            ),
-          );
-        }
-        return Dialog();
-      },
+            );
+          }
+          return const Dialog();
+        },
+      ),
     );
   }
 
@@ -107,27 +112,34 @@ class _AfterSalesState extends State<AfterSales> {
         alignment: Alignment.center,
         child: Container(
             decoration: BoxDecoration(
-                color: Color.fromRGBO(43, 56, 86, 1),
+                color: const Color.fromRGBO(43, 56, 86, 1),
                 borderRadius: BorderRadius.circular(30)),
             child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 40),
-                  Text(
+                  const SizedBox(height: 40),
+                  const Text(
                     'Menyimpan data!',
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.w500),
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => NavBar()),
+                          MaterialPageRoute(
+                              builder: (context) => const NavBar()),
                         );
                       },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: const Color.fromRGBO(43, 56, 86, 1),
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                      ),
                       child: const SizedBox(
                           width: 60,
                           height: 30,
@@ -138,14 +150,8 @@ class _AfterSalesState extends State<AfterSales> {
                               style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold),
                             ),
-                          )),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        onPrimary: Color.fromRGBO(43, 56, 86, 1),
-                        primary: Colors.white,
-                      )),
-                  SizedBox(height: 50),
+                          ))),
+                  const SizedBox(height: 50),
                 ])));
   }
 }

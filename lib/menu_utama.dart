@@ -23,12 +23,12 @@ class _MenuUtamaState extends State<MenuUtama> {
               width: 150,
             ),
           ),
-          SizedBox(height: 20),
-          Stack(
+          const SizedBox(height: 20),
+          const Stack(
             alignment: Alignment.topRight,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 0, left: 40),
+                padding: EdgeInsets.only(top: 0, left: 40),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -49,62 +49,62 @@ class _MenuUtamaState extends State<MenuUtama> {
             ],
           ),
 
-          SizedBox(height: 40), // Add some space between the text and image
-          Stack(
+          const SizedBox(height: 40), // Add some space between the text and image
+          const Stack(
             alignment: Alignment.topRight,
           ),
-          SizedBox(height: 20), // Add some space between the image and buttons
+          const SizedBox(height: 20), // Add some space between the image and buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(10),
-                    color: Color.fromRGBO(85, 100, 136, 1),
-                    child: Icon(
+                    padding: const EdgeInsets.all(10),
+                    color: const Color.fromRGBO(85, 100, 136, 1),
+                    child: const Icon(
                       Icons.qr_code_scanner_rounded,
                       color: Color.fromRGBO(43, 56, 86, 1),
                       size: 70,
                     ),
                   ),
-                  Text(
+                  const Text(
                     "Scan Material",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   )
                 ],
               ),
-              SizedBox(width: 30),
+              const SizedBox(width: 30),
               Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(10),
-                    color: Color.fromRGBO(85, 100, 136, 1),
-                    child: Icon(
+                    padding: const EdgeInsets.all(10),
+                    color: const Color.fromRGBO(85, 100, 136, 1),
+                    child: const Icon(
                       Icons.move_to_inbox_rounded,
                       color: Color.fromRGBO(43, 56, 86, 1),
                       size: 70,
                     ),
                   ),
-                  Text(
+                  const Text(
                     "Scan Produk",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   )
                 ],
               ),
-              SizedBox(width: 30),
+              const SizedBox(width: 30),
               Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(10),
-                    color: Color.fromRGBO(85, 100, 136, 1),
-                    child: Icon(
+                    padding: const EdgeInsets.all(10),
+                    color: const Color.fromRGBO(85, 100, 136, 1),
+                    child: const Icon(
                       Icons.qr_code_scanner_rounded,
                       color: Color.fromRGBO(43, 56, 86, 1),
                       size: 70,
                     ),
                   ),
-                  Text(
+                  const Text(
                     "Scan Produk",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   )
@@ -112,7 +112,7 @@ class _MenuUtamaState extends State<MenuUtama> {
               ),
             ],
           ),
-          SizedBox(height: 20), // Add some space between the button rows
+          const SizedBox(height: 20), // Add some space between the button rows
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,40 +120,40 @@ class _MenuUtamaState extends State<MenuUtama> {
               Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(10),
-                    color: Color.fromRGBO(85, 100, 136, 1),
-                    child: Icon(
+                    padding: const EdgeInsets.all(10),
+                    color: const Color.fromRGBO(85, 100, 136, 1),
+                    child: const Icon(
                       Icons.description_outlined,
                       color: Color.fromRGBO(43, 56, 86, 1),
                       size: 70,
                     ),
                   ),
-                  Text(
+                  const Text(
                     "Download \nDocument",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   )
                 ],
               ),
-              SizedBox(width: 30),
+              const SizedBox(width: 30),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AfterSales()),
+                    MaterialPageRoute(builder: (context) => const AfterSales()),
                   );
                 },
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(10),
-                      color: Color.fromRGBO(85, 100, 136, 1),
-                      child: Icon(
+                      padding: const EdgeInsets.all(10),
+                      color: const Color.fromRGBO(85, 100, 136, 1),
+                      child: const Icon(
                         Icons.headset_mic,
                         color: Color.fromRGBO(43, 56, 86, 1),
                         size: 70,
                       ),
                     ),
-                    Text(
+                    const Text(
                       "After Seles",
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -161,19 +161,19 @@ class _MenuUtamaState extends State<MenuUtama> {
                   ],
                 ),
               ),
-              SizedBox(width: 30),
+              const SizedBox(width: 30),
               Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(10),
-                    color: Color.fromRGBO(85, 100, 136, 1),
-                    child: Icon(
+                    padding: const EdgeInsets.all(10),
+                    color: const Color.fromRGBO(85, 100, 136, 1),
+                    child: const Icon(
                       Icons.assignment_turned_in_outlined,
                       color: Color.fromRGBO(43, 56, 86, 1),
                       size: 70,
                     ),
                   ),
-                  Text(
+                  const Text(
                     "Cek Status \n   Produk",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   )

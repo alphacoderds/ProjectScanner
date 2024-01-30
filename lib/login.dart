@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 
 class loginpage extends StatefulWidget {
+  const loginpage({super.key});
+
   @override
   State<loginpage> createState() => _loginpageState();
 }
@@ -27,7 +29,7 @@ class _loginpageState extends State<loginpage> {
     return Container(
       child: Stack(
         children: [
-          Positioned(
+          const Positioned(
             top: 0,
             left: 345,
             right: 0,
@@ -47,24 +49,24 @@ class _loginpageState extends State<loginpage> {
                   width: 200,
                 ),
                 const SizedBox(height: 20),
-                Text(
+                const Text(
                   "REKA CHAIN",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                Text(
+                const Text(
                   "PT. REKAINDO GLOBAL JASA",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 40),
-                Text("Username :",
+                const Text("Username :",
                     style: TextStyle(fontSize: 15), textAlign: TextAlign.left),
                 const SizedBox(height: 5),
                 _inputField("Username", NIPController,
                     backgroundColor: Colors.white),
                 const SizedBox(height: 10),
-                Text("Password :",
+                const Text("Password :",
                     style: TextStyle(fontSize: 15), textAlign: TextAlign.left),
                 const SizedBox(height: 5),
                 _inputField("Password", passwordController,
@@ -75,7 +77,7 @@ class _loginpageState extends State<loginpage> {
               ],
             ),
           ),
-          Positioned(
+          const Positioned(
             bottom: -10,
             left: 0,
             child: Image(
@@ -100,7 +102,7 @@ class _loginpageState extends State<loginpage> {
           controller: controller,
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Color.fromARGB(255, 73, 72, 72),
               fontSize: 15,
             ),
@@ -109,7 +111,7 @@ class _loginpageState extends State<loginpage> {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
             ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 12),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
           ),
           obscureText: isPassword,
         ),
@@ -122,9 +124,12 @@ class _loginpageState extends State<loginpage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => NavBar()),
+            MaterialPageRoute(builder: (context) => const NavBar()),
           );
         },
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white, backgroundColor: const Color.fromRGBO(43, 56, 86, 1), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        ),
         child: const SizedBox(
             width: 200,
             height: 40,
@@ -134,11 +139,6 @@ class _loginpageState extends State<loginpage> {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
-            )),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          primary: Color.fromRGBO(43, 56, 86, 1),
-          onPrimary: Colors.white,
-        ));
+            )));
   }
 }
