@@ -10,17 +10,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyHomePage(),
+      home: Scanner(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class Scanner extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _ScannerState createState() => _ScannerState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _ScannerState extends State<Scanner> {
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     try {
@@ -35,9 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
       barcodeScanRes = 'Failed to get platform version';
     }
     if (!mounted) return;
-    setState(() {
-      // Lakukan perubahan state jika diperlukan setelah pemindaian barcode
-    });
+    setState(() {});
   }
 
   @override
