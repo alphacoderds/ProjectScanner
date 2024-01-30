@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/menu_utama.dart';
 import 'package:flutter_scanner/profile.dart';
-import 'package:flutter_scanner/updateprofile.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -12,7 +11,7 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
-  List<Widget> _widgetOptions = <Widget>[MenuUtama(), ProfileCard()];
+  final List<Widget> _widgetOptions = <Widget>[const MenuUtama(), const ProfileCard()];
 
   void _onItemTap(int index) {
     setState(() {
@@ -25,12 +24,12 @@ class _NavBarState extends State<NavBar> {
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Beranda'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Akun'),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Color.fromRGBO(43, 56, 86, 1),
+        selectedItemColor: const Color.fromRGBO(43, 56, 86, 1),
         onTap: _onItemTap,
       ),
     );

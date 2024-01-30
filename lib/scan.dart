@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: scan(),
     );
   }
 }
 
 class scan extends StatelessWidget {
+  const scan({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Column(
+        title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(
@@ -31,7 +35,7 @@ class scan extends StatelessWidget {
         ),
       ),
       body: Align(
-        alignment: Alignment(0, -0.5), // Mengatur posisi tombol ke atas
+        alignment: const Alignment(0, -0.5), // Mengatur posisi tombol ke atas
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,12 +46,12 @@ class scan extends StatelessWidget {
                 print('Melakukan scanning...');
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
-              child: Column(
+              child: const Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -60,7 +64,7 @@ class scan extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
                 height: 20), // Jarak antara tombol "Scan" dan tombol "Process"
             ElevatedButton(
               onPressed: () {
@@ -68,15 +72,14 @@ class scan extends StatelessWidget {
                 print('Processing...');
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16), backgroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                ),
-                primary: Colors.white, // Warna putih untuk tombol "Process"
+                ), // Warna putih untuk tombol "Process"
               ),
-              child: Text('Process'),
+              child: const Text('Process'),
             ),
-            SizedBox(
+            const SizedBox(
                 height:
                     20), // Jarak antara tombol "Process" dan pemenuhan kekurangan
             ElevatedButton(
@@ -85,12 +88,12 @@ class scan extends StatelessWidget {
                 print('Pemenuhan Kekurangan...');
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
-              child: Text('Pemenuhan Kekurangan'),
+              child: const Text('Pemenuhan Kekurangan'),
             ),
           ],
         ),

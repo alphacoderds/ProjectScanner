@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scanner/keterangan.dart';
 
 class TambahKeterangan extends StatelessWidget {
+  const TambahKeterangan({super.key});
+
   // Function to handle save button press
   void _saveData(BuildContext context) {
     // Implement your save logic here
@@ -11,7 +13,7 @@ class TambahKeterangan extends StatelessWidget {
     // Navigasi kembali ke halaman Keterangan.dart
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => Keterangan()),
+      MaterialPageRoute(builder: (context) => const Keterangan()),
     );
   }
 
@@ -19,9 +21,9 @@ class TambahKeterangan extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Keterangan'),
+        title: const Text('Keterangan'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -47,7 +49,7 @@ class TambahKeterangan extends StatelessWidget {
           Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -56,13 +58,13 @@ class TambahKeterangan extends StatelessWidget {
             ),
           ),
           SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 // Remove the additional AppBar here
                 Container(
-                  margin: EdgeInsets.only(top: 20),
-                  child: Text(
+                  margin: const EdgeInsets.only(top: 20),
+                  child: const Text(
                     'Your content goes here', // Tambahkan konten Anda di sini
                     style: TextStyle(fontSize: 18),
                   ),
@@ -77,8 +79,8 @@ class TambahKeterangan extends StatelessWidget {
               onPressed: () {
                 _saveData(context); // Panggil fungsi save saat tombol ditekan
               },
-              child: Icon(Icons.add),
               backgroundColor: Colors.white,
+              child: const Icon(Icons.add),
             ),
           ),
         ],

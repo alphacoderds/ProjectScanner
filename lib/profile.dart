@@ -1,10 +1,10 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:flutter_scanner/updateprofile.dart';
 
 class ProfileCard extends StatefulWidget {
+  const ProfileCard({super.key});
+
   @override
   State<ProfileCard> createState() => _ProfileCardState();
 }
@@ -14,13 +14,13 @@ class _ProfileCardState extends State<ProfileCard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NavBar()),
+              MaterialPageRoute(builder: (context) => const NavBar()),
             );
           },
         ),
@@ -31,7 +31,7 @@ class _ProfileCardState extends State<ProfileCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
+              const Text(
                 'Hallo!',
                 style: TextStyle(
                   color: Color.fromRGBO(43, 56, 86, 1),
@@ -42,7 +42,7 @@ class _ProfileCardState extends State<ProfileCard> {
               ),
 
               _buildAvatar(),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               _buildTextView('Nama',
                   text: 'John Doe'), // Set the text accordingly
               _buildDivider(),
@@ -51,24 +51,23 @@ class _ProfileCardState extends State<ProfileCard> {
               _buildDivider(),
               _buildTextView('Unit Kerja',
                   text: 'Sample Unit'), // Set the text accordingly
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ProfilePage()),
+                    MaterialPageRoute(builder: (context) => const ProfilePage()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Color.fromRGBO(43, 56, 86, 1),
-                  onPrimary: Colors.white,
+                  foregroundColor: Colors.white, backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   padding:
-                      EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+                      const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
                 ),
-                child: Text('Ubah Profile'),
+                child: const Text('Ubah Profile'),
               ),
             ],
           ),
@@ -78,7 +77,7 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 
   Widget _buildHelloText() {
-    return Text(
+    return const Text(
       'Hallo!',
       style: TextStyle(
         color: Color.fromRGBO(43, 56, 86, 1),
@@ -105,7 +104,7 @@ class _ProfileCardState extends State<ProfileCard> {
               ),
             ],
             shape: BoxShape.circle,
-            image: DecorationImage(
+            image: const DecorationImage(
               fit: BoxFit.cover,
               alignment: Alignment.center,
               image: NetworkImage('assets/images/profile-illustration.png'),
@@ -122,15 +121,15 @@ class _ProfileCardState extends State<ProfileCard> {
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16.0,
           ),
         ),
@@ -139,7 +138,7 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 
   Widget _buildDivider() {
-    return Divider(
+    return const Divider(
       color: Colors.grey,
       thickness: 1.0,
       height: 16.0,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -21,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           children: [
             SizedBox(width: 5),
             Text('Ubah Profil'),
@@ -29,22 +30,22 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
-          Column(
+          const Column(
             children: [
               CircleAvatar(
                 radius: 40,
+                backgroundImage: AssetImage(
+                    'assets/profile_image.jpg'),
                 child: Icon(
                   Icons.camera_alt,
                   size: 16,
-                ),
-                backgroundImage: AssetImage(
-                    'assets/profile_image.jpg'), // Ganti dengan path gambar profil Anda
+                ), // Ganti dengan path gambar profil Anda
               ),
               SizedBox(height: 5),
               Padding(
-                padding: const EdgeInsets.only(top: 5),
+                padding: EdgeInsets.only(top: 5),
                 child: Align(
                   alignment: Alignment.center,
                 ),
@@ -73,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
               buildDivider(),
               buildTextField('Status', statusController),
               buildDivider(),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Align(
                 alignment: Alignment.center,
                 child: SizedBox(
@@ -83,9 +84,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       // Aksi yang ingin Anda lakukan saat tombol "Selesai" ditekan
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(43, 56, 86, 1),
+                      backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Selesai',
                       style: TextStyle(
                         fontSize: 16,
@@ -95,7 +96,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
             ],
           ),
         ],
@@ -110,17 +111,17 @@ class _ProfilePageState extends State<ProfilePage> {
       children: [
         Text(
           '$label:',
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
           ),
         ),
         TextField(
           controller: controller,
           obscureText: obscureText,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
           ),
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: InputBorder.none,
           ),
         ),
@@ -129,7 +130,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildDivider() {
-    return Divider(
+    return const Divider(
       color: Colors.grey,
       height: 8,
       thickness: 0.5,
