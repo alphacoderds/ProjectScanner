@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:flutter_scanner/updateprofile.dart';
@@ -36,7 +35,7 @@ class _ProfileCardState extends State<ProfileCard> {
                 'Hallo!',
                 style: TextStyle(
                   color: Color.fromRGBO(43, 56, 86, 1),
-                  fontSize: 33.0,
+                  fontSize: 36.0,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.start, // Align text to the left
@@ -71,6 +70,22 @@ class _ProfileCardState extends State<ProfileCard> {
                       horizontal: 12.0, vertical: 12.0),
                 ),
                 child: const Text('Ubah Profile'),
+              ),
+              const SizedBox(height: 16.0), // Spacer
+              ElevatedButton(
+                onPressed: () {
+                  // Logika untuk logout
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 12.0),
+                ),
+                child: const Text('Logout'),
               ),
             ],
           ),
