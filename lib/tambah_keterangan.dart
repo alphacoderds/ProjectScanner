@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scanner/keterangan.dart';
 
 class TambahKeterangan extends StatelessWidget {
+<<<<<<< HEAD
   const TambahKeterangan({super.key});
 
   // Function to handle save button press
+=======
+>>>>>>> 0081def1a3311b5922f7f8382ba5d33619156831
   void _saveData(BuildContext context) {
-    // Implement your save logic here
-    // This function will be called when the save button is pressed
     print('Data saved!');
-
-    // Navigasi kembali ke halaman Keterangan.dart
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const Keterangan()),
@@ -33,7 +32,7 @@ class TambahKeterangan extends StatelessWidget {
             padding: const EdgeInsets.only(right: 0.0),
             child: GestureDetector(
               onTap: () {
-                _saveData(context); // Panggil fungsi save saat ikon ditekan
+                _saveData(context);
               },
               child: Image.asset(
                 'assets/images/bolder32.png',
@@ -61,11 +60,16 @@ class TambahKeterangan extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                // Remove the additional AppBar here
                 Container(
+<<<<<<< HEAD
                   margin: const EdgeInsets.only(top: 20),
                   child: const Text(
                     'Your content goes here', // Tambahkan konten Anda di sini
+=======
+                  margin: EdgeInsets.only(top: 20),
+                  child: Text(
+                    'Your content goes here',
+>>>>>>> 0081def1a3311b5922f7f8382ba5d33619156831
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
@@ -77,7 +81,7 @@ class TambahKeterangan extends StatelessWidget {
             right: 15,
             child: FloatingActionButton(
               onPressed: () {
-                _saveData(context); // Panggil fungsi save saat tombol ditekan
+                _saveData(context);
               },
               backgroundColor: Colors.white,
               child: const Icon(Icons.add),
