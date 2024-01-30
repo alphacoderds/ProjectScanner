@@ -71,10 +71,10 @@ class _ProfileCardState extends State<ProfileCard> {
                 ),
                 child: const Text('Ubah Profile'),
               ),
-              const SizedBox(height: 16.0), // Spacer
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  // Logika untuk logout
+                  _showLogoutConfirmationDialog(); // Dialog konfirmasi logout
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
@@ -160,6 +160,39 @@ class _ProfileCardState extends State<ProfileCard> {
       color: Colors.grey,
       thickness: 1.0,
       height: 16.0,
+    );
+  }
+
+  Future<void> _showLogoutConfirmationDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Logout Confirmation'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Apakah Anda yakin ingin logout?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Batal'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Logika logout
+                Navigator.of(context).pop();
+              },
+              child: const Text('Logout'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
