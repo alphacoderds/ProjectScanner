@@ -1,19 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-void main() {
-  runApp(updateprofil());
-}
-
-class updateprofil extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ProfilePage(),
-    );
-  }
-}
-
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -36,11 +23,6 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: Row(
           children: [
-            Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.rotationY(math.pi), // Pemutaran 180 derajat
-              child: Icon(Icons.arrow_forward),
-            ),
             SizedBox(width: 5),
             Text('Ubah Profil'),
           ],
@@ -90,6 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
               buildTextField('Password', passwordController, obscureText: true),
               buildDivider(),
               buildTextField('Status', statusController),
+              buildDivider(),
               SizedBox(height: 20),
               Align(
                 alignment: Alignment.center,

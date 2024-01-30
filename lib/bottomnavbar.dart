@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/menu_utama.dart';
 import 'package:flutter_scanner/profile.dart';
-import 'package:flutter_scanner/updateprofile.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
