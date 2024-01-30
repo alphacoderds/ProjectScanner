@@ -13,7 +13,7 @@ class RiwayatProsesScreen extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              left: 27,
+              left: 27, 
               top: 145,
               child: Container(
                 width: 375,
