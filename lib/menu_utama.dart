@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scanner/aftersales.dart';
 
 class MenuUtama extends StatefulWidget {
   const MenuUtama({Key? key}) : super(key: key);
@@ -134,22 +135,31 @@ class _MenuUtamaState extends State<MenuUtama> {
                 ],
               ),
               SizedBox(width: 30),
-              Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    color: Color.fromRGBO(85, 100, 136, 1),
-                    child: Icon(
-                      Icons.headset_mic,
-                      color: Color.fromRGBO(43, 56, 86, 1),
-                      size: 70,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AfterSales()),
+                  );
+                },
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      color: Color.fromRGBO(85, 100, 136, 1),
+                      child: Icon(
+                        Icons.headset_mic,
+                        color: Color.fromRGBO(43, 56, 86, 1),
+                        size: 70,
+                      ),
                     ),
-                  ),
-                  Text(
-                    "After Seles",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  )
-                ],
+                    Text(
+                      "After Seles",
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
               ),
               SizedBox(width: 30),
               Column(

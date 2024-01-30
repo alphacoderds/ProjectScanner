@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scanner/aftersales.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:flutter_scanner/keterangan.dart';
 import 'package:flutter_scanner/login.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: loginpage(),
+      home: NavBar(),
     );
   }
 }
