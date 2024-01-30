@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:flutter_scanner/updateprofile.dart';
+import 'package:flutter_scanner/login.dart';
 
 class ProfileCard extends StatefulWidget {
   const ProfileCard({super.key});
@@ -71,10 +72,10 @@ class _ProfileCardState extends State<ProfileCard> {
                 ),
                 child: const Text('Ubah Profile'),
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 16.0), // Spacer
               ElevatedButton(
                 onPressed: () {
-                  _showLogoutConfirmationDialog(); // Dialog konfirmasi logout
+                  _showLogoutConfirmationDialog();
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
@@ -187,6 +188,10 @@ class _ProfileCardState extends State<ProfileCard> {
               onPressed: () {
                 // Logika logout
                 Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const loginpage()),
+                );
               },
               child: const Text('Logout'),
             ),
