@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scanner/afdata.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 
 class AfterSales extends StatefulWidget {
@@ -60,16 +61,17 @@ class _AfterSalesState extends State<AfterSales> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: 40),
+                    SizedBox(height: 30),
                     Text(
-                      'Apakah produk berjalan sesuai dengan semestinya?',
+                      'Apakah produk berjalan sesuai \n dengan semestinya?',
                       style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16.5,
+                      ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -109,7 +111,7 @@ class _AfterSalesState extends State<AfterSales> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => NavBar(),
+                                builder: (context) => AfterSalesData(),
                               ),
                             );
                           },
@@ -153,6 +155,7 @@ class _AfterSalesState extends State<AfterSales> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
+        width: 500,
         decoration: BoxDecoration(
           color: Color.fromRGBO(43, 56, 86, 1),
           borderRadius: BorderRadius.circular(30),
@@ -171,9 +174,10 @@ class _AfterSalesState extends State<AfterSales> {
             Text(
               'Menyimpan data!',
               style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18),
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+                fontSize: 16.5,
+              ),
             ),
             SizedBox(height: 30),
             ElevatedButton(

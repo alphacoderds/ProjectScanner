@@ -52,10 +52,6 @@ class _ScannerProdukState extends State<ScannerProduk> {
       appBar: AppBar(
         title: Row(
           children: [
-            Icon(
-              Icons.arrow_back,
-              color: Color.fromARGB(255, 10, 10, 10),
-            ),
             SizedBox(width: 8),
             Text('Reka Chain'),
           ],
