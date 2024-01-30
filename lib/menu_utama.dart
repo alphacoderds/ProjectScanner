@@ -134,25 +134,6 @@ class _MenuUtamaState extends State<MenuUtama> {
                   )
                 ],
               ),
-<<<<<<< HEAD
-              const SizedBox(width: 30),
-              Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    color: const Color.fromRGBO(85, 100, 136, 1),
-                    child: const Icon(
-                      Icons.headset_mic,
-                      color: Color.fromRGBO(43, 56, 86, 1),
-                      size: 70,
-                    ),
-                  ),
-                  const Text(
-                    "After Seles",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  )
-                ],
-=======
               SizedBox(width: 30),
               GestureDetector(
                 onTap: () {
@@ -179,7 +160,6 @@ class _MenuUtamaState extends State<MenuUtama> {
                     )
                   ],
                 ),
->>>>>>> 0081def1a3311b5922f7f8382ba5d33619156831
               ),
               const SizedBox(width: 30),
               Column(
