@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
 
 class ScannerMaterial extends StatefulWidget {
   @override
-  _ScannerProdukState createState() => _ScannerProdukState();
+  _ScannerMaterialState createState() => _ScannerMaterialState();
 }
 
-class _ScannerProdukState extends State<ScannerMaterial> {
+class _ScannerMaterialState extends State<ScannerMaterial> {
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     try {
