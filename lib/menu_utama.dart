@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/aftersales.dart';
+import 'package:flutter_scanner/scan_material.dart';
+import 'package:flutter_scanner/scan_produk.dart';
 
 class MenuUtama extends StatefulWidget {
   const MenuUtama({Key? key}) : super(key: key);
@@ -59,52 +61,69 @@ class _MenuUtamaState extends State<MenuUtama> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(85, 100, 136, 1),
-                        borderRadius: BorderRadius.circular(20),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ScannerMaterial()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(85, 100, 136, 1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Icon(
+                          Icons.qr_code_scanner_rounded,
+                          color: Color.fromRGBO(43, 56, 86, 1),
+                          size: 70,
+                        ),
                       ),
-                      child: const Icon(
-                        Icons.qr_code_scanner_rounded,
-                        color: Color.fromRGBO(43, 56, 86, 1),
-                        size: 70,
-                      ),
-                    ),
-                    const Text(
-                      "Scan Material",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
+                      const Text(
+                        "Scan Material",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 30),
-                Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(85, 100, 136, 1),
-                        borderRadius: BorderRadius.circular(20),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ScannerProduk()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(85, 100, 136, 1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Icon(
+                          Icons.move_to_inbox_rounded,
+                          color: Color.fromRGBO(43, 56, 86, 1),
+                          size: 70,
+                        ),
                       ),
-                      child: const Icon(
-                        Icons.move_to_inbox_rounded,
-                        color: Color.fromRGBO(43, 56, 86, 1),
-                        size: 70,
-                      ),
-                    ),
-                    const Text(
-                      "Scan Produk",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
+                      const Text(
+                        "Scan Produk",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 30),
                 Column(
