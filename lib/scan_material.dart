@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
 
 class ScannerMaterial extends StatefulWidget {
   @override
-  _ScannerMaterialState createState() => _ScannerMaterialState();
+  _ScannerProdukState createState() => _ScannerProdukState();
 }
 
-class _ScannerMaterialState extends State<ScannerMaterial> {
+class _ScannerProdukState extends State<ScannerMaterial> {
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     try {
@@ -31,13 +31,19 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
         ScanMode.BARCODE,
       );
       debugPrint(barcodeScanRes);
+
+      // Tampilkan pesan setelah selesai melakukan scan
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Hasil scan: $barcodeScanRes'),
+          duration: Duration(seconds: 3),
+        ),
+      );
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version';
     }
     if (!mounted) return;
-    setState(() {
-      // Lakukan perubahan state jika diperlukan setelah pemindaian barcode
-    });
+    setState(() {});
   }
 
   @override
@@ -63,7 +69,7 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
           children: [
             ElevatedButton(
               onPressed: () {
-                scanBarcodeNormal(); // Panggil fungsi untuk melakukan pemindaian barcode
+                scanBarcodeNormal();
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.all(16),
