@@ -16,11 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-<<<<<<< HEAD
       home: NavBar(),
-=======
-      home: const NavBar(),
->>>>>>> 1536c39295a60b2005d6152117f56d3ea1e1af35
     );
   }
 }

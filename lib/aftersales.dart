@@ -67,14 +67,8 @@ class _AfterSalesState extends State<AfterSales> {
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                       ),
-<<<<<<< HEAD
                     ),
                     SizedBox(height: 40),
-=======
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 25),
->>>>>>> 1536c39295a60b2005d6152117f56d3ea1e1af35
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -142,11 +136,7 @@ class _AfterSalesState extends State<AfterSales> {
                         ),
                       ],
                     ),
-<<<<<<< HEAD
                     SizedBox(height: 40),
-=======
-                    SizedBox(height: 20),
->>>>>>> 1536c39295a60b2005d6152117f56d3ea1e1af35
                   ],
                 ),
               ),
@@ -162,10 +152,6 @@ class _AfterSalesState extends State<AfterSales> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-<<<<<<< HEAD
-=======
-        width: 500,
->>>>>>> 1536c39295a60b2005d6152117f56d3ea1e1af35
         decoration: BoxDecoration(
           color: Color.fromRGBO(43, 56, 86, 1),
           borderRadius: BorderRadius.circular(30),
@@ -185,10 +171,7 @@ class _AfterSalesState extends State<AfterSales> {
             SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
-<<<<<<< HEAD
                 Navigator.of(context).pop();
-=======
->>>>>>> 1536c39295a60b2005d6152117f56d3ea1e1af35
                 Navigator.push(
                   context,
                   MaterialPageRoute(
