@@ -10,17 +10,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyHomePage(),
+      home: ScannerProduk(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class ScannerProduk extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _ScannerProdukState createState() => _ScannerProdukState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _ScannerProdukState extends State<ScannerProduk> {
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     try {

@@ -67,20 +67,19 @@ class _AfterSalesState extends State<AfterSales> {
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 25),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
                             showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return _dialog2();
-                              },
-                            );
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return _dialog2();
+                                });
                           },
                           child: const SizedBox(
                             width: 40,
@@ -138,7 +137,7 @@ class _AfterSalesState extends State<AfterSales> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 20),
                   ],
                 ),
               ),
@@ -154,6 +153,7 @@ class _AfterSalesState extends State<AfterSales> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
+        width: 500,
         decoration: BoxDecoration(
           color: Color.fromRGBO(43, 56, 86, 1),
           borderRadius: BorderRadius.circular(30),
@@ -173,7 +173,6 @@ class _AfterSalesState extends State<AfterSales> {
             SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
