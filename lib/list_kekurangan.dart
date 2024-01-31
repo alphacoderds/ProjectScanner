@@ -53,37 +53,45 @@ class _ListKekuranganState extends State<ListKekurangan> {
       body: ListView.builder(
         itemCount: 8, // Sesuaikan dengan jumlah item yang diinginkan
         itemBuilder: (context, index) {
-          return Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xBF2B3856),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Kekurangan ${index + 1}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w700,
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TambahKekurangan()),
+              );
+            },
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xBF2B3856),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Kekurangan ${index + 1}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now()),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontFamily: 'Inter',
+                    const SizedBox(height: 10),
+                    Text(
+                      DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now()),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );
