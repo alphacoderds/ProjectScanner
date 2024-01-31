@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/afdata.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
+import 'package:flutter_scanner/pop_up_product.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: NavBar(),
+      home: const PopUpProduk(),
     );
   }
 }
