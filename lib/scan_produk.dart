@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_scanner/pop_up_product.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,13 +37,19 @@ class _ScannerProdukState extends State<ScannerProduk> {
       );
       debugPrint(barcodeScanRes);
 
-      // Tampilkan pesan setelah selesai melakukan scan
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Hasil scan: $barcodeScanRes'),
           duration: const Duration(seconds: 3),
         ),
       );
+
+      if (barcodeScanRes != '-1') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const PopUpProduk()),
+        );
+      }
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version';
     }
