@@ -66,7 +66,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ScannerMaterial()),
+                          builder: (context) => const ScannerMaterial()),
                     );
                   },
                   child: Column(
@@ -98,7 +98,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ScannerProduk()),
+                      MaterialPageRoute(builder: (context) => const ScannerProduk()),
                     );
                   },
                   child: Column(

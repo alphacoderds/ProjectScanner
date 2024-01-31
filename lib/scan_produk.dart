@@ -3,19 +3,23 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: ScannerProduk(),
     );
   }
 }
 
 class ScannerProduk extends StatefulWidget {
+  const ScannerProduk({super.key});
+
   @override
   _ScannerProdukState createState() => _ScannerProdukState();
 }
@@ -36,7 +40,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Hasil scan: $barcodeScanRes'),
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
         ),
       );
     } on PlatformException {
@@ -50,7 +54,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           children: [
             SizedBox(width: 8),
             Text('Reka Chain'),
@@ -58,7 +62,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
         ),
       ),
       body: Align(
-        alignment: Alignment(0, -0.5),
+        alignment: const Alignment(0, -0.5),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,12 +72,12 @@ class _ScannerProdukState extends State<ScannerProduk> {
                 scanBarcodeNormal();
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
-              child: Column(
+              child: const Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

@@ -27,68 +27,70 @@ class _ProfileCardState extends State<ProfileCard> {
         ),
       ),
       body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text(
-                'Hallo!',
-                style: TextStyle(
-                  color: Color.fromRGBO(43, 56, 86, 1),
-                  fontSize: 36.0,
-                  fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  'Hallo!',
+                  style: TextStyle(
+                    color: Color.fromRGBO(43, 56, 86, 1),
+                    fontSize: 36.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.start, // Align text to the left
                 ),
-                textAlign: TextAlign.start, // Align text to the left
-              ),
 
-              _buildAvatar(),
-              const SizedBox(height: 16.0),
-              _buildTextView('Nama',
-                  text: 'John Doe'), // Set the text accordingly
-              _buildDivider(),
-              _buildTextView('NIP',
-                  text: '123456789'), // Set the text accordingly
-              _buildDivider(),
-              _buildTextView('Unit Kerja',
-                  text: 'Sample Unit'), // Set the text accordingly
-              const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ProfilePage()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                _buildAvatar(),
+                const SizedBox(height: 16.0),
+                _buildTextView('Nama',
+                    text: 'John Doe'), // Set the text accordingly
+                _buildDivider(),
+                _buildTextView('NIP',
+                    text: '123456789'), // Set the text accordingly
+                _buildDivider(),
+                _buildTextView('Unit Kerja',
+                    text: 'Sample Unit'), // Set the text accordingly
+                const SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProfilePage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 12.0),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 12.0, vertical: 12.0),
+                  child: const Text('Ubah Profile'),
                 ),
-                child: const Text('Ubah Profile'),
-              ),
-              const SizedBox(height: 16.0), // Spacer
-              ElevatedButton(
-                onPressed: () {
-                  _showLogoutConfirmationDialog();
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                const SizedBox(height: 16.0), // Spacer
+                ElevatedButton(
+                  onPressed: () {
+                    _showLogoutConfirmationDialog();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 12.0),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 12.0, vertical: 12.0),
+                  child: const Text('Logout'),
                 ),
-                child: const Text('Logout'),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
