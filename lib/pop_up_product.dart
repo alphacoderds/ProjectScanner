@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
-import 'package:flutter_scanner/scan_produk.dart';
+import 'package:flutter_scanner/keterangan.dart';
 
 class PopUpProduk extends StatefulWidget {
   const PopUpProduk({Key? key}) : super(key: key);
@@ -113,7 +113,7 @@ class _PopUpProdukState extends State<PopUpProduk> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ScannerProduk(),
+                                builder: (context) => const NavBar(),
                               ),
                             );
                           },
@@ -215,7 +215,12 @@ class _PopUpProdukState extends State<PopUpProduk> {
                 const SizedBox(width: 50),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Keterangan(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: const Color.fromRGBO(43, 56, 86, 1),
