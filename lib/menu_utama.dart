@@ -98,7 +98,8 @@ class _MenuUtamaState extends State<MenuUtama> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const ScannerProduk()),
+                      MaterialPageRoute(
+                          builder: (context) => const ScannerProduk()),
                     );
                   },
                   child: Column(
@@ -171,7 +172,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                       ),
                     ),
                     const Text(
-                      "Download \nDocument",
+                      "Unduh Berkas",
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -203,7 +204,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                         ),
                       ),
                       const Text(
-                        "After Seles",
+                        "After Sales",
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -228,7 +229,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                       ),
                     ),
                     const Text(
-                      "Cek Status \n   Produk",
+                      "Tahap Selesai",
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,

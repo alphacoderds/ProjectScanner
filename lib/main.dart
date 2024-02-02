@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:flutter_scanner/list_kekurangan.dart';
+import 'package:flutter_scanner/open_item.dart';
 import 'package:flutter_scanner/riwayat_proses.dart';
 import 'package:flutter_scanner/riwayat_scan.dart';
 import 'package:flutter_scanner/tambah_keterangan.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const NavBar(),
+      home: ListOpenItem(),
     );
   }
 }
