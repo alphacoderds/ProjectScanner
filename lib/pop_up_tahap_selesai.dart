@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
+import 'package:flutter_scanner/close_item.dart';
 import 'package:flutter_scanner/keterangan.dart';
 import 'package:flutter_scanner/open_item.dart';
+import 'package:flutter_scanner/scan_tahap_selesai.dart';
 
 class PopUpTahapSelesai extends StatefulWidget {
   const PopUpTahapSelesai({Key? key}) : super(key: key);
@@ -81,7 +83,8 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const NavBar(),
+                                builder: (context) =>
+                                    const ScannerTahapSelesai(),
                               ),
                             );
                           },
@@ -151,11 +154,11 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return ListOpenItem();
-                      },
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ListOpenItem(),
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -183,11 +186,11 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                 const SizedBox(width: 50),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Keterangan(),
-                      ),
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return _dialog4();
+                      },
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -203,6 +206,38 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                     child: Center(
                       child: Text(
                         "Tidak",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 50),
+                ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return _dialog3();
+                      },
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: const Color.fromRGBO(43, 56, 86, 1),
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: const SizedBox(
+                    width: 40,
+                    height: 30,
+                    child: Center(
+                      child: Text(
+                        "Next",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15,
@@ -250,11 +285,11 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return _dialog4();
-                      },
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ListCloseItem(),
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -282,11 +317,11 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                 const SizedBox(width: 50),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Keterangan(),
-                      ),
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return _dialog4();
+                      },
                     );
                   },
                   style: ElevatedButton.styleFrom(
