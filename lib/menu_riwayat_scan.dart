@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scanner/scan_riwayat_produk.dart';
+import 'package:flutter_scanner/scan_riwayat_material.dart';
+import 'package:flutter_scanner/scan_riwayat_aftersales.dart';
 
 class MenuRiwayatScan extends StatefulWidget {
   const MenuRiwayatScan({Key? key}) : super(key: key);
@@ -8,7 +11,6 @@ class MenuRiwayatScan extends StatefulWidget {
 }
 
 class _MenuRiwayatScanState extends State<MenuRiwayatScan> {
-  // Define a list of texts
   final List<String> riwayatTexts = [
     'Penerimaan Product',
     'Material',
@@ -52,72 +54,58 @@ class _MenuRiwayatScanState extends State<MenuRiwayatScan> {
         ),
       ),
       body: ListView.builder(
-        itemCount: riwayatTexts.length, // Menggunakan panjang riwayatTexts sebagai itemCount
+        itemCount: riwayatTexts.length,
         itemBuilder: (context, index) {
-          if (index == 2) {
-            // Tambahkan widget Container kosong setelah container ketiga
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 16.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xBF2B3856),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 8),
-                        Center(
-                          child: Text(
-                            '${riwayatTexts[index]}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20), // Sesuaikan tinggi sesuai kebutuhan
-              ],
-            );
-          }
-
-          return Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xBF2B3856),
-                borderRadius: BorderRadius.circular(30),
+          return GestureDetector(
+            onTap: () {
+              if (index == 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ScanRiwayatProduk()),
+                );
+              } else if (index == 1) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ScanRiwayatMaterial()),
+                );
+              } else if (index == 2) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ScanRiwayatAfterSales()),
+                );
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 16.0,
               ),
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 10),
-                  Center(
-                    child: Text(
-                      '${riwayatTexts[index]}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xBF2B3856),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10),
+                    Center(
+                      child: Text(
+                        '${riwayatTexts[index]}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                ],
+                    const SizedBox(height: 10),
+                  ],
+                ),
               ),
             ),
           );
