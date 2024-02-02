@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scanner/aftersales.dart';
 import 'package:flutter_scanner/scan_material.dart';
 import 'package:flutter_scanner/scan_produk.dart';
+import 'package:flutter_scanner/scan_tahap_selesai.dart';
 
 class MenuUtama extends StatefulWidget {
   const MenuUtama({Key? key}) : super(key: key);
@@ -214,14 +215,29 @@ class _MenuUtamaState extends State<MenuUtama> {
                   ),
                 ),
                 const SizedBox(width: 30),
-                Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(85, 100, 136, 1),
-                        borderRadius: BorderRadius.circular(20),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ScannerTahapSelesai()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(85, 100, 136, 1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Icon(
+                          Icons.move_to_inbox_rounded,
+                          color: Color.fromRGBO(43, 56, 86, 1),
+                          size: 70,
+                        ),
                       ),
+<<<<<<< HEAD
                       child: const Icon(
                         Icons.assignment_turned_in_outlined,
                         color: Color.fromRGBO(43, 56, 86, 1),
@@ -236,6 +252,17 @@ class _MenuUtamaState extends State<MenuUtama> {
                       ),
                     )
                   ],
+=======
+                      const Text(
+                        "Tahap Selesai",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
+                  ),
+>>>>>>> f36b647055212404240eda69ed8141d1d3adeb10
                 ),
               ],
             ),

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_scanner/pop_up_product.dart';
+import 'package:flutter_scanner/pop_up_tahap_selesai.dart';
 
-class ScannerProduk extends StatefulWidget {
-  const ScannerProduk({super.key});
+class ScannerTahapSelesai extends StatefulWidget {
+  const ScannerTahapSelesai({super.key});
 
   @override
-  _ScannerProdukState createState() => _ScannerProdukState();
+  _ScannerTahapSelesaiState createState() => _ScannerTahapSelesaiState();
 }
 
-class _ScannerProdukState extends State<ScannerProduk> {
+class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     try {
@@ -32,7 +32,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
       if (barcodeScanRes != '-1') {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const PopUpProduk()),
+          MaterialPageRoute(builder: (context) => const PopUpTahapSelesai()),
         );
       }
     } on PlatformException {
@@ -64,7 +64,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
                 scanBarcodeNormal();
               },
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(25),
+                padding: const EdgeInsets.all(16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -75,13 +75,10 @@ class _ScannerProdukState extends State<ScannerProduk> {
                 children: [
                   Icon(
                     Icons.center_focus_weak,
-                    size: 220,
+                    size: 180,
                   ),
                   SizedBox(height: 20),
-                  Text(
-                    'Scan',
-                    style: TextStyle(fontSize: 16),
-                  ),
+                  Text('Scan'),
                 ],
               ),
             ),
