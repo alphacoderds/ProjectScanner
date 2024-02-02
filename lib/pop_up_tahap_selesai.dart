@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:flutter_scanner/keterangan.dart';
+import 'package:flutter_scanner/open_item.dart';
 
 class PopUpTahapSelesai extends StatefulWidget {
   const PopUpTahapSelesai({Key? key}) : super(key: key);
@@ -153,7 +154,7 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return _dialog3();
+                        return ListOpenItem();
                       },
                     );
                   },
