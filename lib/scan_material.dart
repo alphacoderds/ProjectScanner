@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_scanner/pop_up_materiall.dart';
 
 class ScannerMaterial extends StatefulWidget {
   const ScannerMaterial({super.key});
@@ -10,15 +11,8 @@ class ScannerMaterial extends StatefulWidget {
 }
 
 class _ScannerMaterialState extends State<ScannerMaterial> {
-  late String barcodeScanRes;
-
-  @override
-  void initState() {
-    super.initState();
-    scanBarcodeNormal();
-  }
-
   Future<void> scanBarcodeNormal() async {
+    String barcodeScanRes;
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
         '#ff6666',
@@ -28,13 +22,19 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
       );
       debugPrint(barcodeScanRes);
 
-      // Tampilkan pesan setelah selesai melakukan scan
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Hasil scan: $barcodeScanRes'),
-          duration: const Duration(seconds: 5),
+          duration: const Duration(seconds: 3),
         ),
       );
+
+      if (barcodeScanRes != '-1') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const PopUpMaterial()),
+        );
+      }
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version';
     }
@@ -50,6 +50,41 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
           children: [
             SizedBox(width: 8),
             Text('Reka Chain'),
+          ],
+        ),
+      ),
+      body: Align(
+        alignment: const Alignment(0, -0.5),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                scanBarcodeNormal();
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(25),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              child: const Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.center_focus_weak,
+                    size: 220,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Scan Material',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

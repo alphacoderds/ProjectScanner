@@ -79,7 +79,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'Scan',
+                    'Scan Produk',
                     style: TextStyle(fontSize: 16),
                   ),
                 ],
