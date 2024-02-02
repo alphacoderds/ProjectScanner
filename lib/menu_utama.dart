@@ -237,22 +237,6 @@ class _MenuUtamaState extends State<MenuUtama> {
                           size: 70,
                         ),
                       ),
-<<<<<<< HEAD
-                      child: const Icon(
-                        Icons.assignment_turned_in_outlined,
-                        color: Color.fromRGBO(43, 56, 86, 1),
-                        size: 70,
-                      ),
-                    ),
-                    const Text(
-                      "Tahap Selesai",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
-=======
                       const Text(
                         "Tahap Selesai",
                         style: TextStyle(
@@ -262,7 +246,6 @@ class _MenuUtamaState extends State<MenuUtama> {
                       )
                     ],
                   ),
->>>>>>> f36b647055212404240eda69ed8141d1d3adeb10
                 ),
               ],
             ),
