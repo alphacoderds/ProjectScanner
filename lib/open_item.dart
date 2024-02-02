@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
-import 'package:flutter_scanner/openitem_popup.dart';
+import 'package:flutter_scanner/scan_tahap_selesai.dart';
 
 //======================================Tampilan List Open Item======================================
 class ListOpenItem extends StatefulWidget {
@@ -191,7 +191,7 @@ class _ListOpenItemState extends State<ListOpenItem> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ListOpenItem(),
+                        builder: (context) => ScannerTahapSelesai(),
                       ),
                     );
                   },

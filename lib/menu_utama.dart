@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/aftersales.dart';
+import 'package:flutter_scanner/menu_riwayat_scan.dart';
 import 'package:flutter_scanner/scan_material.dart';
 import 'package:flutter_scanner/scan_produk.dart';
 import 'package:flutter_scanner/scan_tahap_selesai.dart';
@@ -128,28 +129,37 @@ class _MenuUtamaState extends State<MenuUtama> {
                   ),
                 ),
                 const SizedBox(width: 30),
-                Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(85, 100, 136, 1),
-                        borderRadius: BorderRadius.circular(20),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MenuRiwayatScan()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(85, 100, 136, 1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Icon(
+                          Icons.move_to_inbox_rounded,
+                          color: Color.fromRGBO(43, 56, 86, 1),
+                          size: 70,
+                        ),
                       ),
-                      child: const Icon(
-                        Icons.qr_code_scanner_rounded,
-                        color: Color.fromRGBO(43, 56, 86, 1),
-                        size: 70,
-                      ),
-                    ),
-                    const Text(
-                      "Riwayat Scan",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
+                      const Text(
+                        "Riwayat Scan",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -205,7 +215,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                         ),
                       ),
                       const Text(
-                        "After Sales",
+                        "After Seles",
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
