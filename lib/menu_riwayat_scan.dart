@@ -4,10 +4,10 @@ class MenuRiwayatScan extends StatefulWidget {
   const MenuRiwayatScan({Key? key}) : super(key: key);
 
   @override
-  State<MenuRiwayatScan> createState() => _RiwayatScanState();
+  State<MenuRiwayatScan> createState() => _MenuRiwayatScanState();
 }
 
-class _RiwayatScanState extends State<MenuRiwayatScan> {
+class _MenuRiwayatScanState extends State<MenuRiwayatScan> {
   // Define a list of texts
   final List<String> riwayatTexts = [
     'Penerimaan Product',
@@ -29,8 +29,7 @@ class _RiwayatScanState extends State<MenuRiwayatScan> {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: FractionalTranslation(
-                  translation:
-                      Offset(0.37, 0.10), // Sesuaikan offset sesuai kebutuhan
+                  translation: Offset(0.37, 0.10),
                   child: AspectRatio(
                     aspectRatio: 11 / 8,
                     child: Image(
@@ -53,10 +52,10 @@ class _RiwayatScanState extends State<MenuRiwayatScan> {
         ),
       ),
       body: ListView.builder(
-        itemCount: 4, // Sesuaikan dengan jumlah item yang diinginkan
+        itemCount: riwayatTexts.length, // Menggunakan panjang riwayatTexts sebagai itemCount
         itemBuilder: (context, index) {
           if (index == 2) {
-            // Add empty container after the third container
+            // Tambahkan widget Container kosong setelah container ketiga
             return Column(
               children: [
                 Padding(
@@ -88,7 +87,7 @@ class _RiwayatScanState extends State<MenuRiwayatScan> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20), // Adjust the height as needed
+                SizedBox(height: 20), // Sesuaikan tinggi sesuai kebutuhan
               ],
             );
           }
