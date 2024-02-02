@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_scanner/pop_up_product.dart';
+import 'package:flutter_scanner/pop_up_tahap_selesai.dart';
 
-class ScannerProduk extends StatefulWidget {
-  const ScannerProduk({super.key});
+class ScannerTahapSelesai extends StatefulWidget {
+  const ScannerTahapSelesai({super.key});
 
   @override
-  _ScannerProdukState createState() => _ScannerProdukState();
+  _ScannerTahapSelesaiState createState() => _ScannerTahapSelesaiState();
 }
 
-class _ScannerProdukState extends State<ScannerProduk> {
+class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     try {
@@ -32,7 +32,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
       if (barcodeScanRes != '-1') {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const PopUpProduk()),
+          MaterialPageRoute(builder: (context) => const PopUpTahapSelesai()),
         );
       }
     } on PlatformException {
