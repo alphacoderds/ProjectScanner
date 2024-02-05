@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/aftersales.dart';
 import 'package:flutter_scanner/menu_riwayat_scan.dart';
+import 'package:flutter_scanner/scan_aftersales.dart';
 import 'package:flutter_scanner/scan_material.dart';
 import 'package:flutter_scanner/scan_produk.dart';
 import 'package:flutter_scanner/scan_tahap_selesai.dart';
@@ -206,7 +206,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const AfterSales()),
+                          builder: (context) => const ScannerAfterSales()),
                     );
                   },
                   child: Column(

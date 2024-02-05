@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -18,6 +20,8 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController statusController = TextEditingController();
 
+  XFile? _selectedImage;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,129 +30,101 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        child: _buildAvatar(),
+        child: Column(
+          children: [
+            _buildAvatar(),
+            const SizedBox(height: 70),
+            _buildFormFields(),
+            const SizedBox(height: 20),
+            _buildSubmitButton(),
+            const SizedBox(height: 10),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildAvatar() {
-    return Column(
+    return Stack(
       children: [
-        Stack(
-          children: [
-            Container(
-              width: 130,
-              height: 130,
-              decoration: BoxDecoration(
-                border: Border.all(width: 4, color: Colors.white),
-                boxShadow: [
-                  BoxShadow(
-                    spreadRadius: 2,
-                    blurRadius: 10,
-                    color: Colors.black.withOpacity(0.1),
-                  ),
-                ],
-                shape: BoxShape.circle,
-                image: const DecorationImage(
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  image: NetworkImage('assets/images/profile-illustration.png'),
-                ),
+        Container(
+          width: 130,
+          height: 130,
+          decoration: BoxDecoration(
+            border: Border.all(width: 4, color: Colors.white),
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: 2,
+                blurRadius: 10,
+                color: Colors.black.withOpacity(0.1),
               ),
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    width: 4,
-                    color: Colors.white,
+            ],
+            shape: BoxShape.circle,
+            image: _selectedImage != null
+                ? DecorationImage(
+                    fit: BoxFit.cover,
+                    alignment: Alignment.center,
+                    image: FileImage(File(_selectedImage!.path)),
+                  )
+                : const DecorationImage(
+                    fit: BoxFit.cover,
+                    alignment: Alignment.center,
+                    image: AssetImage('assets/images/default_image.png'),
                   ),
-                  color: const Color.fromARGB(255, 22, 44, 62),
-                ),
-                child: const Icon(
-                  Icons.edit,
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: InkWell(
+            onTap: () {
+              _pickImage();
+            },
+            child: Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  width: 4,
                   color: Colors.white,
                 ),
+                color: const Color.fromARGB(255, 17, 46, 70),
+              ),
+              child: const Icon(
+                Icons.edit,
+                color: Colors.white,
               ),
             ),
-          ],
-        ),
-        const SizedBox(height: 70),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildTextField('Nama Lengkap', namaLengkapController),
-            buildDivider(),
-            buildTextField('Jabatan', jabatanController),
-            buildDivider(),
-            buildTextField('Unit Kerja', unitKerjaController),
-            buildDivider(),
-            buildTextField('Departement', departemenController),
-            buildDivider(),
-            buildTextField('Divisi', divisiController),
-            buildDivider(),
-            buildTextField('Nomor Telepon', nomorTeleponController),
-            buildDivider(),
-            buildTextField('NIP', nipController),
-            buildDivider(),
-            buildTextField('Password', passwordController, obscureText: true),
-            buildDivider(),
-            buildTextField('Status', statusController),
-            buildDivider(),
-            const SizedBox(height: 20),
-            Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Aksi yang ingin Anda lakukan saat tombol "Selesai" ditekan
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                  ),
-                  child: const Text(
-                    'Selesai',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-          ],
+          ),
         ),
       ],
     );
   }
 
-  Widget imageProfile() {
-    return Center(
-      child: Stack(children: <Widget>[
-        CircleAvatar(
-          radius: 80.0,
-          backgroundImage: AssetImage("assets\images\profile-illustration.png"),
-        ),
-        Positioned(
-          bottom: 20.0,
-          right: 20.0,
-          child: InkWell(
-            onTap: () {},
-            child: Icon(
-              Icons.camera_alt,
-              color: Colors.teal,
-              size: 28.0,
-            ),
-          ),
-        ),
-      ]),
+  Widget _buildFormFields() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildTextField('Nama Lengkap', namaLengkapController),
+        buildDivider(),
+        buildTextField('Jabatan', jabatanController),
+        buildDivider(),
+        buildTextField('Unit Kerja', unitKerjaController),
+        buildDivider(),
+        buildTextField('Departement', departemenController),
+        buildDivider(),
+        buildTextField('Divisi', divisiController),
+        buildDivider(),
+        buildTextField('Nomor Telepon', nomorTeleponController),
+        buildDivider(),
+        buildTextField('NIP', nipController),
+        buildDivider(),
+        buildTextField('Password', passwordController, obscureText: true),
+        buildDivider(),
+        buildTextField('Status', statusController),
+        buildDivider(),
+      ],
     );
   }
 
@@ -177,6 +153,30 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  Widget _buildSubmitButton() {
+    return Align(
+      alignment: Alignment.center,
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () {
+            // Tambahkan logika untuk menangani tombol "Selesai"
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
+          ),
+          child: const Text(
+            'Selesai',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget buildDivider() {
     return const Divider(
       color: Colors.grey,
@@ -184,6 +184,52 @@ class _ProfilePageState extends State<ProfilePage> {
       thickness: 0.5,
       indent: 0,
       endIndent: 0,
+    );
+  }
+
+  void _pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Galeri'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  XFile? image =
+                      await _picker.pickImage(source: ImageSource.gallery);
+
+                  if (image != null) {
+                    setState(() {
+                      _selectedImage = image;
+                    });
+                  }
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Kamera'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  XFile? image =
+                      await _picker.pickImage(source: ImageSource.camera);
+
+                  if (image != null) {
+                    setState(() {
+                      _selectedImage = image;
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
