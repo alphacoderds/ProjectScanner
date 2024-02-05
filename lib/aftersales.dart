@@ -206,7 +206,7 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
                 child: Center(
                   child: Text(
                     "OK",
-                    textAlign: TextAlign.center,
+                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,

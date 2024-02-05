@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
-import 'package:flutter_scanner/openitem_popup.dart';
 import 'package:flutter_scanner/scan_tahap_selesai.dart';
 
 //======================================Tampilan List Open Item======================================
