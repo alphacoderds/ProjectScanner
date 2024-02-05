@@ -3,14 +3,14 @@ import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:flutter_scanner/list_kekurangan.dart';
 import 'package:flutter_scanner/saran_tindak_lanjut.dart';
 
-class AfterSales extends StatefulWidget {
-  const AfterSales({Key? key}) : super(key: key);
+class PopUpAfterSales extends StatefulWidget {
+  const PopUpAfterSales({Key? key}) : super(key: key);
 
   @override
-  State<AfterSales> createState() => _AfterSalesState();
+  State<PopUpAfterSales> createState() => _PopUpAfterSalesState();
 }
 
-class _AfterSalesState extends State<AfterSales> {
+class _PopUpAfterSalesState extends State<PopUpAfterSales> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,7 +126,7 @@ class _AfterSalesState extends State<AfterSales> {
                             ),
                           ),
                           child: const SizedBox(
-                            width: 40,
+                            width: 45,
                             height: 30,
                             child: Center(
                               child: Text(

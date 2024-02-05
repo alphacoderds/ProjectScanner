@@ -5,6 +5,7 @@ import 'package:flutter_scanner/menu_utama.dart';
 import 'package:flutter_scanner/pop_up_materiall.dart';
 import 'package:flutter_scanner/pop_up_product.dart';
 import 'package:flutter_scanner/riwayat_scan.dart';
+import 'package:flutter_scanner/updateprofile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MenuRiwayatScan(),
+      home: NavBar(),
     );
   }
 }
