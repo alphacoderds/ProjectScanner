@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:flutter_scanner/close_item.dart';
-import 'package:flutter_scanner/keterangan.dart';
 import 'package:flutter_scanner/open_item.dart';
 import 'package:flutter_scanner/scan_tahap_selesai.dart';
 
@@ -129,17 +128,17 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-        width: 500,
+        width: 400, // Reduced width
+        height: 300, // Reduced height
         decoration: BoxDecoration(
           color: const Color.fromRGBO(43, 56, 86, 1),
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
-            const SizedBox(height: 10),
             const Text(
               'Apakah ada open item?',
               style: TextStyle(
@@ -169,8 +168,8 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                     ),
                   ),
                   child: const SizedBox(
-                    width: 40,
                     height: 30,
+                    width: 30,
                     child: Center(
                       child: Text(
                         "Ya",
@@ -183,7 +182,7 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 50),
+                const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
                     showDialog(
@@ -201,8 +200,8 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                     ),
                   ),
                   child: const SizedBox(
-                    width: 40,
                     height: 30,
+                    width: 40,
                     child: Center(
                       child: Text(
                         "Tidak",
@@ -215,39 +214,39 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 50),
-                ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return _dialog3();
-                      },
-                    );
+              ],
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return _dialog3();
                   },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: const SizedBox(
-                    width: 40,
-                    height: 30,
-                    child: Center(
-                      child: Text(
-                        "Next",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: const Color.fromRGBO(43, 56, 86, 1),
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              child: const SizedBox(
+                height: 30,
+                width: 150,
+                child: Center(
+                  child: Text(
+                    "Close Open Item",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
             const SizedBox(height: 20),
           ],
@@ -270,7 +269,6 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
-            const SizedBox(height: 10),
             const Text(
               'Close open item ?',
               style: TextStyle(
