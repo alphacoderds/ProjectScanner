@@ -206,7 +206,7 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
                 child: Center(
                   child: Text(
                     "OK",
-                     textAlign: TextAlign.center,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -263,7 +263,10 @@ class _AfterSalesDataState extends State<AfterSalesData> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NavBar()),
+              );
             },
           ),
         ),
