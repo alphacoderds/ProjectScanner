@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:flutter_scanner/aftersales.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:flutter_scanner/login.dart';
@@ -10,9 +9,7 @@ import 'package:flutter_scanner/pop_up_product.dart';
 import 'package:flutter_scanner/profile.dart';
 import 'package:flutter_scanner/riwayat_scan.dart';
 import 'package:flutter_scanner/updateprofile.dart';
-=======
 import 'package:flutter_scanner/pop_up_tahap_selesai.dart';
->>>>>>> 87d3255e58915063624398c72a5f8dfd02fe91fb
 
 void main() {
   runApp(const MyApp());
