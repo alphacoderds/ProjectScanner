@@ -4,6 +4,7 @@ import 'package:flutter_scanner/menu_riwayat_scan.dart';
 import 'package:flutter_scanner/scan_material.dart';
 import 'package:flutter_scanner/scan_produk.dart';
 import 'package:flutter_scanner/scan_tahap_selesai.dart';
+import 'package:flutter_scanner/unduh_berkas.dart';
 
 class MenuUtama extends StatefulWidget {
   const MenuUtama({Key? key}) : super(key: key);
@@ -168,28 +169,36 @@ class _MenuUtamaState extends State<MenuUtama> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(85, 100, 136, 1),
-                        borderRadius: BorderRadius.circular(20),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const unduh()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(85, 100, 136, 1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Icon(
+                          Icons.description_outlined,
+                          color: Color.fromRGBO(43, 56, 86, 1),
+                          size: 70,
+                        ),
                       ),
-                      child: const Icon(
-                        Icons.description_outlined,
-                        color: Color.fromRGBO(43, 56, 86, 1),
-                        size: 70,
+                      const Text(
+                        "Unduh Berkas",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const Text(
-                      "Unduh Berkas",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 30),
                 GestureDetector(
