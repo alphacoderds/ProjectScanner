@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
-import 'dart:js_util';
 
 class ListCloseItem extends StatefulWidget {
   const ListCloseItem({super.key});
