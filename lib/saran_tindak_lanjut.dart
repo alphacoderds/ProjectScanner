@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scanner/aftersales.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:intl/intl.dart';
 
@@ -24,8 +25,7 @@ class _SaranState extends State<Saran> {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: FractionalTranslation(
-                  translation:
-                      Offset(0.37, 0.10), // Sesuaikan offset sesuai kebutuhan
+                  translation: Offset(0.37, 0.10),
                   child: AspectRatio(
                     aspectRatio: 11 / 8,
                     child: Image(
@@ -45,13 +45,13 @@ class _SaranState extends State<Saran> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NavBar()),
+              MaterialPageRoute(builder: (context) => AfterSalesData()),
             );
           },
         ),
       ),
       body: ListView.builder(
-        itemCount: 8, // Sesuaikan dengan jumlah item yang diinginkan
+        itemCount: 8,
         itemBuilder: (context, index) {
           return Padding(
             padding:
