@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:flutter_scanner/aftersales.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:flutter_scanner/login.dart';
@@ -10,26 +9,27 @@ import 'package:flutter_scanner/pop_up_product.dart';
 import 'package:flutter_scanner/profile.dart';
 import 'package:flutter_scanner/riwayat_scan.dart';
 import 'package:flutter_scanner/updateprofile.dart';
-=======
 import 'package:flutter_scanner/pop_up_tahap_selesai.dart';
->>>>>>> 87d3255e58915063624398c72a5f8dfd02fe91fb
-
-void main() {
-  runApp(const MyApp());
-}
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: NavBar(),
-    );
+    return ScreenUtilInit(
+        designSize: const Size(360, 690),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (_, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: NavBar(),
+          );
+        });
   }
 }
