@@ -64,7 +64,7 @@ class _ScanRiwayatAfterSalesState extends State<ScanRiwayatAfterSales> {
                 scanBarcodeNormal();
               },
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(25),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -75,7 +75,7 @@ class _ScanRiwayatAfterSalesState extends State<ScanRiwayatAfterSales> {
                 children: [
                   Icon(
                     Icons.center_focus_weak,
-                    size: 180,
+                    size: 220,
                   ),
                   SizedBox(height: 20),
                   Text('Scan After Sales'),

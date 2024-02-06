@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/aftersales.dart';
-import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:intl/intl.dart';
 
 class Saran extends StatefulWidget {
