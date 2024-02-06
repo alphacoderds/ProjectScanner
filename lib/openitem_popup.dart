@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:flutter_scanner/open_item.dart';
 
 class OIPopup1 extends StatefulWidget {

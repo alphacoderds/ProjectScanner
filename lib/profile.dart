@@ -207,7 +207,7 @@ class _ProfileCardState extends State<ProfileCard> {
                 Navigator.of(context).pop();
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const loginpage()),
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
                 );
               },
               child: const Text('Logout'),

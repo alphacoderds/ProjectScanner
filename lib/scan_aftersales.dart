@@ -67,7 +67,7 @@ class _ScannerAfterSalesState extends State<ScannerAfterSales> {
                 scanBarcodeNormal();
               },
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(25),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
