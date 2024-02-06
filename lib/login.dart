@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
