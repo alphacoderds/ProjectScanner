@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/open_item.dart';
+import 'package:RekaChain/open_item.dart';
 
 class OIPopup1 extends StatefulWidget {
   const OIPopup1({super.key});

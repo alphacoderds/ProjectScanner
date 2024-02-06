@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/bottomnavbar.dart';
-import 'package:flutter_scanner/close_item.dart';
-import 'package:flutter_scanner/open_item.dart';
-import 'package:flutter_scanner/scan_tahap_selesai.dart';
+import 'package:RekaChain/bottomnavbar.dart';
+import 'package:RekaChain/close_item.dart';
+import 'package:RekaChain/open_item.dart';
+import 'package:RekaChain/scan_tahap_selesai.dart';
 
 class PopUpTahapSelesai extends StatefulWidget {
   const PopUpTahapSelesai({Key? key}) : super(key: key);

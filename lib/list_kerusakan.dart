@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/aftersales.dart';
+import 'package:RekaChain/aftersales.dart';
 import 'package:intl/intl.dart';
 
 class ListKerusakan extends StatefulWidget {

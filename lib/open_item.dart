@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/bottomnavbar.dart';
-import 'package:flutter_scanner/scan_tahap_selesai.dart';
+import 'package:RekaChain/bottomnavbar.dart';
+import 'package:RekaChain/scan_tahap_selesai.dart';
 
 //======================================Tampilan List Open Item======================================
 class ListOpenItem extends StatefulWidget {

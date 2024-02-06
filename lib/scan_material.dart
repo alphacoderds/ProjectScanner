@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_scanner/pop_up_materiall.dart';
+import 'package:RekaChain/pop_up_materiall.dart';
 
 class ScannerMaterial extends StatefulWidget {
   const ScannerMaterial({super.key});

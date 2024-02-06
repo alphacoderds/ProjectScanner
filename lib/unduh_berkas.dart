@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/detailunduh_berkas.dart';
+import 'package:RekaChain/detailunduh_berkas.dart';
 
 class unduh extends StatelessWidget {
   const unduh({super.key});

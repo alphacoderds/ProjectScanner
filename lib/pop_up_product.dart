@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/bottomnavbar.dart';
-import 'package:flutter_scanner/keterangan.dart';
+import 'package:RekaChain/bottomnavbar.dart';
+import 'package:RekaChain/keterangan.dart';
 
 class PopUpProduk extends StatefulWidget {
   const PopUpProduk({Key? key}) : super(key: key);
