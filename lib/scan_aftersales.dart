@@ -11,6 +11,9 @@ class ScannerAfterSales extends StatefulWidget {
 }
 
 class _ScannerAfterSalesState extends State<ScannerAfterSales> {
+  late double screenWidth = MediaQuery.of(context).size.width;
+  late double screenHeight = MediaQuery.of(context).size.height;
+
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     try {
@@ -54,11 +57,11 @@ class _ScannerAfterSalesState extends State<ScannerAfterSales> {
         ),
       ),
       body: Align(
-        alignment: const Alignment(0, -0.5),
+        alignment: Alignment.topCenter,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: screenHeight * 0.2),
             ElevatedButton(
               onPressed: () {
                 scanBarcodeNormal();
@@ -75,10 +78,14 @@ class _ScannerAfterSalesState extends State<ScannerAfterSales> {
                 children: [
                   Icon(
                     Icons.center_focus_weak,
+                    color: Color.fromRGBO(149, 0, 0, 1),
                     size: 180,
                   ),
                   SizedBox(height: 20),
-                  Text('Scan'),
+                  Text('Scan AfterSales',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 85, 19, 19),
+                          fontSize: 18)),
                 ],
               ),
             ),

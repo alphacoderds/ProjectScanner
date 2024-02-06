@@ -11,6 +11,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  late double screenWidth = MediaQuery.of(context).size.width;
+  late double screenHeight = MediaQuery.of(context).size.height;
+
   TextEditingController namaLengkapController = TextEditingController();
   TextEditingController jabatanController = TextEditingController();
   TextEditingController unitKerjaController = TextEditingController();
@@ -30,15 +33,19 @@ class _ProfilePageState extends State<ProfilePage> {
         title: const Text('Edit Profile'),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.only(
+          top: screenHeight * 0.01,
+          left: screenWidth * 0.05,
+          right: screenWidth * 0.05,
+        ),
         child: Column(
           children: [
             _buildAvatar(),
-            const SizedBox(height: 70),
+            SizedBox(height: screenHeight * 0.1),
             _buildFormFields(),
-            const SizedBox(height: 20),
+            SizedBox(height: screenHeight * 0.03),
             _buildSubmitButton(),
-            const SizedBox(height: 10),
+            SizedBox(height: screenHeight * 0.05),
           ],
         ),
       ),
@@ -49,8 +56,8 @@ class _ProfilePageState extends State<ProfilePage> {
     return Stack(
       children: [
         Container(
-          width: 130,
-          height: 130,
+          width: screenWidth * 0.35,
+          height: screenWidth * 0.35,
           decoration: BoxDecoration(
             border: Border.all(width: 4, color: Colors.white),
             boxShadow: [
