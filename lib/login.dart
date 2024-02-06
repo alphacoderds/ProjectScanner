@@ -1,27 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class loginpage extends StatefulWidget {
-  const loginpage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<loginpage> createState() => _loginpageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _loginpageState extends State<loginpage> {
-  TextEditingController NIPController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+class _LoginPageState extends State<LoginPage> {
+  late TextEditingController nipController;
+  late TextEditingController passwordController;
+  late double screenWidth;
+  late double screenHeight;
+  double hintTextSize = 15; // Adjust as needed
+
+  @override
+  void initState() {
+    super.initState();
+    nipController = TextEditingController();
+    passwordController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.yellow,
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: _page(),
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: _page(),
       ),
     );
   }
@@ -30,61 +41,75 @@ class _loginpageState extends State<loginpage> {
     return Container(
       child: Stack(
         children: [
-          const Positioned(
-            top: 0,
-            left: 345,
-            right: 0,
+          Padding(
+            padding: EdgeInsets.only(
+              top: screenHeight * 0.040,
+              left: screenWidth * 0.89,
+              right: 0,
+            ),
             child: Image(
               image: AssetImage('assets/images/bolder31.png'),
-              width: 150,
-              height: 100,
+              width: screenWidth * 0.70, // Adjust the width as needed
+              height: screenHeight * 0.10, // Adjust the height as needed
             ),
           ),
           Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 100),
+                SizedBox(height: screenHeight * 0.15),
                 Image.asset(
                   'assets/images/logoREKA.png',
-                  width: 200,
+                  width: screenWidth * 0.5,
                 ),
-                const SizedBox(height: 20),
-                const Text(
+                SizedBox(height: screenHeight * 0.02),
+                Text(
                   "REKA CHAIN",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: screenHeight * 0.03,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                const Text(
+                Text(
                   "PT. REKAINDO GLOBAL JASA",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: screenHeight * 0.03,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                const SizedBox(height: 40),
-                const Text("Username :",
-                    style: TextStyle(fontSize: 15), textAlign: TextAlign.left),
-                const SizedBox(height: 5),
-                _inputField("Username", NIPController,
+                SizedBox(height: screenHeight * 0.07),
+                Text(
+                  "Username :",
+                  style: TextStyle(fontSize: screenHeight * 0.025),
+                  textAlign: TextAlign.left,
+                ),
+                SizedBox(height: screenHeight * 0.005),
+                _inputField("Username", nipController,
                     backgroundColor: Colors.white),
-                const SizedBox(height: 10),
-                const Text("Password :",
-                    style: TextStyle(fontSize: 15), textAlign: TextAlign.left),
-                const SizedBox(height: 5),
+                SizedBox(height: screenHeight * 0.01),
+                Text(
+                  "Password :",
+                  style: TextStyle(fontSize: screenHeight * 0.025),
+                  textAlign: TextAlign.left,
+                ),
+                SizedBox(height: screenHeight * 0.005),
                 _inputField("Password", passwordController,
                     isPassword: true, backgroundColor: Colors.white),
-                const SizedBox(height: 50),
+                SizedBox(height: screenHeight * 0.025),
                 _loginBtn(),
                 Expanded(child: Container())
               ],
             ),
           ),
-          const Positioned(
-            bottom: -10,
+          Positioned(
+            bottom: -screenHeight * 0.001,
             left: 0,
             child: Image(
               image: AssetImage('assets/images/Bolder21.png'),
-              width: 150,
-              height: 100,
+              width: screenWidth * 0.35,
+              height: screenHeight * 0.11,
             ),
           ),
         ],
@@ -92,20 +117,20 @@ class _loginpageState extends State<loginpage> {
     );
   }
 
-  Widget _inputField(String hintText, controller,
+  Widget _inputField(String hintText, TextEditingController controller,
       {bool isPassword = false, Color? backgroundColor}) {
     return SizedBox(
-      width: 270,
-      height: 40,
+      width: screenWidth * 0.65,
+      height: screenHeight * 0.04,
       child: Center(
         child: TextField(
           style: const TextStyle(color: Color.fromARGB(255, 8, 8, 8)),
           controller: controller,
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: const TextStyle(
+            hintStyle: TextStyle(
               color: Color.fromARGB(255, 73, 72, 72),
-              fontSize: 15,
+              fontSize: hintTextSize * screenWidth / 360,
             ),
             fillColor: backgroundColor,
             filled: true,
@@ -122,24 +147,31 @@ class _loginpageState extends State<loginpage> {
 
   Widget _loginBtn() {
     return ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const NavBar()),
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white, backgroundColor: const Color.fromRGBO(43, 56, 86, 1), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const NavBar()),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      ),
+      child: SizedBox(
+        width: screenWidth * 0.5,
+        height: screenHeight * 0.05,
+        child: Center(
+          child: Text(
+            "Sign In",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: screenHeight * 0.020,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
-        child: const SizedBox(
-            width: 200,
-            height: 40,
-            child: Center(
-              child: Text(
-                "Sign In",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              ),
-            )));
+      ),
+    );
   }
 }

@@ -27,16 +27,16 @@ class _MenuUtamaState extends State<MenuUtama> {
               children: [
                 Center(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: screenHeight * 0.05),
-                      Stack(
-                        alignment: Alignment.topRight,
+                      SizedBox(height: screenHeight * 0.035),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
-                              top: screenHeight * 0.01,
-                              left: screenWidth * 0.1,
+                              top: screenHeight * 0.001,
+                              left: screenWidth * 0.09,
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,30 +45,35 @@ class _MenuUtamaState extends State<MenuUtama> {
                                   "REKA CHAIN",
                                   style: TextStyle(
                                     fontFamily: 'Donegal One',
+                                    fontSize: screenWidth * 0.05,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 Text(
                                   "Selamat Datang...",
                                   style: TextStyle(
-                                    fontSize: screenWidth * 0.05,
+                                    fontSize: screenWidth * 0.075,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: Image.asset(
-                              'assets/images/bolder32.png',
-                              width: screenWidth * 0.2,
+                          Spacer(), // Spacer untuk memberikan ruang di antara dua kolom
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.only(right: screenWidth * 0.0001),
+                              child: Image.asset(
+                                'assets/images/bolder32.png',
+                                width: screenWidth * 0.2,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: screenHeight * 0.04),
+                      SizedBox(height: screenHeight * 0.13),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -85,7 +90,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                               );
                             },
                           ),
-                          SizedBox(width: screenWidth * 0.05),
+                          SizedBox(width: screenWidth * 0.06),
                           buildMenuItem(
                             screenWidth,
                             Icons.move_to_inbox_rounded,
@@ -99,7 +104,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                               );
                             },
                           ),
-                          SizedBox(width: screenWidth * 0.05),
+                          SizedBox(width: screenWidth * 0.06),
                           buildMenuItem(
                             screenWidth,
                             Icons.move_to_inbox_rounded,
@@ -115,7 +120,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                           ),
                         ],
                       ),
-                      SizedBox(height: screenHeight * 0.03),
+                      SizedBox(height: screenHeight * 0.06),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,7 +138,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                               );
                             },
                           ),
-                          SizedBox(width: screenWidth * 0.05),
+                          SizedBox(width: screenWidth * 0.06),
                           buildMenuItem(
                             screenWidth,
                             Icons.headset_mic,
@@ -148,7 +153,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                               );
                             },
                           ),
-                          SizedBox(width: screenWidth * 0.05),
+                          SizedBox(width: screenWidth * 0.06),
                           buildMenuItem(
                             screenWidth,
                             Icons.move_to_inbox_rounded,
@@ -170,7 +175,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                 ),
               ],
             ),
-          );
+          ); 
         },
       ),
     );
@@ -183,15 +188,15 @@ class _MenuUtamaState extends State<MenuUtama> {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(screenWidth * 0.04),
+            padding: EdgeInsets.all(screenWidth * 0.029),
             decoration: BoxDecoration(
               color: const Color.fromRGBO(85, 100, 136, 1),
-              borderRadius: BorderRadius.circular(screenWidth * 0.1),
+              borderRadius: BorderRadius.circular(screenWidth * 0.06),
             ),
             child: Icon(
               icon,
               color: Color.fromRGBO(43, 56, 86, 1),
-              size: screenWidth * 0.2,
+              size: screenWidth * 0.19,
             ),
           ),
           Text(

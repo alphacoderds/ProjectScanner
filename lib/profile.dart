@@ -11,6 +11,9 @@ class ProfileCard extends StatefulWidget {
 }
 
 class _ProfileCardState extends State<ProfileCard> {
+  late double screenWidth = MediaQuery.of(context).size.width;
+  late double screenHeight = MediaQuery.of(context).size.height;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,22 +32,26 @@ class _ProfileCardState extends State<ProfileCard> {
       body: Container(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.only(
+              top: screenHeight * 0.01,
+              left: screenWidth * 0.05,
+              right: screenWidth * 0.05,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
+                Text(
                   'Hallo!',
                   style: TextStyle(
                     color: Color.fromRGBO(43, 56, 86, 1),
-                    fontSize: 36.0,
+                    fontSize: screenWidth * 0.075,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.start, // Align text to the left
                 ),
 
                 _buildAvatar(),
-                const SizedBox(height: 16.0),
+                SizedBox(height: screenHeight * 0.05),
                 _buildTextView('Nama',
                     text: 'John Doe'), // Set the text accordingly
                 _buildDivider(),
@@ -53,7 +60,7 @@ class _ProfileCardState extends State<ProfileCard> {
                 _buildDivider(),
                 _buildTextView('Unit Kerja',
                     text: 'Sample Unit'), // Set the text accordingly
-                const SizedBox(height: 16.0),
+                SizedBox(height: screenHeight * 0.05),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -68,12 +75,16 @@ class _ProfileCardState extends State<ProfileCard> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 12.0),
+                    padding: EdgeInsets.only(
+                      top: screenHeight * 0.015,
+                      bottom: screenHeight * 0.015,
+                      left: screenWidth * 0.1,
+                      right: screenWidth * 0.1,
+                    ),
                   ),
                   child: const Text('Ubah Profile'),
                 ),
-                const SizedBox(height: 16.0), // Spacer
+                SizedBox(height: screenHeight * 0.01), // Spacer
                 ElevatedButton(
                   onPressed: () {
                     _showLogoutConfirmationDialog();
@@ -84,8 +95,12 @@ class _ProfileCardState extends State<ProfileCard> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 12.0),
+                    padding: EdgeInsets.only(
+                      top: screenHeight * 0.015,
+                      bottom: screenHeight * 0.015,
+                      left: screenWidth * 0.1,
+                      right: screenWidth * 0.1,
+                    ),
                   ),
                   child: const Text('Logout'),
                 ),
@@ -113,8 +128,8 @@ class _ProfileCardState extends State<ProfileCard> {
     return Stack(
       children: [
         Container(
-          width: 130,
-          height: 130,
+          width: screenWidth * 0.35,
+          height: screenWidth * 0.35,
           decoration: BoxDecoration(
             border: Border.all(width: 4, color: Colors.white),
             boxShadow: [
@@ -192,7 +207,7 @@ class _ProfileCardState extends State<ProfileCard> {
                 Navigator.of(context).pop();
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const loginpage()),
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
                 );
               },
               child: const Text('Logout'),

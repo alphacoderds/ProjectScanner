@@ -11,6 +11,9 @@ class ScannerMaterial extends StatefulWidget {
 }
 
 class _ScannerMaterialState extends State<ScannerMaterial> {
+  late double screenWidth = MediaQuery.of(context).size.width;
+  late double screenHeight = MediaQuery.of(context).size.height;
+
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     try {
@@ -54,17 +57,18 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
         ),
       ),
       body: Align(
-        alignment: const Alignment(0, -0.5),
+        alignment: Alignment.topCenter,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: screenHeight * 0.2),
             ElevatedButton(
               onPressed: () {
                 scanBarcodeNormal();
               },
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.all(25),
+                backgroundColor: Color.fromARGB(255, 251, 249, 249),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -75,12 +79,14 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
                 children: [
                   Icon(
                     Icons.center_focus_weak,
-                    size: 220,
+                    color: Color.fromRGBO(149, 0, 0, 1),
+                    size: 180,
                   ),
                   SizedBox(height: 20),
                   Text(
                     'Scan Material',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 85, 19, 19), fontSize: 18),
                   ),
                 ],
               ),
