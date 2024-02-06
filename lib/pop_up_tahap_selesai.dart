@@ -12,8 +12,14 @@ class PopUpTahapSelesai extends StatefulWidget {
 }
 
 class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
+  late double screenWidth;
+  late double screenHeight;
+
   @override
   Widget build(BuildContext context) {
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: FutureBuilder(
         future: Future.delayed(const Duration(seconds: 1)),
@@ -22,6 +28,7 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
             return Dialog(
               alignment: Alignment.center,
               child: Container(
+                width: screenWidth * 0.8,
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(43, 56, 86, 1),
                   borderRadius: BorderRadius.circular(30),
@@ -96,7 +103,7 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                             ),
                           ),
                           child: const SizedBox(
-                            width: 40,
+                            width: 50,
                             height: 30,
                             child: Center(
                               child: Text(
@@ -128,8 +135,8 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-        width: 400, // Reduced width
-        height: 300, // Reduced height
+        width: screenWidth * 0.8,
+        height: screenHeight * 0.3,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(43, 56, 86, 1),
           borderRadius: BorderRadius.circular(20),
@@ -200,8 +207,8 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                     ),
                   ),
                   child: const SizedBox(
-                    height: 30,
-                    width: 40,
+                    height: 40,
+                    width: 45,
                     child: Center(
                       child: Text(
                         "Tidak",
@@ -259,10 +266,11 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-        width: 500,
+        width: screenWidth * 0.8,
+        height: screenHeight * 0.3,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(43, 56, 86, 1),
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -298,8 +306,8 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                     ),
                   ),
                   child: const SizedBox(
-                    width: 40,
                     height: 30,
+                    width: 30,
                     child: Center(
                       child: Text(
                         "Ya",
@@ -312,7 +320,7 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 50),
+                const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
                     showDialog(
@@ -330,8 +338,8 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                     ),
                   ),
                   child: const SizedBox(
-                    width: 40,
-                    height: 30,
+                    height: 40,
+                    width: 45,
                     child: Center(
                       child: Text(
                         "Tidak",
@@ -357,10 +365,11 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-        width: 500,
+        width: screenWidth * 0.9,
+        height: screenHeight * 0.35,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(43, 56, 86, 1),
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -373,14 +382,15 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
               size: 100,
             ),
             const Text(
-              'Menyimpan!',
+              '\nMenyimpan',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,
                 fontSize: 16.5,
               ),
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
@@ -399,8 +409,8 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                 ),
               ),
               child: const SizedBox(
-                width: 40,
-                height: 30,
+                width: 50,
+                height: 40,
                 child: Center(
                   child: Text(
                     "Done",
@@ -413,7 +423,7 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                 ),
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
           ],
         ),
       ),

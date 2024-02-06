@@ -3,7 +3,6 @@ import 'package:RekaChain/bottomnavbar.dart';
 import 'package:RekaChain/list_kerusakan.dart';
 import 'package:RekaChain/saran_tindak_lanjut.dart';
 
-
 class PopUpAfterSales extends StatefulWidget {
   const PopUpAfterSales({Key? key}) : super(key: key);
 
@@ -12,42 +11,12 @@ class PopUpAfterSales extends StatefulWidget {
 }
 
 class _PopUpAfterSalesState extends State<PopUpAfterSales> {
+  late double screenWidth = MediaQuery.of(context).size.width;
+  late double screenHeight = MediaQuery.of(context).size.height;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('Riwayat Scan'),
-            SizedBox(width: 10.0),
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: FractionalTranslation(
-                  translation: Offset(0.37, 0.10),
-                  child: AspectRatio(
-                    aspectRatio: 11 / 8,
-                    child: Image(
-                      image: AssetImage('assets/images/bolder31.png'),
-                      width: 170,
-                      height: 120,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
       body: FutureBuilder(
         future: Future.delayed(const Duration(seconds: 1)),
         builder: (context, snapshot) {

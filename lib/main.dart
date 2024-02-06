@@ -1,6 +1,10 @@
 import 'package:RekaChain/bottomnavbar.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/login.dart';
+import 'package:flutter_scanner/aftersales.dart';
+import 'package:flutter_scanner/bottomnavbar.dart';
+import 'package:flutter_scanner/login.dart';
+import 'package:flutter_scanner/pop_up_materiall.dart';
 
 void main() {
   runApp(const MyApp());
