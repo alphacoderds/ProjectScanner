@@ -1,10 +1,5 @@
-import 'package:RekaChain/bottomnavbar.dart';
+import 'package:RekaChain/open_item.dart';
 import 'package:flutter/material.dart';
-import 'package:RekaChain/login.dart';
-import 'package:RekaChain/aftersales.dart';
-import 'package:RekaChain/bottomnavbar.dart';
-import 'package:RekaChain/login.dart';
-import 'package:RekaChain/pop_up_materiall.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,11 +12,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'RekaChain',
+      title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: NavBar(),
+      home: ListOpenItem(),
     );
   }
 }
