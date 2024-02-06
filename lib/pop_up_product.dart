@@ -10,8 +10,14 @@ class PopUpProduk extends StatefulWidget {
 }
 
 class _PopUpProdukState extends State<PopUpProduk> {
+  late double screenWidth;
+  late double screenHeight;
+
   @override
   Widget build(BuildContext context) {
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: FutureBuilder(
         future: Future.delayed(const Duration(seconds: 1)),
@@ -20,6 +26,7 @@ class _PopUpProdukState extends State<PopUpProduk> {
             return Dialog(
               alignment: Alignment.center,
               child: Container(
+                width: screenWidth * 0.8,
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(43, 56, 86, 1),
                   borderRadius: BorderRadius.circular(30),
@@ -93,7 +100,7 @@ class _PopUpProdukState extends State<PopUpProduk> {
                             ),
                           ),
                           child: const SizedBox(
-                            width: 40,
+                            width: 50,
                             height: 30,
                             child: Center(
                               child: Text(
@@ -125,24 +132,25 @@ class _PopUpProdukState extends State<PopUpProduk> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-        width: 500,
+        width: screenWidth * 0.99,
+        height: screenHeight * 0.25,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(43, 56, 86, 1),
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
-            const SizedBox(height: 10),
             const Text(
-              'Apakah produk dapat mulai dikerjakan?',
+              'Apakah produk dapat \nmulai dikerjakan?',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,
                 fontSize: 16.5,
               ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
             Row(
@@ -197,7 +205,7 @@ class _PopUpProdukState extends State<PopUpProduk> {
                     ),
                   ),
                   child: const SizedBox(
-                    width: 40,
+                    width: 50,
                     height: 30,
                     child: Center(
                       child: Text(
@@ -224,10 +232,11 @@ class _PopUpProdukState extends State<PopUpProduk> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-        width: 500,
+        width: screenWidth * 0.9,
+        height: screenHeight * 0.43,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(43, 56, 86, 1),
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -240,14 +249,15 @@ class _PopUpProdukState extends State<PopUpProduk> {
               size: 100,
             ),
             const Text(
-              'Semangat memulai pekerjaan Anda !',
+              '\nSemangat memulai \npekerjaan Anda !',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,
                 fontSize: 16.5,
               ),
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
@@ -266,7 +276,7 @@ class _PopUpProdukState extends State<PopUpProduk> {
                 ),
               ),
               child: const SizedBox(
-                width: 40,
+                width: 50,
                 height: 40,
                 child: Center(
                   child: Text(
