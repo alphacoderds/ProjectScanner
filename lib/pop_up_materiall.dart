@@ -9,6 +9,9 @@ class PopUpMaterial extends StatefulWidget {
 }
 
 class _PopUpMaterialState extends State<PopUpMaterial> {
+  late double screenWidth = MediaQuery.of(context).size.width;
+  late double screenHeight = MediaQuery.of(context).size.height;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +22,7 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
             return Dialog(
               alignment: Alignment.center,
               child: Container(
-                width: 300,
+                width: screenWidth * 0.15,
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(43, 56, 86, 1),
                   borderRadius: BorderRadius.circular(20),
@@ -27,9 +30,9 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 21),
                     const Text(
-                      'Apakah material sudah bisa diterima\nsesuai checklist?',
+                      'Apakah material sudah bisa\nditerima sesuai checklist?',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -37,7 +40,7 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -57,9 +60,13 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: screenHeight * 0.015,
+                              bottom: screenHeight * 0.015,
+                              left: screenWidth * 0.0035,
+                              right: screenWidth * 0.0035,
+                            ),
                             child: Text(
                               "Ya",
                               style: TextStyle(
@@ -86,9 +93,13 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: screenHeight * 0.015,
+                              bottom: screenHeight * 0.015,
+                              left: screenWidth * 0.003,
+                              right: screenWidth * 0.003,
+                            ),
                             child: Text(
                               "Tidak",
                               style: TextStyle(
@@ -100,7 +111,7 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 23),
                   ],
                 ),
               ),
@@ -116,7 +127,7 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-        width: 300,
+        width: screenWidth * 0.15,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(43, 56, 86, 1),
           borderRadius: BorderRadius.circular(20),
@@ -155,8 +166,13 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: screenHeight * 0.015,
+                  bottom: screenHeight * 0.015,
+                  left: screenWidth * 0.003,
+                  right: screenWidth * 0.003,
+                ),
                 child: Text(
                   "Done",
                   style: TextStyle(
@@ -177,7 +193,7 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-        width: 300,
+        width: screenWidth * 0.15,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(43, 56, 86, 1),
           borderRadius: BorderRadius.circular(20),
@@ -185,9 +201,9 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 31),
             const Text(
-              'Apakah material tetap diterima walaupun\n tidak lengkap?',
+              'Apakah material tetap diterima\nwalaupun tidak lengkap?',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -195,7 +211,7 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 31),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -215,8 +231,13 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: screenHeight * 0.015,
+                      bottom: screenHeight * 0.015,
+                      left: screenWidth * 0.0035,
+                      right: screenWidth * 0.0035,
+                    ),
                     child: Text(
                       "Ya",
                       style: TextStyle(
@@ -226,7 +247,7 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 25),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -243,8 +264,13 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: screenHeight * 0.015,
+                      bottom: screenHeight * 0.015,
+                      left: screenWidth * 0.003,
+                      right: screenWidth * 0.003,
+                    ),
                     child: Text(
                       "Tidak",
                       style: TextStyle(
@@ -256,7 +282,7 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 31),
           ],
         ),
       ),
