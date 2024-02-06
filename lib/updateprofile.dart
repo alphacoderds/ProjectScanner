@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_scanner/profile.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -160,7 +161,12 @@ class _ProfilePageState extends State<ProfilePage> {
         width: double.infinity,
         child: ElevatedButton(
           onPressed: () {
-            // Tambahkan logika untuk menangani tombol "Selesai"
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ProfileCard(),
+              ),
+            );
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
