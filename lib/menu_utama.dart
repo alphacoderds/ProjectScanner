@@ -93,7 +93,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                           SizedBox(width: screenWidth * 0.06),
                           buildMenuItem(
                             screenWidth,
-                            Icons.move_to_inbox_rounded,
+                            Icons.qr_code_scanner_rounded,
                             "Scan Produk",
                             () {
                               Navigator.push(
@@ -175,7 +175,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                 ),
               ],
             ),
-          ); 
+          );
         },
       ),
     );
