@@ -3,14 +3,14 @@ import 'package:flutter_scanner/aftersales.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
 import 'package:intl/intl.dart';
 
-class ListKekurangan extends StatefulWidget {
-  const ListKekurangan({super.key});
+class ListKerusakan extends StatefulWidget {
+  const ListKerusakan({super.key});
 
   @override
-  State<ListKekurangan> createState() => _ListKekuranganState();
+  State<ListKerusakan> createState() => _ListKerusakanState();
 }
 
-class _ListKekuranganState extends State<ListKekurangan> {
+class _ListKerusakanState extends State<ListKerusakan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +19,7 @@ class _ListKekuranganState extends State<ListKekurangan> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('List Kekurangan'),
+            Text('List Kerusakan'),
             SizedBox(width: 10.0),
             Expanded(
               child: Align(
@@ -57,7 +57,7 @@ class _ListKekuranganState extends State<ListKekurangan> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TambahKekurangan()),
+                MaterialPageRoute(builder: (context) => TambahKerusakan()),
               );
             },
             child: Padding(
@@ -73,7 +73,7 @@ class _ListKekuranganState extends State<ListKekurangan> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Kekurangan ${index + 1}',
+                      'Kerusakan ${index + 1}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -110,7 +110,7 @@ class _ListKekuranganState extends State<ListKekurangan> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => TambahKekurangan(),
+                builder: (context) => TambahKerusakan(),
               ),
             );
           }),
@@ -118,14 +118,14 @@ class _ListKekuranganState extends State<ListKekurangan> {
   }
 }
 
-class TambahKekurangan extends StatefulWidget {
-  const TambahKekurangan({super.key});
+class TambahKerusakan extends StatefulWidget {
+  const TambahKerusakan({super.key});
 
   @override
-  State<TambahKekurangan> createState() => _TambahKekuranganState();
+  State<TambahKerusakan> createState() => _TambahKerusakanState();
 }
 
-class _TambahKekuranganState extends State<TambahKekurangan> {
+class _TambahKerusakanState extends State<TambahKerusakan> {
   TextEditingController KekuranganController = TextEditingController();
 
   @override
@@ -177,7 +177,7 @@ class _TambahKekuranganState extends State<TambahKekurangan> {
                     borderRadius: BorderRadius.circular(5),
                     borderSide: BorderSide(color: Colors.black),
                   ),
-                  hintText: 'Isi Data Kekurangan',
+                  hintText: 'Isi Data Kerusakan',
                   filled: true,
                   fillColor: Colors.transparent,
                 ),
@@ -190,7 +190,7 @@ class _TambahKekuranganState extends State<TambahKekurangan> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ListKekurangan()),
+                    MaterialPageRoute(builder: (context) => ListKerusakan()),
                   );
                 },
                 style: ElevatedButton.styleFrom(

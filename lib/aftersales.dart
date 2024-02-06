@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scanner/bottomnavbar.dart';
-import 'package:flutter_scanner/list_kekurangan.dart';
+import 'package:flutter_scanner/list_kerusakan.dart';
 import 'package:flutter_scanner/saran_tindak_lanjut.dart';
 
 class PopUpAfterSales extends StatefulWidget {
@@ -279,7 +279,7 @@ class _AfterSalesDataState extends State<AfterSalesData> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ListKekurangan(),
+                      builder: (context) => ListKerusakan(),
                     ),
                   );
                 },
