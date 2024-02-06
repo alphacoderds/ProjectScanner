@@ -19,7 +19,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
         '#ff6666',
-        'cancel',
+        'Cancel',
         true,
         ScanMode.BARCODE,
       );
