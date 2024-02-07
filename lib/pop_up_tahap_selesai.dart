@@ -68,22 +68,23 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          child: const SizedBox(
-                            width: 40,
-                            height: 30,
-                            child: Center(
-                              child: Text(
-                                "Ya",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: screenHeight * 0.012,
+                              bottom: screenHeight * 0.012,
+                              left: screenWidth * 0.035,
+                              right: screenWidth * 0.05,
+                            ),
+                            child: Text(
+                              "Ya",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 50),
+                        const SizedBox(width: 20),
                         ElevatedButton(
                           onPressed: () {
                             Navigator.push(
@@ -174,17 +175,18 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Center(
-                      child: Text(
-                        "Ya",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: screenHeight * 0.012,
+                      bottom: screenHeight * 0.012,
+                      left: screenWidth * 0.035,
+                      right: screenWidth * 0.05,
+                    ),
+                    child: Text(
+                      "Ya",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -276,7 +278,7 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
             const Text(
               'Close open item ?',
               style: TextStyle(
@@ -285,7 +287,7 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                 fontSize: 16.5,
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -305,17 +307,18 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Center(
-                      child: Text(
-                        "Ya",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: screenHeight * 0.012,
+                      bottom: screenHeight * 0.012,
+                      left: screenWidth * 0.035,
+                      right: screenWidth * 0.05,
+                    ),
+                    child: Text(
+                      "Ya",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -382,7 +385,7 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
               size: 100,
             ),
             const Text(
-              '\nMenyimpan',
+              '\nMenyimpan data!',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,

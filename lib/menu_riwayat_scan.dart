@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:RekaChain/scan_riwayat_produk.dart';
-import 'package:RekaChain/scan_riwayat_material.dart';
-import 'package:RekaChain/scan_riwayat_aftersales.dart';
 
 class MenuRiwayatScan extends StatefulWidget {
   const MenuRiwayatScan({Key? key}) : super(key: key);
@@ -11,106 +8,124 @@ class MenuRiwayatScan extends StatefulWidget {
 }
 
 class _MenuRiwayatScanState extends State<MenuRiwayatScan> {
-  final List<String> riwayatTexts = [
-    'Penerimaan Product',
-    'Material',
-    'After Seles',
-  ];
+  late double screenWidth = MediaQuery.of(context).size.width;
+  late double screenHeight = MediaQuery.of(context).size.height;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('Riwayat Scan'),
-            SizedBox(width: 10.0),
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: FractionalTranslation(
-                  translation: Offset(0.37, 0.10),
-                  child: AspectRatio(
-                    aspectRatio: 11 / 8,
-                    child: Image(
-                      image: AssetImage('assets/images/bolder31.png'),
-                      width: 170,
-                      height: 120,
-                      fit: BoxFit.contain,
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('Riwayat Scan'),
+              SizedBox(width: 20.0),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: FractionalTranslation(
+                    translation: Offset(0.37, 0.10),
+                    child: AspectRatio(
+                      aspectRatio: 11 / 8,
+                      child: Image(
+                        image: AssetImage('assets/images/bolder31.png'),
+                        width: 170,
+                        height: 120,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: ListView.builder(
-        itemCount: riwayatTexts.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              if (index == 0) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ScanRiwayatProduk()),
-                );
-              } else if (index == 1) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ScanRiwayatMaterial()),
-                );
-              } else if (index == 2) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ScanRiwayatAfterSales()),
-                );
-              }
+            ],
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
             },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 8.0,
-                horizontal: 16.0,
+          ),
+        ),
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: screenHeight * 0.01,
+            horizontal: screenWidth * 0.05,
+          ),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: screenHeight * 0.033,
+                horizontal: screenWidth * 0.045,
               ),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xBF2B3856),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 10),
-                    Center(
-                      child: Text(
-                        '${riwayatTexts[index]}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                  ],
+              decoration: BoxDecoration(
+                color: const Color(0xBF2B3856),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Text(
+                  'Penerimaan Product',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 21,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
-          );
-        },
-      ),
-    );
+            SizedBox(
+              height: screenHeight * 0.012,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: screenHeight * 0.033,
+                horizontal: screenWidth * 0.045,
+              ),
+              decoration: BoxDecoration(
+                color: const Color(0xBF2B3856),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Text(
+                  'Material',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 21,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: screenHeight * 0.012,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: screenHeight * 0.033,
+                horizontal: screenWidth * 0.045,
+              ),
+              decoration: BoxDecoration(
+                color: const Color(0xBF2B3856),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Text(
+                  'After Sales',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 21,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ]),
+        ));
   }
 }

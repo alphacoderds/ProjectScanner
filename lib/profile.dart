@@ -44,6 +44,7 @@ class _ProfileCardState extends State<ProfileCard> {
                   'Hallo!',
                   style: TextStyle(
                     color: Color.fromRGBO(43, 56, 86, 1),
+                    fontFamily: 'Donegal One',
                     fontSize: screenWidth * 0.075,
                     fontWeight: FontWeight.bold,
                   ),

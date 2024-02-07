@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: screenHeight * 0.07),
                 Text(
                   "Username :",
-                  style: TextStyle(fontSize: screenHeight * 0.025),
+                  style: TextStyle(fontSize: screenHeight * 0.023),
                   textAlign: TextAlign.left,
                 ),
                 SizedBox(height: screenHeight * 0.005),
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: screenHeight * 0.01),
                 Text(
                   "Password :",
-                  style: TextStyle(fontSize: screenHeight * 0.025),
+                  style: TextStyle(fontSize: screenHeight * 0.023),
                   textAlign: TextAlign.left,
                 ),
                 SizedBox(height: screenHeight * 0.005),
@@ -166,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
             "Sign In",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: screenHeight * 0.020,
+              fontSize: screenHeight * 0.021,
               fontWeight: FontWeight.bold,
             ),
           ),
