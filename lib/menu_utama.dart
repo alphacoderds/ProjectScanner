@@ -45,21 +45,24 @@ class _MenuUtamaState extends State<MenuUtama> {
                                   "REKA CHAIN",
                                   style: TextStyle(
                                     fontFamily: 'Donegal One',
-                                    fontSize: screenWidth * 0.05,
+                                    fontSize: screenWidth * 0.045,
                                     fontWeight: FontWeight.bold,
                                   ),
+                                ),
+                                SizedBox(
+                                  height: screenHeight * 0.001,
                                 ),
                                 Text(
                                   "Selamat Datang...",
                                   style: TextStyle(
-                                    fontSize: screenWidth * 0.075,
+                                    fontSize: screenWidth * 0.070,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Spacer(), // Spacer untuk memberikan ruang di antara dua kolom
+                          Spacer(),
                           Align(
                             alignment: Alignment.topRight,
                             child: Padding(
@@ -156,7 +159,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                           SizedBox(width: screenWidth * 0.06),
                           buildMenuItem(
                             screenWidth,
-                            Icons.fact_check_outlined,
+                            Icons.move_to_inbox_rounded,
                             "Tahap Selesai",
                             () {
                               Navigator.push(

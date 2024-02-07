@@ -30,7 +30,7 @@ class unduh extends StatelessWidget {
         ],
       ),
       body: ListView.builder(
-        itemCount: 8, // Sesuaikan dengan jumlah item yang diinginkan
+        itemCount: 8, 
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
