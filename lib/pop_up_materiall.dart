@@ -38,7 +38,7 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 17,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -72,7 +72,7 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                             child: Text(
                               "Ya",
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

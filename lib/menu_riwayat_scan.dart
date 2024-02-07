@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:RekaChain/scan_riwayat_produk.dart';
-import 'package:RekaChain/scan_riwayat_material.dart';
-import 'package:RekaChain/scan_riwayat_aftersales.dart';
 
 class MenuRiwayatScan extends StatefulWidget {
   const MenuRiwayatScan({Key? key}) : super(key: key);

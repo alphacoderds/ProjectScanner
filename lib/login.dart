@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: screenHeight * 0.07),
                 Text(
                   "Username :",
-                  style: TextStyle(fontSize: screenHeight * 0.025),
+                  style: TextStyle(fontSize: screenHeight * 0.023),
                   textAlign: TextAlign.left,
                 ),
                 SizedBox(height: screenHeight * 0.005),
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: screenHeight * 0.01),
                 Text(
                   "Password :",
-                  style: TextStyle(fontSize: screenHeight * 0.025),
+                  style: TextStyle(fontSize: screenHeight * 0.023),
                   textAlign: TextAlign.left,
                 ),
                 SizedBox(height: screenHeight * 0.005),
@@ -159,14 +159,14 @@ class _LoginPageState extends State<LoginPage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       ),
       child: SizedBox(
-        width: screenWidth * 0.52,
+        width: screenWidth * 0.5,
         height: screenHeight * 0.05,
         child: Center(
           child: Text(
             "Sign In",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: screenHeight * 0.023,
+              fontSize: screenHeight * 0.021,
               fontWeight: FontWeight.bold,
             ),
           ),
