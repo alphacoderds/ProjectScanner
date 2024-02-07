@@ -22,13 +22,15 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
             return Dialog(
               alignment: Alignment.center,
               child: Container(
-                width: screenWidth * 0.15,
+                width: screenWidth * 0.8,
+                height: screenHeight * 0.25,
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(43, 56, 86, 1),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(30),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(height: 21),
                     const Text(
@@ -57,13 +59,13 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                             primary: Colors.white,
                             onPrimary: const Color.fromRGBO(43, 56, 86, 1),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(30),
                             ),
                           ),
                           child: Padding(
                             padding: EdgeInsets.only(
-                              top: screenHeight * 0.015,
-                              bottom: screenHeight * 0.015,
+                              top: screenHeight * 0.012,
+                              bottom: screenHeight * 0.012,
                               left: screenWidth * 0.0035,
                               right: screenWidth * 0.0035,
                             ),
@@ -90,13 +92,13 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                             primary: Colors.white,
                             onPrimary: const Color.fromRGBO(43, 56, 86, 1),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(30),
                             ),
                           ),
                           child: Padding(
                             padding: EdgeInsets.only(
-                              top: screenHeight * 0.015,
-                              bottom: screenHeight * 0.015,
+                              top: screenHeight * 0.012,
+                              bottom: screenHeight * 0.012,
                               left: screenWidth * 0.003,
                               right: screenWidth * 0.003,
                             ),
@@ -127,13 +129,14 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-        width: screenWidth * 0.15,
+        width: screenWidth * 0.8,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(43, 56, 86, 1),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(30),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
             const Icon(
@@ -163,13 +166,13 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                 primary: Colors.white,
                 onPrimary: const Color.fromRGBO(43, 56, 86, 1),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: screenHeight * 0.015,
-                  bottom: screenHeight * 0.015,
+                  top: screenHeight * 0.012,
+                  bottom: screenHeight * 0.012,
                   left: screenWidth * 0.003,
                   right: screenWidth * 0.003,
                 ),
@@ -193,13 +196,15 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-        width: screenWidth * 0.15,
+        width: screenWidth * 0.8,
+        height: screenHeight * 0.25,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(43, 56, 86, 1),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 31),
             const Text(
@@ -228,13 +233,13 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                     primary: Colors.white,
                     onPrimary: const Color.fromRGBO(43, 56, 86, 1),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   child: Padding(
                     padding: EdgeInsets.only(
-                      top: screenHeight * 0.015,
-                      bottom: screenHeight * 0.015,
+                      top: screenHeight * 0.012,
+                      bottom: screenHeight * 0.012,
                       left: screenWidth * 0.0035,
                       right: screenWidth * 0.0035,
                     ),
@@ -261,13 +266,13 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                     primary: Colors.white,
                     onPrimary: const Color.fromRGBO(43, 56, 86, 1),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   child: Padding(
                     padding: EdgeInsets.only(
-                      top: screenHeight * 0.015,
-                      bottom: screenHeight * 0.015,
+                      top: screenHeight * 0.012,
+                      bottom: screenHeight * 0.012,
                       left: screenWidth * 0.003,
                       right: screenWidth * 0.003,
                     ),
@@ -293,13 +298,14 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-        width: 300,
+        width: screenWidth * 0.8,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(43, 56, 86, 1),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(30),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
             const Icon(
@@ -330,11 +336,16 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                 primary: Colors.white,
                 onPrimary: const Color.fromRGBO(43, 56, 86, 1),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: screenHeight * 0.012,
+                  bottom: screenHeight * 0.012,
+                  left: screenWidth * 0.003,
+                  right: screenWidth * 0.003,
+                ),
                 child: Text(
                   "Kembali",
                   style: TextStyle(
