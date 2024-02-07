@@ -1,4 +1,4 @@
-import 'package:RekaChain/aftersales.dart';
+import 'package:RekaChain/open_item.dart';
 import 'package:RekaChain/pop_up_materiall.dart';
 import 'package:RekaChain/pop_up_product.dart';
 import 'package:RekaChain/pop_up_tahap_selesai.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PopUpAfterSales(),
+      home: ProfileCard(),
     );
   }
 }
