@@ -9,8 +9,14 @@ class OIPopup1 extends StatefulWidget {
 }
 
 class _OIPopup1State extends State<OIPopup1> {
+  late double screenWidth;
+  late double screenHeight;
+
   @override
   Widget build(BuildContext context) {
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: FutureBuilder(
         future: Future.delayed(const Duration(seconds: 0)),
@@ -19,7 +25,7 @@ class _OIPopup1State extends State<OIPopup1> {
             return Dialog(
               alignment: Alignment.center,
               child: Container(
-                width: 500,
+                width: screenWidth * 0.8,
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(43, 56, 86, 1),
                   borderRadius: BorderRadius.circular(30),
@@ -62,8 +68,8 @@ class _OIPopup1State extends State<OIPopup1> {
                         ),
                       ),
                       child: const SizedBox(
-                        width: 50,
-                        height: 30,
+                        width: 100,
+                        height: 40,
                         child: Center(
                           child: Text(
                             "Selesai",
