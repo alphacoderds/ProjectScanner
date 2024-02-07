@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_scanner/riwayat_scan.dart';
+import 'package:RekaChain/riwayat_scan.dart';
 
 class ScanRiwayatProduk extends StatefulWidget {
   const ScanRiwayatProduk({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/bottomnavbar.dart';
-import 'package:flutter_scanner/scan_tahap_selesai.dart';
+import 'package:RekaChain/bottomnavbar.dart';
+import 'package:RekaChain/scan_tahap_selesai.dart';
 
 //======================================Tampilan List Open Item======================================
 class ListOpenItem extends StatefulWidget {
@@ -70,7 +70,7 @@ class _ListOpenItemState extends State<ListOpenItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'OPen Item ${index + 1}',
+                      'Open Item ${index + 1}',
                       style: const TextStyle(
                         color: Colors.black54,
                         fontSize: 18,
@@ -90,39 +90,41 @@ class _ListOpenItemState extends State<ListOpenItem> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FloatingActionButton(
-              child: Text('Next',
-                  style: TextStyle(fontSize: 17, color: Colors.white),
-                  textAlign: TextAlign.center),
-              backgroundColor: Color.fromRGBO(43, 56, 86, 1),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => _oipopuplanjut(),
-                  ),
-                );
-              }),
+            child: Text('Next',
+                style: TextStyle(fontSize: 17, color: Colors.white),
+                textAlign: TextAlign.center),
+            backgroundColor: Color.fromRGBO(43, 56, 86, 1),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return _oipopuplanjut();
+                },
+              );
+            },
+          ),
           SizedBox(width: 150),
           FloatingActionButton(
-              child: Icon(
-                Icons.add_rounded,
-                size: 40,
-                weight: 60,
-                color: Colors.white,
-              ),
-              backgroundColor: Color.fromRGBO(43, 56, 86, 1),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50)),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TambahOpenItem(),
-                  ),
-                );
-              }),
+            child: Icon(
+              Icons.add_rounded,
+              size: 40,
+              weight: 60,
+              color: Colors.white,
+            ),
+            backgroundColor: Color.fromRGBO(43, 56, 86, 1),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return TambahOpenItem();
+                },
+              );
+            },
+          ),
         ],
       ),
     );
@@ -158,10 +160,11 @@ class _ListOpenItemState extends State<ListOpenItem> {
                 ElevatedButton(
                   onPressed: () {
                     showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return _oipopupsimpan2();
-                        });
+                      context: context,
+                      builder: (BuildContext context) {
+                        return _oipopupsimpan2();
+                      },
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: const Color.fromRGBO(43, 56, 86, 1),
@@ -372,9 +375,11 @@ class _TambahOpenItemState extends State<TambahOpenItem> {
           right: 20,
           child: IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => _oipopupsimpan1()),
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return _oipopupsimpan1();
+                },
               );
             },
             icon: Icon(

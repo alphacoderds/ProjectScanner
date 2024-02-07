@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/bottomnavbar.dart';
-import 'package:flutter_scanner/updateprofile.dart';
-import 'package:flutter_scanner/login.dart';
+import 'package:RekaChain/bottomnavbar.dart';
+import 'package:RekaChain/updateprofile.dart';
+import 'package:RekaChain/login.dart';
 
 class ProfileCard extends StatefulWidget {
   const ProfileCard({super.key});

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/menu_riwayat_scan.dart';
-import 'package:flutter_scanner/scan_aftersales.dart';
-import 'package:flutter_scanner/scan_material.dart';
-import 'package:flutter_scanner/scan_produk.dart';
-import 'package:flutter_scanner/scan_tahap_selesai.dart';
-import 'package:flutter_scanner/unduh_berkas.dart';
+import 'package:RekaChain/menu_riwayat_scan.dart';
+import 'package:RekaChain/scan_aftersales.dart';
+import 'package:RekaChain/scan_material.dart';
+import 'package:RekaChain/scan_produk.dart';
+import 'package:RekaChain/scan_tahap_selesai.dart';
+import 'package:RekaChain/unduh_berkas.dart';
 
 class MenuUtama extends StatefulWidget {
   const MenuUtama({Key? key}) : super(key: key);

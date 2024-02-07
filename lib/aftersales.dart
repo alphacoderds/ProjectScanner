@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/bottomnavbar.dart';
-import 'package:flutter_scanner/list_kerusakan.dart';
-import 'package:flutter_scanner/saran_tindak_lanjut.dart';
+import 'package:RekaChain/bottomnavbar.dart';
+import 'package:RekaChain/list_kerusakan.dart';
+import 'package:RekaChain/saran_tindak_lanjut.dart';
 
 class PopUpAfterSales extends StatefulWidget {
   const PopUpAfterSales({Key? key}) : super(key: key);

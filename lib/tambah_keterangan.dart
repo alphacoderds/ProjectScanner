@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scanner/keterangan.dart';
+import 'package:RekaChain/keterangan.dart';
 
 class TambahKeterangan extends StatelessWidget {
   const TambahKeterangan({super.key});
