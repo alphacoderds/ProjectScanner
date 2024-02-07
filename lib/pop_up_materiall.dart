@@ -66,8 +66,8 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                             padding: EdgeInsets.only(
                               top: screenHeight * 0.012,
                               bottom: screenHeight * 0.012,
-                              left: screenWidth * 0.0035,
-                              right: screenWidth * 0.0035,
+                              left: screenWidth * 0.035,
+                              right: screenWidth * 0.05,
                             ),
                             child: Text(
                               "Ya",

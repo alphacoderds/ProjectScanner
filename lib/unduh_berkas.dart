@@ -30,7 +30,7 @@ class unduh extends StatelessWidget {
         ],
       ),
       body: ListView.builder(
-        itemCount: 8, 
+        itemCount: 10,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
@@ -49,8 +49,9 @@ class unduh extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         'Dokumen ${index + 1}',

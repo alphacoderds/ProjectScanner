@@ -62,22 +62,23 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          child: const SizedBox(
-                            width: 40,
-                            height: 30,
-                            child: Center(
-                              child: Text(
-                                "Ya",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: screenHeight * 0.012,
+                              bottom: screenHeight * 0.012,
+                              left: screenWidth * 0.035,
+                              right: screenWidth * 0.05,
+                            ),
+                            child: Text(
+                              "Ya",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 50),
+                        const SizedBox(width: 20),
                         ElevatedButton(
                           onPressed: () {
                             Navigator.push(
