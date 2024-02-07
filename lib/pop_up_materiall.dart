@@ -197,7 +197,7 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
       alignment: Alignment.center,
       child: Container(
         width: screenWidth * 0.8,
-        height: screenHeight * 0.25,
+        height: screenHeight * 0.28,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(43, 56, 86, 1),
           borderRadius: BorderRadius.circular(20),

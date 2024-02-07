@@ -1,4 +1,5 @@
 import 'package:RekaChain/open_item.dart';
+import 'package:RekaChain/pop_up_materiall.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ListOpenItem(),
+      home: PopUpMaterial(),
     );
   }
 }
