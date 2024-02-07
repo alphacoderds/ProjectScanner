@@ -159,14 +159,14 @@ class _LoginPageState extends State<LoginPage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       ),
       child: SizedBox(
-        width: screenWidth * 0.5,
+        width: screenWidth * 0.52,
         height: screenHeight * 0.05,
         child: Center(
           child: Text(
             "Sign In",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: screenHeight * 0.020,
+              fontSize: screenHeight * 0.023,
               fontWeight: FontWeight.bold,
             ),
           ),

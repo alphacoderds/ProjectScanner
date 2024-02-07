@@ -26,7 +26,7 @@ class _MenuRiwayatScanState extends State<MenuRiwayatScan> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text('Riwayat Scan'),
-            SizedBox(width: 10.0),
+            SizedBox(width: 20.0),
             Expanded(
               child: Align(
                 alignment: Alignment.centerRight,
@@ -79,19 +79,19 @@ class _MenuRiwayatScanState extends State<MenuRiwayatScan> {
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                vertical: 8.0,
-                horizontal: 16.0,
+                vertical: 15.0,
+                horizontal: 20.0,
               ),
               child: Container(
                 decoration: BoxDecoration(
                   color: const Color(0xBF2B3856),
                   borderRadius: BorderRadius.circular(30),
                 ),
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(25.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Center(
                       child: Text(
                         '${riwayatTexts[index]}',
