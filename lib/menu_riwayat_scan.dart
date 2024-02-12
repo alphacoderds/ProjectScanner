@@ -56,75 +56,105 @@ class _MenuRiwayatScanState extends State<MenuRiwayatScan> {
             horizontal: screenWidth * 0.05,
           ),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Container(
-              padding: EdgeInsets.symmetric(
-                vertical: screenHeight * 0.033,
-                horizontal: screenWidth * 0.045,
-              ),
-              decoration: BoxDecoration(
-                color: const Color(0xBF2B3856),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Center(
-                child: Text(
-                  'Penerimaan Product',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 21,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ScanRiwayatProduk(),
                   ),
-                  textAlign: TextAlign.center,
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: screenHeight * 0.033,
+                  horizontal: screenWidth * 0.045,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xBF2B3856),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: Text(
+                    'Penerimaan Product',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 21,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w700,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             ),
             SizedBox(
               height: screenHeight * 0.012,
             ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                vertical: screenHeight * 0.033,
-                horizontal: screenWidth * 0.045,
-              ),
-              decoration: BoxDecoration(
-                color: const Color(0xBF2B3856),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Center(
-                child: Text(
-                  'Material',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 21,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ScanRiwayatMaterial(),
                   ),
-                  textAlign: TextAlign.center,
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: screenHeight * 0.033,
+                  horizontal: screenWidth * 0.045,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xBF2B3856),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: Text(
+                    'Material',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 21,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w700,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             ),
             SizedBox(
               height: screenHeight * 0.012,
             ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                vertical: screenHeight * 0.033,
-                horizontal: screenWidth * 0.045,
-              ),
-              decoration: BoxDecoration(
-                color: const Color(0xBF2B3856),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Center(
-                child: Text(
-                  'After Sales',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 21,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ScanRiwayatAfterSales(),
                   ),
-                  textAlign: TextAlign.center,
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: screenHeight * 0.033,
+                  horizontal: screenWidth * 0.045,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xBF2B3856),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: Text(
+                    'After Sales',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 21,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w700,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             ),
