@@ -3,6 +3,7 @@ import 'package:RekaChain/list_kerusakan.dart';
 import 'package:RekaChain/menu_riwayat_scan.dart';
 import 'package:RekaChain/riwayat_proses.dart';
 import 'package:RekaChain/riwayat_scan.dart';
+import 'package:RekaChain/tabel_scan_material.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/login.dart';
 import 'package:RekaChain/aftersales.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TambahKerusakan(),
+      home: TabelScanMaterial(),
     );
   }
 }
