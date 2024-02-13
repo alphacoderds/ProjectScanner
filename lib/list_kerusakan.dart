@@ -10,6 +10,9 @@ class ListKerusakan extends StatefulWidget {
 }
 
 class _ListKerusakanState extends State<ListKerusakan> {
+  late double screenWidth = MediaQuery.of(context).size.width;
+  late double screenHeight = MediaQuery.of(context).size.height;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,6 +128,21 @@ class TambahKerusakan extends StatefulWidget {
 }
 
 class _TambahKerusakanState extends State<TambahKerusakan> {
+  late double screenWidth = MediaQuery.of(context).size.width;
+  late double screenHeight = MediaQuery.of(context).size.height;
+
+  bool _lastRowFilled = true;
+
+  // Data structure for each row
+  static Map<String, String> createDataRow() {
+    return {'no': '', 'detailKerusakan': '', 'item': '', 'keterangan': ''};
+  }
+
+  // Initial data
+  List<Map<String, String>> data = [
+    createDataRow(),
+  ];
+
   TextEditingController KekuranganController = TextEditingController();
 
   @override
@@ -164,54 +182,139 @@ class _TambahKerusakanState extends State<TambahKerusakan> {
           },
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 350,
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    borderSide: BorderSide(color: Colors.black),
+      body: Container(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(height: screenHeight * 0.08),
+                Text(
+                  "Isi Data Kerusakan",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: screenHeight * 0.05),
+                DataTable(
+                  border: TableBorder.all(
+                    color: Colors.black,
+                    width: 1.0,
+                    style: BorderStyle.solid,
                   ),
-                  hintText: 'Isi Data Kerusakan',
-                  filled: true,
-                  fillColor: Colors.transparent,
-                ),
-                minLines: 4, // Mengatur jumlah baris minimum
-                maxLines: null,
-              ),
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ListKerusakan()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                ),
-                child: const SizedBox(
-                    width: 70,
-                    height: 40,
-                    child: Center(
-                      child: Text(
-                        "Simpan",
+                  columns: [
+                    DataColumn(
+                      label: Text(
+                        "No",
+                        style: TextStyle(fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
                       ),
-                    ))),
-          ],
+                    ),
+                    DataColumn(
+                      label: Text(
+                        "Detail\nKerusakan",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        "Item",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        "Keterangan",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                  rows: data.map((item) {
+                    return DataRow(
+                      cells: [
+                        DataCell(SizedBox(
+                          height: screenHeight * 0.9,
+                          child: TextField(
+                            controller: TextEditingController(text: item['no']),
+                            maxLines: 5,
+                            onChanged: (value) => item['no'] = value,
+                          ),
+                        )),
+                        DataCell(SizedBox(
+                          height: screenHeight * 0.9,
+                          child: TextField(
+                            controller: TextEditingController(
+                              text: item['detailKerusakan'],
+                            ),
+                            maxLines: 5,
+                            onChanged: (value) =>
+                                item['detailKerusakan'] = value,
+                          ),
+                        )),
+                        DataCell(SizedBox(
+                          height: screenHeight * 0.9,
+                          child: TextField(
+                            controller:
+                                TextEditingController(text: item['item']),
+                            maxLines: 5,
+                            onChanged: (value) => item['item'] = value,
+                          ),
+                        )),
+                        DataCell(IntrinsicHeight(
+                          child: TextField(
+                            controller:
+                                TextEditingController(text: item['keterangan']),
+                            maxLines: 5,
+                            onChanged: (value) => item['keterangan'] = value,
+                          ),
+                        )),
+                      ],
+                    );
+                  }).toList(),
+                ),
+                SizedBox(height: screenHeight * 0.05),
+                ElevatedButton(
+                    onPressed: () {
+                      _saveData();
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => ListKerusakan()),
+                      // );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                    ),
+                    child: const SizedBox(
+                        width: 70,
+                        height: 40,
+                        child: Center(
+                          child: Text(
+                            "Simpan",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ))),
+              ],
+            ),
+          ),
         ),
       ),
     );
+  }
+
+  void _saveData() {
+    if (_lastRowFilled) {
+      // Validasi input (opsional)
+      data.add(createDataRow());
+      _lastRowFilled = false; // Baris baru akan dianggap kosong
+      setState(() {});
+      // Opsional, simpan data di database atau penyimpanan lainnya
+    } else {
+      // Tampilkan pesan peringatan atau pemberitahuan bahwa baris sebelumnya masih kosong
+    }
   }
 }

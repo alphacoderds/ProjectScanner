@@ -1,4 +1,5 @@
 import 'package:RekaChain/bottomnavbar.dart';
+import 'package:RekaChain/list_kerusakan.dart';
 import 'package:RekaChain/menu_riwayat_scan.dart';
 import 'package:RekaChain/riwayat_proses.dart';
 import 'package:RekaChain/riwayat_scan.dart';
@@ -28,11 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-<<<<<<< HEAD
-      home: NavBar(),
-=======
-      home: LoginPage(),
->>>>>>> e282942f9b0473f8681315dfe3a303d125d975b3
+      home: TambahKerusakan(),
     );
   }
 }
