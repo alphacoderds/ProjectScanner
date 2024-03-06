@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
 import 'package:RekaChain/updateprofile.dart';
 import 'package:RekaChain/login.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileCard extends StatefulWidget {
   const ProfileCard({super.key});
@@ -11,6 +14,17 @@ class ProfileCard extends StatefulWidget {
 }
 
 class _ProfileCardState extends State<ProfileCard> {
+  Future<List<dynamic>> fetchData() async {
+    final response = await http.get(Uri.parse(
+        'http://192.168.8.213/ProjectWebAdminRekaChain/ProjectWebAdminRekaChain/lib/Project/create.php'));
+    if (response.statusCode == 200) {
+      // Parsing data dari respons JSON
+      return json.decode(response.body);
+    } else {
+      throw Exception('Gagal mengambil data dari API');
+    }
+  }
+
   late double screenWidth = MediaQuery.of(context).size.width;
   late double screenHeight = MediaQuery.of(context).size.height;
 
