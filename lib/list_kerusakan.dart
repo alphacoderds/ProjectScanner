@@ -184,6 +184,7 @@ class _TambahKerusakanState extends State<TambahKerusakan> {
       ),
       body: Container(
         child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Center(
             child: Column(
               children: [
@@ -193,84 +194,119 @@ class _TambahKerusakanState extends State<TambahKerusakan> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: screenHeight * 0.05),
-                DataTable(
-                  border: TableBorder.all(
-                    color: Colors.black,
-                    width: 1.0,
-                    style: BorderStyle.solid,
-                  ),
-                  columns: [
-                    DataColumn(
-                      label: Text(
-                        "No",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.05,
+                      vertical: screenHeight * 0.05),
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(screenWidth * 0.02),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.circular(5)),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.height - 50,
                       ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        "Detail\nKerusakan",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        "Item",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        "Keterangan",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                  rows: data.map((item) {
-                    return DataRow(
-                      cells: [
-                        DataCell(SizedBox(
-                          height: screenHeight * 0.9,
-                          child: TextField(
-                            controller: TextEditingController(text: item['no']),
-                            maxLines: 5,
-                            onChanged: (value) => item['no'] = value,
-                          ),
-                        )),
-                        DataCell(SizedBox(
-                          height: screenHeight * 0.9,
-                          child: TextField(
-                            controller: TextEditingController(
-                              text: item['detailKerusakan'],
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: DataTable(
+                          columnSpacing: 20.0,
+                          horizontalMargin: 50.0,
+                          columns: [
+                            DataColumn(
+                              label: Center(
+                                child: Text(
+                                  "No",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
                             ),
-                            maxLines: 5,
-                            onChanged: (value) =>
-                                item['detailKerusakan'] = value,
-                          ),
-                        )),
-                        DataCell(SizedBox(
-                          height: screenHeight * 0.9,
-                          child: TextField(
-                            controller:
-                                TextEditingController(text: item['item']),
-                            maxLines: 5,
-                            onChanged: (value) => item['item'] = value,
-                          ),
-                        )),
-                        DataCell(IntrinsicHeight(
-                          child: TextField(
-                            controller:
-                                TextEditingController(text: item['keterangan']),
-                            maxLines: 5,
-                            onChanged: (value) => item['keterangan'] = value,
-                          ),
-                        )),
-                      ],
-                    );
-                  }).toList(),
+                            DataColumn(
+                              label: Center(
+                                child: Text(
+                                  "Detail\nKerusakan",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Center(
+                                child: Text(
+                                  "Item",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Center(
+                                child: Text(
+                                  "Keterangan",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ],
+                          rows: data.map((item) {
+                            return DataRow(
+                              cells: [
+                                DataCell(SizedBox(
+                                  height: screenHeight * 0.9,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none),
+                                    controller:
+                                        TextEditingController(text: item['no']),
+                                    maxLines: 5,
+                                    onChanged: (value) => item['no'] = value,
+                                  ),
+                                )),
+                                DataCell(SizedBox(
+                                  height: screenHeight * 0.9,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none),
+                                    controller: TextEditingController(
+                                      text: item['detailKerusakan'],
+                                    ),
+                                    maxLines: 5,
+                                    onChanged: (value) =>
+                                        item['detailKerusakan'] = value,
+                                  ),
+                                )),
+                                DataCell(SizedBox(
+                                  height: screenHeight * 0.9,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none),
+                                    controller: TextEditingController(
+                                        text: item['item']),
+                                    maxLines: 5,
+                                    onChanged: (value) => item['item'] = value,
+                                  ),
+                                )),
+                                DataCell(IntrinsicHeight(
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none),
+                                    controller: TextEditingController(
+                                        text: item['keterangan']),
+                                    maxLines: 5,
+                                    onChanged: (value) =>
+                                        item['keterangan'] = value,
+                                  ),
+                                )),
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 SizedBox(height: screenHeight * 0.05),
                 ElevatedButton(

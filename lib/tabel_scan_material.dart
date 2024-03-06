@@ -14,6 +14,22 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   late ScrollController _scrollController;
   List<List<TextEditingController>> controllers = [];
 
+  static Map<String, String> createDataRow() {
+    return {
+      'no': '',
+      'kodeMaterial': '',
+      'deskripsi': '',
+      'satuan': '',
+      'qyt': '',
+      'qytDiterima': ''
+    };
+  }
+
+  // Initial data
+  List<Map<String, String>> data = [
+    createDataRow(),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -57,118 +73,344 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
-            vertical: screenHeight * 0.05, horizontal: screenWidth * 0.01),
-        child: Column(
-          children: [
-            Text('Checklist', style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(
-              height: screenHeight * 0.01,
-            ),
-            Expanded(
+            horizontal: screenWidth * 0.05, vertical: screenHeight * 0.05),
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(screenWidth * 0.02),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.circular(5)),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height - 50,
+              ),
               child: SingleChildScrollView(
-                controller: _scrollController,
-                scrollDirection: Axis.vertical,
-                child: Table(
-                  border: TableBorder.all(
-                    color: Colors.black,
-                    width: 1.0,
-                    style: BorderStyle.solid,
-                  ),
-                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                  children: [
-                    TableRow(children: [
-                      TableCell(
-                          child: Padding(
-                        padding: EdgeInsets.all(screenWidth * 0.005),
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  columnSpacing: 20.0,
+                  horizontalMargin: 20.0,
+                  columns: [
+                    DataColumn(
+                      label: Center(
                         child: Text(
                           'No',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
                         ),
-                      )),
-                      TableCell(
-                          child: Padding(
-                        padding: EdgeInsets.all(screenWidth * 0.005),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Center(
                         child: Text(
-                          'Kode\nMaterial',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                          'Kode Material',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
                         ),
-                      )),
-                      TableCell(
-                          child: Padding(
-                        padding: EdgeInsets.all(screenWidth * 0.005),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Center(
                         child: Text(
                           'Deskripsi',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
                         ),
-                      )),
-                      TableCell(
-                          child: Padding(
-                        padding: EdgeInsets.all(screenWidth * 0.005),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Center(
                         child: Text(
                           'Satuan',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
                         ),
-                      )),
-                      TableCell(
-                          child: Padding(
-                        padding: EdgeInsets.all(screenWidth * 0.005),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Center(
                         child: Text(
                           'QYT',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
                         ),
-                      )),
-                      TableCell(
-                          child: Padding(
-                        padding: EdgeInsets.all(screenWidth * 0.005),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Center(
                         child: Text(
-                          'QYT/Diterima',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                          'QYT\nDiterima',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
                         ),
-                      )),
+                      ),
+                    ),
+                  ],
+                  rows: [
+                    DataRow(cells: [
+                      DataCell(
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text('1'),
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text('1'),
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text('1'),
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text('1'),
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text('1'),
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text('1'),
+                          ),
+                        ),
+                      ),
                     ]),
-                    for (int i = 0; i < controllers.length; i++)
-                      TableRow(children: [
-                        for (int j = 0; j < controllers[i].length; j++)
-                          TableCell(
-                            child: Padding(
-                              padding: EdgeInsets.all(screenWidth * 0.005),
-                              child: TextField(
-                                controller: controllers[i][j],
-                                maxLines: 5,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: screenHeight * 0.01,
-                                      horizontal: screenWidth * 0.01),
-                                ),
-                                onChanged: (value) {
-                                  // Tambah baris jika baris terakhir terisi
-                                  if (j == controllers[i].length - 1 &&
-                                      value.isNotEmpty) {
-                                    setState(() {
-                                      controllers.add([
-                                        for (int k = 0; k < 6; k++)
-                                          TextEditingController(),
-                                      ]);
-                                    });
-                                  }
-                                },
-                              ),
-                            ),
-                          )
-                      ])
                   ],
                 ),
               ),
-            )
-          ],
+            ),
+          ),
         ),
+      ),
+      // Padding(
+      //   padding: EdgeInsets.symmetric(
+      //       vertical: screenHeight * 0.05, horizontal: screenWidth * 0.01),
+      //   child: Column(
+      //     children: [
+      //       Text(
+      //         'Checklist',
+      //         style: TextStyle(fontWeight: FontWeight.bold),
+      //         textAlign: TextAlign.left,
+      //       ),
+      //       SizedBox(
+      //         height: screenHeight * 0.01,
+      //       ),
+      //       Expanded(
+      //         child: SingleChildScrollView(
+      //           controller: _scrollController,
+      //           scrollDirection: Axis.vertical,
+      //           child: Table(
+      //             border: TableBorder.all(
+      //               color: Colors.black,
+      //               width: 1.0,
+      //               style: BorderStyle.solid,
+      //             ),
+      //             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      //             children: [
+      //               TableRow(
+      //                 children: [
+      //                     TableCell(
+      //                         child: Padding(
+      //                       padding: EdgeInsets.all(screenWidth * 0.005),
+      //                       child: Text(
+      //                         'No',
+      //                         textAlign: TextAlign.center,
+      //                         style: TextStyle(fontWeight: FontWeight.w600),
+      //                       ),
+      //                     )),
+      //                     TableCell(
+      //                         child: Padding(
+      //                       padding: EdgeInsets.all(screenWidth * 0.005),
+      //                       child: Text(
+      //                         'Kode\nMaterial',
+      //                         textAlign: TextAlign.center,
+      //                         style: TextStyle(fontWeight: FontWeight.w600),
+      //                       ),
+      //                     )),
+      //                     TableCell(
+      //                         child: Padding(
+      //                       padding: EdgeInsets.all(screenWidth * 0.005),
+      //                       child: Text(
+      //                         'Deskripsi',
+      //                         textAlign: TextAlign.center,
+      //                         style: TextStyle(fontWeight: FontWeight.w600),
+      //                       ),
+      //                     )),
+      //                     TableCell(
+      //                         child: Padding(
+      //                       padding: EdgeInsets.all(screenWidth * 0.005),
+      //                       child: Text(
+      //                         'Satuan',
+      //                         textAlign: TextAlign.center,
+      //                         style: TextStyle(fontWeight: FontWeight.w600),
+      //                       ),
+      //                     )),
+      //                     TableCell(
+      //                         child: Padding(
+      //                       padding: EdgeInsets.all(screenWidth * 0.005),
+      //                       child: Text(
+      //                         'QYT',
+      //                         textAlign: TextAlign.center,
+      //                         style: TextStyle(fontWeight: FontWeight.w600),
+      //                       ),
+      //                     )),
+      //                     TableCell(
+      //                         child: Padding(
+      //                       padding: EdgeInsets.all(screenWidth * 0.005),
+      //                       child: Text(
+      //                         'QYT\nDiterima',
+      //                         textAlign: TextAlign.center,
+      //                         style: TextStyle(fontWeight: FontWeight.w600),
+      //                       ),
+      //                     )),
+      //                   ]),
+      //                   TableRow(children: [
+      //                     TableCell(
+      //                       child: Padding(
+      //                         padding: EdgeInsets.all(screenWidth * 0.005),
+      //                         child: TextField(
+      //                           maxLines: 5,
+      //                           decoration: InputDecoration(
+      //                             border: InputBorder.none,
+      //                             contentPadding: EdgeInsets.symmetric(
+      //                                 vertical: screenHeight * 0.01,
+      //                                 horizontal: screenWidth * 0.01),
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     ),
+      //                     TableCell(
+      //                       child: Padding(
+      //                         padding: EdgeInsets.all(screenWidth * 0.005),
+      //                         child: TextField(
+      //                           maxLines: 5,
+      //                           decoration: InputDecoration(
+      //                             border: InputBorder.none,
+      //                             contentPadding: EdgeInsets.symmetric(
+      //                                 vertical: screenHeight * 0.01,
+      //                                 horizontal: screenWidth * 0.01),
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     ),
+      //                     TableCell(
+      //                       child: Padding(
+      //                         padding: EdgeInsets.all(screenWidth * 0.005),
+      //                         child: TextField(
+      //                           maxLines: 5,
+      //                           decoration: InputDecoration(
+      //                             border: InputBorder.none,
+      //                             contentPadding: EdgeInsets.symmetric(
+      //                                 vertical: screenHeight * 0.01,
+      //                                 horizontal: screenWidth * 0.01),
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     ),
+      //                     TableCell(
+      //                       child: Padding(
+      //                         padding: EdgeInsets.all(screenWidth * 0.005),
+      //                         child: TextField(
+      //                           maxLines: 5,
+      //                           decoration: InputDecoration(
+      //                             border: InputBorder.none,
+      //                             contentPadding: EdgeInsets.symmetric(
+      //                                 vertical: screenHeight * 0.01,
+      //                                 horizontal: screenWidth * 0.01),
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     ),
+      //                     TableCell(
+      //                       child: Padding(
+      //                         padding: EdgeInsets.all(screenWidth * 0.005),
+      //                         child: TextField(
+      //                           maxLines: 5,
+      //                           decoration: InputDecoration(
+      //                             border: InputBorder.none,
+      //                             contentPadding: EdgeInsets.symmetric(
+      //                                 vertical: screenHeight * 0.01,
+      //                                 horizontal: screenWidth * 0.01),
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     ),
+      //                     TableCell(
+      //                       child: Padding(
+      //                         padding: EdgeInsets.all(screenWidth * 0.005),
+      //                         child: TextField(
+      //                           maxLines: 5,
+      //                           decoration: InputDecoration(
+      //                             border: InputBorder.none,
+      //                             contentPadding: EdgeInsets.symmetric(
+      //                                 vertical: screenHeight * 0.01,
+      //                                 horizontal: screenWidth * 0.01),
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     )
+      //                   ]
+      //                 )]
+      //           ),
+      //         ),
+      //       ),
+
+      //     ],
+      //   ),
+      // ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.check,
+          size: 30,
+          color: Color.fromRGBO(43, 56, 86, 1),
+        ),
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+          side: BorderSide(color: Color.fromRGBO(43, 56, 86, 1), width: 2),
+        ),
+        onPressed: () {
+          for (var controllerList in controllers) {
+            for (var controller in controllerList) {
+              print(controller.text);
+            }
+          }
+
+          setState(() {
+            controllers.add([
+              for (int k = 0; k < 6; k++) TextEditingController(),
+            ]);
+          });
+        },
       ),
     );
   }
