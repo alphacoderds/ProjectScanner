@@ -1,6 +1,7 @@
 import 'package:RekaChain/bottomnavbar.dart';
 import 'package:RekaChain/list_kerusakan.dart';
 import 'package:RekaChain/menu_riwayat_scan.dart';
+import 'package:RekaChain/profile.dart';
 import 'package:RekaChain/riwayat_proses.dart';
 import 'package:RekaChain/riwayat_scan.dart';
 import 'package:RekaChain/tabel_scan_material.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AfterSalesData(),
+      home: ProfileCard(),
     );
   }
 }
