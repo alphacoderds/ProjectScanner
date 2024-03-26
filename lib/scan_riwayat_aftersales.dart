@@ -83,7 +83,7 @@ class _ScanRiwayatAfterSalesState extends State<ScanRiwayatAfterSales> {
                     size: 180,
                   ),
                   SizedBox(height: 20),
-                  Text('Scan After Sales',
+                  Text('Scan Riwayat After Sales',
                       style: TextStyle(
                           color: Color.fromARGB(255, 85, 19, 19),
                           fontSize: 18)),

@@ -1,20 +1,24 @@
+import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
+import 'package:RekaChain/bottomnavbar.dart';
 import 'package:RekaChain/profile.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  final String nip;
+  const ProfilePage({Key? key, required this.nip}) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late double screenWidth = MediaQuery.of(context).size.width;
-  late double screenHeight = MediaQuery.of(context).size.height;
-
-  TextEditingController namaLengkapController = TextEditingController();
+  late double screenWidth;
+  late double screenHeight;
+  final formKey = GlobalKey<FormState>();
+  TextEditingController namaController = TextEditingController();
   TextEditingController jabatanController = TextEditingController();
   TextEditingController unitKerjaController = TextEditingController();
   TextEditingController departemenController = TextEditingController();
@@ -24,33 +28,124 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController statusController = TextEditingController();
 
-  XFile? _selectedImage;
-
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Profile'),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(
-          top: screenHeight * 0.01,
-          left: screenWidth * 0.05,
-          right: screenWidth * 0.05,
-        ),
-        child: Column(
-          children: [
-            _buildAvatar(),
-            SizedBox(height: screenHeight * 0.1),
-            _buildFormFields(),
-            SizedBox(height: screenHeight * 0.03),
-            _buildSubmitButton(),
-            SizedBox(height: screenHeight * 0.05),
-          ],
-        ),
-      ),
+  void initState() {
+    super.initState();
+    _getdata();
+  }
+
+  Future<void> _simpan() async {
+    final response = await http.post(
+      Uri.parse(
+          'http://192.168.8.218/ProjectScanner/lib/tbl_tambahstaff/create_tambahstaff.php'),
+      body: {
+        "nama": namaController.text,
+        "jabatan": jabatanController.text,
+        "unit_kerja": unitKerjaController.text,
+        "departemen": departemenController.text,
+        "divisi": divisiController.text,
+        "no_telp": nomorTeleponController.text,
+        "nip": nipController.text,
+        "password": passwordController.text,
+        "status": statusController.text,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final newProjectData = {
+        "nama": namaController.text,
+        "jabatan": jabatanController.text,
+        "unit_kerja": unitKerjaController.text,
+        "departemen": departemenController.text,
+        "divisi": divisiController.text,
+        "no_telp": nomorTeleponController.text,
+        "nip": nipController.text,
+        "password": passwordController.text,
+        "status": statusController.text,
+      };
+    } else {
+      print('Gagal menyimpan data: ${response.statusCode}');
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProfileCard(nip: '')),
     );
   }
+
+  Future _getdata() async {
+    try {
+      final response = await http.get(Uri.parse(
+          'http://192.168.8.218/crudflutter/flutter_crud/lib/read.php'));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          namaController.text = data['nama'];
+          jabatanController.text = data['jabatan'];
+          unitKerjaController.text = data['unit_kerja'];
+          departemenController.text = data['departemen'];
+          divisiController.text = data['divisi'];
+          nomorTeleponController.text = data['no_telp'];
+          nipController.text = data['nip'];
+          passwordController.text = data['password'];
+          statusController.text = data['status'];
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> fetchData() async {
+    final response = await http.get(
+      Uri.parse(
+          'http://192.168.8.218/crudflutter/flutter_crud/lib/read.php'), // Ganti dengan URL yang sesuai untuk mendapatkan data dari database
+    );
+
+    if (response.statusCode == 200) {
+      final responseData =
+          json.decode(response.body); // Ubah respon menjadi bentuk yang sesuai
+      setState(() {
+        namaController.text = responseData['nama'];
+        jabatanController.text = responseData['jabatan'];
+        unitKerjaController.text = responseData['unit_kerja'];
+        departemenController.text = responseData['departemen'];
+        divisiController.text = responseData['divisi'];
+        nomorTeleponController.text = responseData['no_telp'];
+        nipController.text = responseData['nip'];
+        passwordController.text = responseData['password'];
+        statusController.text = responseData['status'];
+      });
+    } else {
+      print('Gagal mendapatkan data: ${response.statusCode}');
+    }
+  }
+
+  Future<void> _update() async {
+    final response = await http.post(
+      Uri.parse(
+          'http://192.168.8.218/ProjectScanner/lib/tbl_tambahstaff/create_tambahstaff.php'),
+      body: {
+        "nama": namaController.text,
+        "jabatan": jabatanController.text,
+        "unit_kerja": unitKerjaController.text,
+        "departemen": departemenController.text,
+        "divisi": divisiController.text,
+        "no_telp": nomorTeleponController.text,
+        "nip": nipController.text,
+        "password": passwordController.text,
+        "status": statusController.text,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print('Data berhasil diperbarui');
+    } else {
+      print('Gagal memperbarui data: ${response.statusCode}');
+    }
+  }
+
+  XFile? _selectedImage;
 
   Widget _buildAvatar() {
     return Stack(
@@ -114,7 +209,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildTextField('Nama Lengkap', namaLengkapController),
+        buildTextField('Nama Lengkap', namaController),
         buildDivider(),
         buildTextField('Jabatan', jabatanController),
         buildDivider(),
@@ -168,11 +263,13 @@ class _ProfilePageState extends State<ProfilePage> {
         width: double.infinity,
         child: ElevatedButton(
           onPressed: () {
+            _simpan;
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ProfileCard(),
-              ),
+                  builder: (context) => ProfileCard(
+                        nip: '',
+                      )),
             );
           },
           style: ElevatedButton.styleFrom(
@@ -243,6 +340,35 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         );
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Edit Profile'),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.only(
+          top: screenHeight * 0.01,
+          left: screenWidth * 0.05,
+          right: screenWidth * 0.05,
+        ),
+        child: Column(
+          children: [
+            _buildAvatar(),
+            SizedBox(height: screenHeight * 0.1),
+            _buildFormFields(),
+            SizedBox(height: screenHeight * 0.03),
+            _buildSubmitButton(),
+            SizedBox(height: screenHeight * 0.05),
+          ],
+        ),
+      ),
     );
   }
 }

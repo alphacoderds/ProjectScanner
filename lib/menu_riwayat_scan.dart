@@ -146,7 +146,7 @@ class _MenuRiwayatScanState extends State<MenuRiwayatScan> {
                 ),
                 child: Center(
                   child: Text(
-                    'After Sales',
+                    'Riwayat After Sales',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 21,

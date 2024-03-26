@@ -1,141 +1,226 @@
 import 'dart:convert';
-import 'package:RekaChain/login.dart';
-import 'package:RekaChain/updateprofile.dart';
+
 import 'package:flutter/material.dart';
+import 'package:RekaChain/bottomnavbar.dart';
+import 'package:RekaChain/updateprofile.dart';
+import 'package:RekaChain/login.dart';
 import 'package:http/http.dart' as http;
 
+class User {
+  final String kode_staff;
+  final String nama;
+  final String jabatan;
+  final String unit_kerja;
+  final String departemen;
+  final String divisi;
+  final String email;
+  final String no_telp;
+  final String nip;
+  final String status;
+  final String password;
+  final String konfirmasi_password;
+
+  User({
+    required this.kode_staff,
+    required this.nama,
+    required this.jabatan,
+    required this.unit_kerja,
+    required this.departemen,
+    required this.divisi,
+    required this.email,
+    required this.no_telp,
+    required this.nip,
+    required this.status,
+    required this.password,
+    required this.konfirmasi_password,
+  });
+}
+
 class ProfileCard extends StatefulWidget {
-  const ProfileCard({Key? key}) : super(key: key);
+  final String nip;
+  const ProfileCard({super.key, required this.nip});
 
   @override
   State<ProfileCard> createState() => _ProfileCardState();
 }
 
 class _ProfileCardState extends State<ProfileCard> {
-  late double screenWidth;
-  late double screenHeight;
-  Map<String, dynamic>? data;
+  final formKey = GlobalKey<FormState>();
+  Map<String, dynamic>? _userData;
+  late double screenWidth = MediaQuery.of(context).size.width;
+  late double screenHeight = MediaQuery.of(context).size.height;
 
-  @override
-  void initState() {
-    fetchData();
-    super.initState();
-  }
+  TextEditingController namaController = TextEditingController();
+  TextEditingController nipController = TextEditingController();
+  TextEditingController unitKerjaController = TextEditingController();
 
-  Future<void> fetchData() async {
+  bool _isLoading = true;
+  String _errorMessage = 'Terjadi kesalahan saat mengambil data';
+
+  Future<void> _getData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.11.115/ProjectScanner/lib/tbl_tambahstaff/read_tambahstaff.php'));
-
+          'http://192.168.8.218/ProjectScanner/lib/tbl_tambahstaff/profileREAD.php'));
       if (response.statusCode == 200) {
-        final List<dynamic> responseData = jsonDecode(response.body);
+        final data = jsonDecode(response.body);
 
-        setState(() {
-          if (responseData.isNotEmpty) {
-            data = responseData.first;
+        // Filter data berdasarkan NIP yang telah diperoleh sebelumnya
+        Map<String, dynamic>? userData;
+        for (var userDataItem in data) {
+          if (userDataItem['nip'] == widget.nip) {
+            userData = userDataItem;
+            break;
           }
-        });
+        }
+
+        if (userData != null) {
+          // Setel state untuk menampilkan data pengguna yang sesuai
+          setState(() {
+            _userData = userData;
+            _isLoading = false;
+          });
+        } else {
+          // Tampilkan pesan jika data pengguna tidak ditemukan
+          setState(() {
+            _isLoading = false;
+            _errorMessage = 'Data pengguna tidak ditemukan';
+          });
+        }
       }
     } catch (e) {
-      print('Error: $e');
+      // Tangani kesalahan yang terjadi
+      print(e);
+      setState(() {
+        _isLoading = false;
+        _errorMessage = 'Terjadi kesalahan saat mengambil data';
+      });
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
+  void initState() {
+    _getData();
+    //print(_listdata);
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NavBar()),
+            );
           },
         ),
       ),
-      body: data == null
-          ? Center(child: CircularProgressIndicator())
-          : Container(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: screenHeight * 0.01,
-                    left: screenWidth * 0.05,
-                    right: screenWidth * 0.05,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        'Hallo!',
-                        style: TextStyle(
-                          color: Color.fromRGBO(43, 56, 86, 1),
-                          fontFamily: 'Donegal One',
-                          fontSize: screenWidth * 0.075,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                      _buildAvatar(),
-                      SizedBox(height: screenHeight * 0.05),
-                      _buildTextView('Nama', text: data!['nama']),
-                      _buildDivider(),
-                      _buildTextView('NIP', text: data!['nip']),
-                      _buildDivider(),
-                      _buildTextView('Unit Kerja', text: data!['unit_kerja']),
-                      SizedBox(height: screenHeight * 0.05),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ProfilePage(),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          padding: EdgeInsets.only(
-                            top: screenHeight * 0.015,
-                            bottom: screenHeight * 0.015,
-                            left: screenWidth * 0.1,
-                            right: screenWidth * 0.1,
-                          ),
-                        ),
-                        child: const Text('Ubah Profile'),
-                      ),
-                      SizedBox(height: screenHeight * 0.01),
-                      ElevatedButton(
-                        onPressed: () {
-                          _showLogoutConfirmationDialog();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          padding: EdgeInsets.only(
-                            top: screenHeight * 0.015,
-                            bottom: screenHeight * 0.015,
-                            left: screenWidth * 0.1,
-                            right: screenWidth * 0.1,
-                          ),
-                        ),
-                        child: const Text('Logout'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+      body: Container(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: screenHeight * 0.01,
+              left: screenWidth * 0.05,
+              right: screenWidth * 0.05,
             ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Hallo!',
+                  style: TextStyle(
+                    color: Color.fromRGBO(43, 56, 86, 1),
+                    fontFamily: 'Donegal One',
+                    fontSize: screenWidth * 0.075,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.start, // Align text to the left
+                ),
+
+                _buildAvatar(),
+                SizedBox(height: screenHeight * 0.05),
+                _buildTextView('Nama',
+                    text: _userData != null
+                        ? _userData!['nama'].toString()
+                        : 'Loading...'),
+                _buildDivider(),
+                _buildTextView('NIP',
+                    text: _userData != null
+                        ? _userData!['nip'].toString()
+                        : 'Loading...'),
+                _buildDivider(),
+                _buildTextView('Unit Kerja',
+                    text: _userData != null
+                        ? _userData!['unit_kerja'].toString()
+                        : 'Loading...'),
+
+                SizedBox(height: screenHeight * 0.05),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProfilePage(
+                                nip: '',
+                              )),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    padding: EdgeInsets.only(
+                      top: screenHeight * 0.015,
+                      bottom: screenHeight * 0.015,
+                      left: screenWidth * 0.1,
+                      right: screenWidth * 0.1,
+                    ),
+                  ),
+                  child: const Text('Ubah Profile'),
+                ),
+                SizedBox(height: screenHeight * 0.01), // Spacer
+                ElevatedButton(
+                  onPressed: () {
+                    _showLogoutConfirmationDialog();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    padding: EdgeInsets.only(
+                      top: screenHeight * 0.015,
+                      bottom: screenHeight * 0.015,
+                      left: screenWidth * 0.1,
+                      right: screenWidth * 0.1,
+                    ),
+                  ),
+                  child: const Text('Logout'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHelloText() {
+    return const Text(
+      'Hallo!',
+      style: TextStyle(
+        color: Color.fromRGBO(43, 56, 86, 1),
+        fontSize: 32.0,
+        fontWeight: FontWeight.bold,
+      ),
+      textAlign: TextAlign.start,
     );
   }
 

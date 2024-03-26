@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
+import 'package:RekaChain/profile.dart';
+import 'package:RekaChain/updateprofile.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -9,17 +14,51 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late TextEditingController nipController;
-  late TextEditingController passwordController;
+  TextEditingController nipController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   late double screenWidth;
   late double screenHeight;
-  double hintTextSize = 15; // Adjust as needed
+  double hintTextSize = 15;
+
+  // Adjust as needed
+  // String? nip;
 
   @override
   void initState() {
     super.initState();
     nipController = TextEditingController();
     passwordController = TextEditingController();
+  }
+
+  String hashPassword(String password) {
+    var bytes =
+        utf8.encode(password); // Mengonversi string password ke bytes UTF-8
+    var digest =
+        sha1.convert(bytes); // Menghitung hash SHA-1 dari bytes password
+    return digest.toString(); // Mengembalikan hash sebagai string
+  }
+
+  Future loginbtn() async {
+    final hashedPassword = hashPassword(passwordController.text);
+    var response = await http.post(
+        Uri.parse(
+            'http://192.168.8.218/ProjectScanner/lib/tbl_tambahstaff/login.php'),
+        body: {"nip": nipController.text, "password": hashedPassword});
+    var data = json.decode(response.body);
+    if (data == "Success") {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ProfilePage(
+                    nip: '',
+                  )));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('username atau password salah'),
+        ),
+      );
+    }
   }
 
   @override
@@ -98,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                 _inputField("Password", passwordController,
                     isPassword: true, backgroundColor: Colors.white),
                 SizedBox(height: screenHeight * 0.025),
-                _loginBtn(),
+                _loginButton(),
                 Expanded(child: Container())
               ],
             ),
@@ -130,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
             hintText: hintText,
             hintStyle: TextStyle(
               color: Color.fromARGB(255, 73, 72, 72),
-              fontSize: hintTextSize * screenWidth / 360,
+              fontSize: hintTextSize * screenHeight / 700,
             ),
             fillColor: backgroundColor,
             filled: true,
@@ -145,13 +184,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _loginBtn() {
+  Widget _loginButton() {
     return ElevatedButton(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const NavBar()),
-        );
+        loginbtn();
       },
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,

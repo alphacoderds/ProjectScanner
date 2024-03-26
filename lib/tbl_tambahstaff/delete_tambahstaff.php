@@ -1,4 +1,5 @@
-<!-- <?php
+<?php
+header("Access-Control-Allow-Origin: *");
 $conn=new mysqli("localhost","root","","db_rekachain");
 $nohp = $_POST["nohp"];
 $data= mysqli_query($conn, "delete from siswa where nohp='$nohp' ");
@@ -11,4 +12,4 @@ if ($data) {
         'pesan' => 'Gagal'
     ]);
 }
-?> -->
+?>
