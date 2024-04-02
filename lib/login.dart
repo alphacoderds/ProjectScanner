@@ -41,10 +41,9 @@ class _LoginPageState extends State<LoginPage> {
   Future loginbtn() async {
     final hashedPassword = hashPassword(passwordController.text);
     var response = await http.post(
-        Uri.parse(
-            'http://192.168.8.218/ProjectScanner/lib/tbl_tambahstaff/login.php'),
+        Uri.parse('http://192.168.11.163/ProjectScanner/lib/API/login.php'),
         body: {"nip": nipController.text, "password": hashedPassword});
-    var data = json.decode(response.body);
+    var data = jsonDecode(response.body);
     if (data == "Success") {
       Navigator.push(
           context,
@@ -120,12 +119,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: screenHeight * 0.07),
                 Text(
-                  "Username :",
+                  "NIP :",
                   style: TextStyle(fontSize: screenHeight * 0.023),
                   textAlign: TextAlign.left,
                 ),
                 SizedBox(height: screenHeight * 0.005),
-                _inputField("Username", nipController,
+                _inputField("NIP", nipController,
                     backgroundColor: Colors.white),
                 SizedBox(height: screenHeight * 0.01),
                 Text(
@@ -142,15 +141,15 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
-          Positioned(
-            bottom: -screenHeight * 0.001,
-            left: 0,
-            child: Image(
-              image: AssetImage('assets/images/Bolder21.png'),
-              width: screenWidth * 0.35,
-              height: screenHeight * 0.11,
-            ),
-          ),
+          // Positioned(
+          //   bottom: -screenHeight * 0.001,
+          //   left: 0,
+          //   child: Image(
+          //     image: AssetImage('assets/images/Bolder21.png'),
+          //     width: screenWidth * 0.35,
+          //     height: screenHeight * 0.11,
+          //   ),
+          // ),
         ],
       ),
     );

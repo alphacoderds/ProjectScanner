@@ -1,3 +1,4 @@
+import 'package:RekaChain/tabel_scan_material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
@@ -35,7 +36,10 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
       if (barcodeScanRes != '-1') {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const PopUpMaterial()),
+          MaterialPageRoute(
+              builder: (context) => TabelScanMaterial(
+                    kode_material: barcodeScanRes,
+                  )),
         );
       }
     } on PlatformException {

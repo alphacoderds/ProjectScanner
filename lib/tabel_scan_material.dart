@@ -1,8 +1,15 @@
+import 'dart:convert';
+
+import 'package:RekaChain/MD_ScanMaterial.dart';
+import 'package:RekaChain/pop_up_materiall.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class TabelScanMaterial extends StatefulWidget {
-  const TabelScanMaterial({super.key});
+  final String kode_material;
 
+  const TabelScanMaterial({Key? key, required this.kode_material})
+      : super(key: key);
   @override
   State<TabelScanMaterial> createState() => _TabelScanMaterialState();
 }
@@ -11,33 +18,85 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   late double screenWidth;
   late double screenHeight;
 
-  late ScrollController _scrollController;
-  List<List<TextEditingController>> controllers = [];
+  late ScanMaterial scanmaterial;
+  late List _listdata;
+  bool _isloading = true;
 
-  static Map<String, String> createDataRow() {
-    return {
-      'no': '',
-      'kodeMaterial': '',
-      'deskripsi': '',
-      'satuan': '',
-      'qyt': '',
-      'qytDiterima': ''
-    };
+  TextEditingController qtyDiterima = TextEditingController();
+  late List<List<TextEditingController>> controllers;
+
+  // Future<ScanMaterial> fetchData() async {
+  //   await http
+  //       .get(Uri.parse(
+  //           'http://192.168.11.163/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}'))
+  //       .then((response) {
+  //     if (jsonDecode(response.body) != null) {
+  //       setState(() {
+  //         scanmaterial = ScanMaterial.fromJson(jsonDecode(response.body));
+  //       });
+  //     }
+  //   });
+  //   return scanmaterial;
+  // }
+
+  Future<void> fetchData() async {
+    setState(() {
+      _isloading = true; // Set loading indicator to true while fetching data
+    });
+
+    final Uri url = Uri.parse(
+        'http://192.168.11.163/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> responseData = jsonDecode(response.body);
+      setState(() {
+        _listdata = responseData
+            .cast<Map<String, dynamic>>(); // Update _listdata with fetched data
+        _isloading =
+            false; // Set loading indicator to false after fetching data
+      });
+    } else {
+      setState(() {
+        _isloading = false; // Set loading indicator to false if request fails
+      });
+      throw Exception('Failed to load data');
+    }
   }
-
-  // Initial data
-  List<Map<String, String>> data = [
-    createDataRow(),
-  ];
 
   @override
   void initState() {
     super.initState();
+
+    fetchData();
+
+    controllers = [];
     _scrollController = ScrollController();
-    controllers.add([
-      for (int i = 0; i < 6; i++) TextEditingController(),
-    ]);
   }
+
+  void _updateQtyDiterima(int index, String newQtyDiterima) async {
+    final Map<String, dynamic> requestData = {
+      'no': _listdata[index]['no'],
+      'qty_diterima': newQtyDiterima,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(
+            'http://192.168.11.163/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
+        body: requestData,
+      );
+
+      if (response.statusCode == 200) {
+      } else {
+        print('Failed to update qty_diterima: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error updating qty_diterima: $e');
+    }
+  }
+
+  late ScrollController _scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -71,322 +130,151 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
           ],
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * 0.05, vertical: screenHeight * 0.05),
-        child: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(screenWidth * 0.02),
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.circular(5)),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height - 50,
-              ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: DataTable(
-                  columnSpacing: 20.0,
-                  horizontalMargin: 20.0,
-                  columns: [
-                    DataColumn(
-                      label: Center(
-                        child: Text(
-                          'No',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
+      body: _isloading
+          ? Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.05,
+                  vertical: screenHeight * 0.05),
+              child: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(screenWidth * 0.02),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(5)),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: MediaQuery.of(context).size.height - 50,
+                    ),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        columnSpacing: 20.0,
+                        horizontalMargin: 20.0,
+                        columns: [
+                          DataColumn(
+                            label: Center(
+                              child: Text(
+                                'No',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Center(
+                              child: Text(
+                                'Kode Material',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Center(
+                              child: Text(
+                                'Deskripsi',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Center(
+                              child: Text(
+                                'Satuan',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Center(
+                              child: Text(
+                                'QTY',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Center(
+                              child: Text(
+                                'QTY\nDiterima',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ),
+                          ),
+                        ],
+                        rows: _listdata.asMap().entries.map((entry) {
+                          final int index = entry.key;
+                          final Map<String, dynamic> data = entry.value;
+                          return DataRow(cells: [
+                            DataCell(
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Text(data['no'].toString()),
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Text(data['kode_material'].toString()),
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Text(data['deskripsi'].toString()),
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Text(data['satuan'].toString()),
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Text(data['qty'].toString()),
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              TextFormField(
+                                initialValue: data['qty_diterima'].toString(),
+                                keyboardType: TextInputType.number,
+                                onChanged: (value) {
+                                  _updateQtyDiterima(index, value);
+                                },
+                              ),
+                            ),
+                          ]);
+                        }).toList(),
                       ),
                     ),
-                    DataColumn(
-                      label: Center(
-                        child: Text(
-                          'Kode Material',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Center(
-                        child: Text(
-                          'Deskripsi',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Center(
-                        child: Text(
-                          'Satuan',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Center(
-                        child: Text(
-                          'QYT',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Center(
-                        child: Text(
-                          'QYT\nDiterima',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ),
-                    ),
-                  ],
-                  rows: [
-                    DataRow(cells: [
-                      DataCell(
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text('1'),
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text('1'),
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text('1'),
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text('1'),
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text('1'),
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text('1'),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-      ),
-      // Padding(
-      //   padding: EdgeInsets.symmetric(
-      //       vertical: screenHeight * 0.05, horizontal: screenWidth * 0.01),
-      //   child: Column(
-      //     children: [
-      //       Text(
-      //         'Checklist',
-      //         style: TextStyle(fontWeight: FontWeight.bold),
-      //         textAlign: TextAlign.left,
-      //       ),
-      //       SizedBox(
-      //         height: screenHeight * 0.01,
-      //       ),
-      //       Expanded(
-      //         child: SingleChildScrollView(
-      //           controller: _scrollController,
-      //           scrollDirection: Axis.vertical,
-      //           child: Table(
-      //             border: TableBorder.all(
-      //               color: Colors.black,
-      //               width: 1.0,
-      //               style: BorderStyle.solid,
-      //             ),
-      //             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-      //             children: [
-      //               TableRow(
-      //                 children: [
-      //                     TableCell(
-      //                         child: Padding(
-      //                       padding: EdgeInsets.all(screenWidth * 0.005),
-      //                       child: Text(
-      //                         'No',
-      //                         textAlign: TextAlign.center,
-      //                         style: TextStyle(fontWeight: FontWeight.w600),
-      //                       ),
-      //                     )),
-      //                     TableCell(
-      //                         child: Padding(
-      //                       padding: EdgeInsets.all(screenWidth * 0.005),
-      //                       child: Text(
-      //                         'Kode\nMaterial',
-      //                         textAlign: TextAlign.center,
-      //                         style: TextStyle(fontWeight: FontWeight.w600),
-      //                       ),
-      //                     )),
-      //                     TableCell(
-      //                         child: Padding(
-      //                       padding: EdgeInsets.all(screenWidth * 0.005),
-      //                       child: Text(
-      //                         'Deskripsi',
-      //                         textAlign: TextAlign.center,
-      //                         style: TextStyle(fontWeight: FontWeight.w600),
-      //                       ),
-      //                     )),
-      //                     TableCell(
-      //                         child: Padding(
-      //                       padding: EdgeInsets.all(screenWidth * 0.005),
-      //                       child: Text(
-      //                         'Satuan',
-      //                         textAlign: TextAlign.center,
-      //                         style: TextStyle(fontWeight: FontWeight.w600),
-      //                       ),
-      //                     )),
-      //                     TableCell(
-      //                         child: Padding(
-      //                       padding: EdgeInsets.all(screenWidth * 0.005),
-      //                       child: Text(
-      //                         'QYT',
-      //                         textAlign: TextAlign.center,
-      //                         style: TextStyle(fontWeight: FontWeight.w600),
-      //                       ),
-      //                     )),
-      //                     TableCell(
-      //                         child: Padding(
-      //                       padding: EdgeInsets.all(screenWidth * 0.005),
-      //                       child: Text(
-      //                         'QYT\nDiterima',
-      //                         textAlign: TextAlign.center,
-      //                         style: TextStyle(fontWeight: FontWeight.w600),
-      //                       ),
-      //                     )),
-      //                   ]),
-      //                   TableRow(children: [
-      //                     TableCell(
-      //                       child: Padding(
-      //                         padding: EdgeInsets.all(screenWidth * 0.005),
-      //                         child: TextField(
-      //                           maxLines: 5,
-      //                           decoration: InputDecoration(
-      //                             border: InputBorder.none,
-      //                             contentPadding: EdgeInsets.symmetric(
-      //                                 vertical: screenHeight * 0.01,
-      //                                 horizontal: screenWidth * 0.01),
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ),
-      //                     TableCell(
-      //                       child: Padding(
-      //                         padding: EdgeInsets.all(screenWidth * 0.005),
-      //                         child: TextField(
-      //                           maxLines: 5,
-      //                           decoration: InputDecoration(
-      //                             border: InputBorder.none,
-      //                             contentPadding: EdgeInsets.symmetric(
-      //                                 vertical: screenHeight * 0.01,
-      //                                 horizontal: screenWidth * 0.01),
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ),
-      //                     TableCell(
-      //                       child: Padding(
-      //                         padding: EdgeInsets.all(screenWidth * 0.005),
-      //                         child: TextField(
-      //                           maxLines: 5,
-      //                           decoration: InputDecoration(
-      //                             border: InputBorder.none,
-      //                             contentPadding: EdgeInsets.symmetric(
-      //                                 vertical: screenHeight * 0.01,
-      //                                 horizontal: screenWidth * 0.01),
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ),
-      //                     TableCell(
-      //                       child: Padding(
-      //                         padding: EdgeInsets.all(screenWidth * 0.005),
-      //                         child: TextField(
-      //                           maxLines: 5,
-      //                           decoration: InputDecoration(
-      //                             border: InputBorder.none,
-      //                             contentPadding: EdgeInsets.symmetric(
-      //                                 vertical: screenHeight * 0.01,
-      //                                 horizontal: screenWidth * 0.01),
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ),
-      //                     TableCell(
-      //                       child: Padding(
-      //                         padding: EdgeInsets.all(screenWidth * 0.005),
-      //                         child: TextField(
-      //                           maxLines: 5,
-      //                           decoration: InputDecoration(
-      //                             border: InputBorder.none,
-      //                             contentPadding: EdgeInsets.symmetric(
-      //                                 vertical: screenHeight * 0.01,
-      //                                 horizontal: screenWidth * 0.01),
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ),
-      //                     TableCell(
-      //                       child: Padding(
-      //                         padding: EdgeInsets.all(screenWidth * 0.005),
-      //                         child: TextField(
-      //                           maxLines: 5,
-      //                           decoration: InputDecoration(
-      //                             border: InputBorder.none,
-      //                             contentPadding: EdgeInsets.symmetric(
-      //                                 vertical: screenHeight * 0.01,
-      //                                 horizontal: screenWidth * 0.01),
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     )
-      //                   ]
-      //                 )]
-      //           ),
-      //         ),
-      //       ),
-
-      //     ],
-      //   ),
-      // ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.check,
@@ -410,6 +298,11 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
               for (int k = 0; k < 6; k++) TextEditingController(),
             ]);
           });
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PopUpMaterial()),
+          );
         },
       ),
     );
