@@ -1,6 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-$conn=mysqli_connect('localhost','root','','db_contact');
+$conn=mysqli_connect('localhost','root','','db_rekachain');
 
 $nip=$_POST['nip'];
 $password=$_POST['password'];
