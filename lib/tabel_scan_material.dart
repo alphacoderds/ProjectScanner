@@ -25,6 +25,8 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   TextEditingController qtyDiterima = TextEditingController();
   late List<List<TextEditingController>> controllers;
 
+  Map<int, String> _temporaryChanges = {};
+
   // Future<ScanMaterial> fetchData() async {
   //   await http
   //       .get(Uri.parse(
@@ -45,7 +47,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     });
 
     final Uri url = Uri.parse(
-        'http://192.168.11.163/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
+        'http://192.168.11.104/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -74,21 +76,57 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     _scrollController = ScrollController();
   }
 
-  void _updateQtyDiterima(int index, String newQtyDiterima) async {
+  // void _updateQtyDiterima(int index, String newQtyDiterima) async {
+  //   final Map<String, dynamic> requestData = {
+  //     'id': _listdata[index]['id'],
+  //     'qty_diterima': newQtyDiterima,
+  //   };
+
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse(
+  //           'http://192.168.11.104/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
+  //       body: requestData,
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //     } else {
+  //       print('Failed to update qty_diterima: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     print('Error updating qty_diterima: $e');
+  //   }
+  // }
+
+  void _updateQtyDiterima(int index, String newQtyDiterima) {
+    setState(() {
+      _temporaryChanges[index] = newQtyDiterima;
+    });
+  }
+
+  void _saveChanges() async {
+    for (var entry in _temporaryChanges.entries) {
+      int index = entry.key;
+      String newQtyDiterima = entry.value;
+      await _updateQtyDiterimaInDatabase(index, newQtyDiterima);
+    }
+  }
+
+  Future<void> _updateQtyDiterimaInDatabase(
+      int index, String newQtyDiterima) async {
     final Map<String, dynamic> requestData = {
-      'no': _listdata[index]['no'],
+      'id': _listdata[index]['id'],
       'qty_diterima': newQtyDiterima,
     };
 
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.11.163/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
+            'http://192.168.11.104/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
         body: requestData,
       );
 
-      if (response.statusCode == 200) {
-      } else {
+      if (response.statusCode != 200) {
         print('Failed to update qty_diterima: ${response.statusCode}');
       }
     } catch (e) {
@@ -157,7 +195,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                           DataColumn(
                             label: Center(
                               child: Text(
-                                'No',
+                                'ID',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16),
                               ),
@@ -218,7 +256,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                                 scrollDirection: Axis.horizontal,
                                 child: Container(
                                   alignment: Alignment.center,
-                                  child: Text(data['no'].toString()),
+                                  child: Text(data['id'].toString()),
                                 ),
                               ),
                             ),
@@ -301,7 +339,9 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
 
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PopUpMaterial()),
+            MaterialPageRoute(
+                builder: (context) =>
+                    PopUpMaterial(saveChangesCallback: _saveChanges)),
           );
         },
       ),

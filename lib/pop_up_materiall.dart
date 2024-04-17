@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
 
 class PopUpMaterial extends StatefulWidget {
-  const PopUpMaterial({Key? key}) : super(key: key);
+  final Function saveChangesCallback;
+  const PopUpMaterial({Key? key, required this.saveChangesCallback})
+      : super(key: key);
 
   @override
   State<PopUpMaterial> createState() => _PopUpMaterialState();
@@ -48,6 +50,7 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
+                            widget.saveChangesCallback();
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -222,6 +225,7 @@ class _PopUpMaterialState extends State<PopUpMaterial> {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    widget.saveChangesCallback();
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {

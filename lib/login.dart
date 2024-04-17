@@ -14,8 +14,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController nipController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController nip = TextEditingController();
+  TextEditingController password = TextEditingController();
   late double screenWidth;
   late double screenHeight;
   double hintTextSize = 15;
@@ -26,8 +26,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    nipController = TextEditingController();
-    passwordController = TextEditingController();
+    nip = TextEditingController();
+    password = TextEditingController();
   }
 
   String hashPassword(String password) {
@@ -39,17 +39,17 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future loginbtn() async {
-    final hashedPassword = hashPassword(passwordController.text);
+    final hashedPassword = hashPassword(password.text);
     var response = await http.post(
-        Uri.parse('http://192.168.11.163/ProjectScanner/lib/API/login.php'),
-        body: {"nip": nipController.text, "password": hashedPassword});
+        Uri.parse('http://192.168.11.104/ProjectScanner/lib/API/login.php'),
+        body: {"nip": nip.text, "password": hashedPassword});
     var data = jsonDecode(response.body);
     if (data == "Success") {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => ProfilePage(
-                    nip: '',
+                    nip: nip.text,
                   )));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -124,8 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                   textAlign: TextAlign.left,
                 ),
                 SizedBox(height: screenHeight * 0.005),
-                _inputField("NIP", nipController,
-                    backgroundColor: Colors.white),
+                _inputField("NIP", nip, backgroundColor: Colors.white),
                 SizedBox(height: screenHeight * 0.01),
                 Text(
                   "Password :",
@@ -133,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                   textAlign: TextAlign.left,
                 ),
                 SizedBox(height: screenHeight * 0.005),
-                _inputField("Password", passwordController,
+                _inputField("Password", password,
                     isPassword: true, backgroundColor: Colors.white),
                 SizedBox(height: screenHeight * 0.025),
                 _loginButton(),
