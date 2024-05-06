@@ -37,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _simpan() async {
     final response = await http.post(
       Uri.parse(
-          'http://192.168.8.218/ProjectScanner/lib/tbl_tambahstaff/create_tambahstaff.php'),
+          'http://192.168.9.141/ProjectScanner/lib/tbl_tambahstaff/create_tambahstaff.php'),
       body: {
         "nama": namaController.text,
         "jabatan": jabatanController.text,
@@ -76,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future _getdata() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.8.218/crudflutter/flutter_crud/lib/read.php'));
+          'http://92.168.10.253/crudflutter/flutter_crud/lib/read.php'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
@@ -99,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> fetchData() async {
     final response = await http.get(
       Uri.parse(
-          'http://192.168.8.218/crudflutter/flutter_crud/lib/read.php'), // Ganti dengan URL yang sesuai untuk mendapatkan data dari database
+          'http://192.168.10.45/crudflutter/flutter_crud/lib/read.php'), // Ganti dengan URL yang sesuai untuk mendapatkan data dari database
     );
 
     if (response.statusCode == 200) {
@@ -124,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _update() async {
     final response = await http.post(
       Uri.parse(
-          'http://192.168.8.218/ProjectScanner/lib/tbl_tambahstaff/create_tambahstaff.php'),
+          'http://192.168.10.45/lib/tbl_tambahstaff/create_tambahstaff.php'),
       body: {
         "nama": namaController.text,
         "jabatan": jabatanController.text,
