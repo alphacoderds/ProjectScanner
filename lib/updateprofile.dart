@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:RekaChain/bottomnavbar.dart';
+import 'package:RekaChain/model/data_model.dart';
 import 'package:RekaChain/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +9,9 @@ import 'package:http/http.dart' as http;
 
 class ProfilePage extends StatefulWidget {
   final String nip;
-  const ProfilePage({Key? key, required this.nip}) : super(key: key);
+  final DataModel data;
+  const ProfilePage({Key? key, required this.nip, required this.data})
+      : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -37,15 +40,16 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _simpan() async {
     final response = await http.post(
       Uri.parse(
-          'http://192.168.9.141/ProjectScanner/lib/tbl_tambahstaff/create_tambahstaff.php'),
+          'http://192.168.43.50/ProjectScanner/lib/API/updateprofile.php'),
       body: {
+        "kode_staff": widget.data.kode_staff,
         "nama": namaController.text,
         "jabatan": jabatanController.text,
         "unit_kerja": unitKerjaController.text,
         "departemen": departemenController.text,
         "divisi": divisiController.text,
         "no_telp": nomorTeleponController.text,
-        "nip": nipController.text,
+       
         "password": passwordController.text,
         "status": statusController.text,
       },
@@ -53,33 +57,46 @@ class _ProfilePageState extends State<ProfilePage> {
 
     if (response.statusCode == 200) {
       final newProjectData = {
+        "kode_staff": widget.data.kode_staff,
         "nama": namaController.text,
         "jabatan": jabatanController.text,
         "unit_kerja": unitKerjaController.text,
         "departemen": departemenController.text,
         "divisi": divisiController.text,
         "no_telp": nomorTeleponController.text,
-        "nip": nipController.text,
+       
         "password": passwordController.text,
         "status": statusController.text,
       };
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ProfileCard(
+                data: DataModel(
+                    departemen: departemenController.text,
+                    divisi: divisiController.text,
+                    jabatan: jabatanController.text,
+                    kode_staff: widget.data.kode_staff,
+                    nama: namaController.text,
+                    nip: nipController.text,
+                    nomorTelp: nomorTeleponController.text,
+                    status: statusController.text,
+                    unit_kerja: unitKerjaController.text),
+                nip: nipController.text)),
+      );
     } else {
       print('Gagal menyimpan data: ${response.statusCode}');
     }
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ProfileCard(nip: '')),
-    );
   }
 
   Future _getdata() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://92.168.10.253/crudflutter/flutter_crud/lib/read.php'));
+          'http://192.168.43.50/crudflutter/flutter_crud/lib/read.php'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
+          namaController.text = data['kode_staff'];
           namaController.text = data['nama'];
           jabatanController.text = data['jabatan'];
           unitKerjaController.text = data['unit_kerja'];
@@ -99,13 +116,14 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> fetchData() async {
     final response = await http.get(
       Uri.parse(
-          'http://192.168.10.45/crudflutter/flutter_crud/lib/read.php'), // Ganti dengan URL yang sesuai untuk mendapatkan data dari database
+          'http://192.168.43.50/crudflutter/flutter_crud/lib/read.php'), // Ganti dengan URL yang sesuai untuk mendapatkan data dari database
     );
 
     if (response.statusCode == 200) {
       final responseData =
           json.decode(response.body); // Ubah respon menjadi bentuk yang sesuai
       setState(() {
+        namaController.text = responseData['kode_staff'];
         namaController.text = responseData['nama'];
         jabatanController.text = responseData['jabatan'];
         unitKerjaController.text = responseData['unit_kerja'];
@@ -124,7 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _update() async {
     final response = await http.post(
       Uri.parse(
-          'http://192.168.10.45/lib/tbl_tambahstaff/create_tambahstaff.php'),
+          'http://192.168.43.50/ProjectScanner/lib/tbl_tambahstaff/create_tambahstaff.php'),
       body: {
         "nama": namaController.text,
         "jabatan": jabatanController.text,
@@ -263,11 +281,21 @@ class _ProfilePageState extends State<ProfilePage> {
         width: double.infinity,
         child: ElevatedButton(
           onPressed: () {
-            _simpan;
+            _simpan();
             Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => ProfileCard(
+                        data: DataModel(
+                            departemen: "",
+                            divisi: "",
+                            jabatan: "",
+                            kode_staff: "",
+                            nama: "",
+                            nip: "",
+                            nomorTelp: '',
+                            status: '',
+                            unit_kerja: ''),
                         nip: '',
                       )),
             );

@@ -6,15 +6,22 @@ $nip=$_POST['nip'];
 $password=$_POST['password'];
 $hashedPassword = sha1($password);
 
-$sql="select * from coba where nip = '$nip' and password = '$password'";
+$sql="SELECT * FROM `coba` WHERE coba.nip = '$nip' AND coba.password = SHA1('$password')";
 
 $result=mysqli_query($conn, $sql);
 $count=mysqli_num_rows($result);
+$data = [];
 
-if($count == 1) {
-    session_start(); // Mulai sesi di sini
-    $_SESSION['nip'] = $nip; // Simpan NIP dalam sesi
-    echo json_encode("Success");
+while($row = mysqli_fetch_assoc($result)){
+    $data[] = $row;
+}
+
+if($data != null ) {
+
+    echo json_encode([
+        "message" => "Success",
+        "data" => $data[0]
+    ]);
 }else{
     echo json_encode('Error');
 }

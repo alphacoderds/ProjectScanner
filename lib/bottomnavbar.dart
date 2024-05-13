@@ -1,3 +1,4 @@
+import 'package:RekaChain/model/data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/menu_utama.dart';
 import 'package:RekaChain/profile.dart';
@@ -13,7 +14,16 @@ class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
     const MenuUtama(),
-    const ProfileCard(
+    ProfileCard(
+      data: DataModel(departemen: "", 
+      divisi: "", 
+      jabatan: "", 
+      kode_staff: "", 
+      nama: "", 
+      nip: "", 
+      nomorTelp: "", 
+      status: "", 
+      unit_kerja: ""),
       nip: '',
     )
   ];

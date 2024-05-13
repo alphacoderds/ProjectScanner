@@ -37,16 +37,15 @@ class User {
   });
 }
 
-class ProfileCard extends StatefulWidget {
-  final DataModel data;
+class TambahOpenItem extends StatefulWidget {
   final String nip;
-  const ProfileCard({super.key, required this.nip, required this.data});
+  const TambahOpenItem({super.key, required this.nip});
 
   @override
-  State<ProfileCard> createState() => _ProfileCardState();
+  State<TambahOpenItem> createState() => _TambahOpenItemState();
 }
 
-class _ProfileCardState extends State<ProfileCard> {
+class _TambahOpenItemState extends State<TambahOpenItem> {
   final formKey = GlobalKey<FormState>();
   Map<String, dynamic>? _userData;
   late double screenWidth = MediaQuery.of(context).size.width;
@@ -109,9 +108,9 @@ class _ProfileCardState extends State<ProfileCard> {
   Future<void> _simpan() async {
     // Simpan data dan dapatkan data yang diperbarui
     final updatedData = {
-      'nama': widget.data.nama,
-      'nip': widget.data.nip,
-      'unit_kerja': widget.data.unit_kerja,
+      'nama': namaController.text,
+      'nip': nipController.text,
+      'unit_kerja': unitKerjaController.text,
       // Data yang diperbarui
     };
 
@@ -161,17 +160,17 @@ class _ProfileCardState extends State<ProfileCard> {
                 _buildTextView('Nama',
                     text: _userData != null
                         ? _userData!['nama'].toString()
-                        : widget.data.nama),
+                        : 'Loading...'),
                 _buildDivider(),
                 _buildTextView('NIP',
                     text: _userData != null
                         ? _userData!['nip'].toString()
-                        : widget.data.nip),
+                        : 'Loading...'),
                 _buildDivider(),
                 _buildTextView('Unit Kerja',
                     text: _userData != null
                         ? _userData!['unit_kerja'].toString()
-                        : widget.data.unit_kerja),
+                        : 'Loading...'),
 
                 SizedBox(height: screenHeight * 0.05),
                 ElevatedButton(
@@ -180,7 +179,16 @@ class _ProfileCardState extends State<ProfileCard> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => ProfilePage(
-                            data: widget.data,
+                                data: DataModel(
+                                    departemen: "departemen",
+                                    divisi: "divisi",
+                                    jabatan: "jabatan",
+                                    kode_staff: "kode_staff",
+                                    nama: "nama",
+                                    nip: "nip",
+                                    nomorTelp: "nomorTelp",
+                                    status: "status",
+                                    unit_kerja: "unit_kerja"),
                                 nip: '',
                               )),
                     );
