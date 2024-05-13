@@ -1,6 +1,7 @@
 import 'dart:convert';
-
-import 'package:RekaChain/MD_ScanMaterial.dart';
+import 'package:RekaChain/ModelClass/MD_ScanMaterial.dart';
+import 'package:RekaChain/ModelClass/MD_User.dart';
+import 'package:RekaChain/login.dart';
 import 'package:RekaChain/pop_up_materiall.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -8,8 +9,10 @@ import 'package:http/http.dart' as http;
 class TabelScanMaterial extends StatefulWidget {
   final String kode_material;
 
-  const TabelScanMaterial({Key? key, required this.kode_material})
-      : super(key: key);
+  const TabelScanMaterial({
+    Key? key,
+    required this.kode_material,
+  }) : super(key: key);
   @override
   State<TabelScanMaterial> createState() => _TabelScanMaterialState();
 }
@@ -19,6 +22,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   late double screenHeight;
 
   late ScanMaterial scanmaterial;
+  late User user;
   late List _listdata;
   bool _isloading = true;
 
@@ -27,27 +31,13 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
 
   Map<int, String> _temporaryChanges = {};
 
-  // Future<ScanMaterial> fetchData() async {
-  //   await http
-  //       .get(Uri.parse(
-  //           'http://192.168.11.163/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}'))
-  //       .then((response) {
-  //     if (jsonDecode(response.body) != null) {
-  //       setState(() {
-  //         scanmaterial = ScanMaterial.fromJson(jsonDecode(response.body));
-  //       });
-  //     }
-  //   });
-  //   return scanmaterial;
-  // }
-
   Future<void> fetchData() async {
     setState(() {
       _isloading = true; // Set loading indicator to true while fetching data
     });
 
     final Uri url = Uri.parse(
-        'http://192.168.11.104/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
+        'http://192.168.9.205/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -76,29 +66,8 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     _scrollController = ScrollController();
   }
 
-  // void _updateQtyDiterima(int index, String newQtyDiterima) async {
-  //   final Map<String, dynamic> requestData = {
-  //     'id': _listdata[index]['id'],
-  //     'qty_diterima': newQtyDiterima,
-  //   };
-
-  //   try {
-  //     final response = await http.post(
-  //       Uri.parse(
-  //           'http://192.168.11.104/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
-  //       body: requestData,
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //     } else {
-  //       print('Failed to update qty_diterima: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     print('Error updating qty_diterima: $e');
-  //   }
-  // }
-
-  void _updateQtyDiterima(int index, String newQtyDiterima) {
+  void _updateQtyDiterima(
+      int index, String newQtyDiterima, int loggedInUserNIP) {
     setState(() {
       _temporaryChanges[index] = newQtyDiterima;
     });
@@ -108,21 +77,23 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     for (var entry in _temporaryChanges.entries) {
       int index = entry.key;
       String newQtyDiterima = entry.value;
-      await _updateQtyDiterimaInDatabase(index, newQtyDiterima);
+      await _updateQtyDiterimaInDatabase(
+          index, newQtyDiterima, LoginPage.loggedInUserNIP);
     }
   }
 
   Future<void> _updateQtyDiterimaInDatabase(
-      int index, String newQtyDiterima) async {
+      int index, String newQtyDiterima, loggedInUserNIP) async {
     final Map<String, dynamic> requestData = {
       'id': _listdata[index]['id'],
       'qty_diterima': newQtyDiterima,
+      'nip': LoginPage.loggedInUserNIP
     };
 
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.11.104/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
+            'http://192.168.9.205/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
         body: requestData,
       );
 
@@ -147,6 +118,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Text('${LoginPage.loggedInUserNIP}'),
             SizedBox(width: screenWidth * 0.6),
             Expanded(
               child: Align(
@@ -301,7 +273,8 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                                 initialValue: data['qty_diterima'].toString(),
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
-                                  _updateQtyDiterima(index, value);
+                                  _updateQtyDiterima(
+                                      index, value, LoginPage.loggedInUserNIP);
                                 },
                               ),
                             ),

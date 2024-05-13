@@ -5,6 +5,7 @@ class ScanMaterial {
   final String satuan;
   final int qty;
   final int qtyDiterima;
+  final int nip;
 
   ScanMaterial({
     required this.no,
@@ -13,6 +14,7 @@ class ScanMaterial {
     required this.satuan,
     required this.qty,
     required this.qtyDiterima,
+    required this.nip,
   });
 
   factory ScanMaterial.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class ScanMaterial {
       satuan: json['satuan'],
       qty: json['qty'],
       qtyDiterima: json['qty_diterima'],
+      nip: json['nip'],
     );
   }
 }

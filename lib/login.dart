@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:RekaChain/menu_utama.dart';
 import 'package:crypto/crypto.dart';
 import 'package:RekaChain/profile.dart';
 import 'package:RekaChain/updateprofile.dart';
@@ -11,17 +12,17 @@ class LoginPage extends StatefulWidget {
 
   @override
   State<LoginPage> createState() => _LoginPageState();
+  static int get loggedInUserNIP => _LoginPageState.loggedInUserNIP;
 }
 
 class _LoginPageState extends State<LoginPage> {
+  static late int loggedInUserNIP;
+
   TextEditingController nip = TextEditingController();
   TextEditingController password = TextEditingController();
   late double screenWidth;
   late double screenHeight;
   double hintTextSize = 15;
-
-  // Adjust as needed
-  // String? nip;
 
   @override
   void initState() {
@@ -41,16 +42,14 @@ class _LoginPageState extends State<LoginPage> {
   Future loginbtn() async {
     final hashedPassword = hashPassword(password.text);
     var response = await http.post(
-        Uri.parse('http://192.168.11.104/ProjectScanner/lib/API/login.php'),
+        Uri.parse('http://192.168.9.205/ProjectScanner/lib/API/login.php'),
         body: {"nip": nip.text, "password": hashedPassword});
     var data = jsonDecode(response.body);
     if (data == "Success") {
+      int nipValue = int.tryParse(nip.text) ?? 0; // Konversi NIP menjadi int
+      _LoginPageState.loggedInUserNIP = nipValue;
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ProfilePage(
-                    nip: nip.text,
-                  )));
+          context, MaterialPageRoute(builder: (context) => NavBar()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

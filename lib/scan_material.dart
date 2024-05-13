@@ -37,9 +37,8 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => TabelScanMaterial(
-                    kode_material: barcodeScanRes,
-                  )),
+              builder: (context) =>
+                  TabelScanMaterial(kode_material: barcodeScanRes)),
         );
       }
     } on PlatformException {
