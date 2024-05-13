@@ -1,16 +1,68 @@
+import 'dart:convert';
+
+import 'package:RekaChain/tbl_tambahstaff/openitem2.dart';
+import 'package:RekaChain/tbl_tambahstaff/tambahopenitem.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
 import 'package:RekaChain/scan_tahap_selesai.dart';
+import 'package:http/http.dart' as http;
 
 //======================================Tampilan List Open Item======================================
 class ListOpenItem extends StatefulWidget {
-  const ListOpenItem({super.key});
+  final Map<String, dynamic>? newProject;
+
+  const ListOpenItem({Key? key, this.newProject}) : super(key: key);
 
   @override
   State<ListOpenItem> createState() => _ListOpenItemState();
 }
 
 class _ListOpenItemState extends State<ListOpenItem> {
+  TextEditingController isiopenitemController = TextEditingController();
+
+  late List<dynamic> _listdata = [];
+  bool _isloading = true;
+
+  String _searchQuery = '';
+
+  void _updateSearchQuery(String query) {
+    setState(() {
+      _searchQuery = query;
+    });
+  }
+
+  Future<void> _getdata() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://192.168.43.50/ProjectScanner/lib/API/read_openlist.php'),
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          _listdata = data;
+          _isloading = false;
+        });
+      } else {
+        setState(() {
+          _isloading = false;
+        });
+        print('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      setState(() {
+        _isloading = false;
+      });
+      print('Error fetching data: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getdata();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,45 +99,7 @@ class _ListOpenItemState extends State<ListOpenItem> {
           },
         ),
       ),
-      body: ListView.builder(
-        itemCount: 8,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => TambahOpenItem()),
-              );
-            },
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black54, width: 2)),
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Open Item ${index + 1}',
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 18,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      ),
+      body: _ListView(),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -120,7 +134,9 @@ class _ListOpenItemState extends State<ListOpenItem> {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return TambahOpenItem();
+                  return TambahOpenItem(
+                    nip: '',
+                  );
                 },
               );
             },
@@ -297,167 +313,112 @@ class _ListOpenItemState extends State<ListOpenItem> {
       ),
     );
   }
-}
 
-//======================================Tampilan Menambah Open Item======================================
-class TambahOpenItem extends StatefulWidget {
-  const TambahOpenItem({super.key});
+  Widget _ListView() {
+    List filteredData = _listdata.where((data) {
+      String isi = data['isi'] ?? '';
+      return isi.toLowerCase().contains(_searchQuery.toLowerCase());
+    }).toList();
 
-  @override
-  State<TambahOpenItem> createState() => _TambahOpenItemState();
-}
+    return ListView.separated(
+      itemBuilder: (context, index) {
+        return ListViewItem(context, index, filteredData[index]);
+      },
+      separatorBuilder: (context, index) {
+        return Divider(height: 0);
+      },
+      itemCount: filteredData.length,
+    );
+  }
 
-class _TambahOpenItemState extends State<TambahOpenItem> {
-  TextEditingController KekuranganController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+  Widget ListViewItem(BuildContext context, int index, dynamic projectData) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ViewOpenItem(
+                selectedProject: {
+                  "no": projectData['no'],
+                  "isi": projectData['isi']
+                },
+              ),
+            ),
+          );
+        },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Open Item'),
-            SizedBox(width: 10.0),
             Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: FractionalTranslation(
-                  translation: Offset(0.37, 0.10),
-                  child: AspectRatio(
-                    aspectRatio: 11 / 8,
-                    child: Image(
-                      image: AssetImage('assets/images/bolder31.png'),
-                      width: 170,
-                      height: 120,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+              child: Container(
+                margin: EdgeInsets.only(left: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    message(context, projectData),
+                  ],
                 ),
               ),
             ),
           ],
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
         ),
       ),
-      body: Stack(children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: SizedBox(
-                width: 350,
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    hintText: 'Isi Open Item',
-                    filled: true,
-                    fillColor: Colors.transparent,
+    );
+  }
+
+  Widget message(BuildContext context, dynamic projectData) {
+    double textsize = 14;
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 15,
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ViewOpenItem(
+                    selectedProject: {
+                      "no": projectData['no'],
+                      "isi": projectData['isi']
+                    },
                   ),
-                  minLines: 4,
-                  maxLines: null,
                 ),
-              ),
-            ),
-          ],
-        ),
-        Positioned(
-          bottom: 40,
-          right: 20,
-          child: IconButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return _oipopupsimpan1();
-                },
               );
             },
-            icon: Icon(
-              Icons.check_box_outlined,
-              size: 40,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${projectData['isi']} ',
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
-      ]),
-    );
-  }
-
-//======================================Tampilan Pop Up Simpan Data 1======================================
-  Widget _oipopupsimpan1() {
-    return Dialog(
-      alignment: Alignment.center,
-      child: Container(
-        width: 500,
-        decoration: BoxDecoration(
-          color: const Color.fromRGBO(43, 56, 86, 1),
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
-            const Icon(
-              Icons.check_circle_outline_rounded,
-              color: Colors.white,
-              size: 100,
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              'Menyimpan data!',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: 16.5,
-              ),
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ListOpenItem(),
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                backgroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-              child: const SizedBox(
-                width: 50,
-                height: 30,
-                child: Center(
-                  child: Text(
-                    "Selesai",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-          ],
-        ),
+        ],
       ),
     );
   }
-}
+}  
+
+
+//======================================Tampilan Menambah Open Item=====================================

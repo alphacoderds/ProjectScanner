@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:RekaChain/menu_utama.dart';
+import 'package:RekaChain/model/data_model.dart';
 import 'package:crypto/crypto.dart';
 import 'package:RekaChain/profile.dart';
 import 'package:RekaChain/updateprofile.dart';
@@ -42,14 +42,19 @@ class _LoginPageState extends State<LoginPage> {
   Future loginbtn() async {
     final hashedPassword = hashPassword(password.text);
     var response = await http.post(
-        Uri.parse('http://192.168.9.205/ProjectScanner/lib/API/login.php'),
-        body: {"nip": nip.text, "password": hashedPassword});
-    var data = jsonDecode(response.body);
-    if (data == "Success") {
-      int nipValue = int.tryParse(nip.text) ?? 0; // Konversi NIP menjadi int
-      _LoginPageState.loggedInUserNIP = nipValue;
+        Uri.parse('http://192.168.43.50/ProjectScanner/lib/API/login.php'),
+        body: {"nip": nip.text, "password": password.text});
+    var jsonData = jsonDecode(response.body);
+    dynamic data = (jsonData as Map<String, dynamic>);
+    DataModel dataKaryawan = DataModel.getDataFromJSOn(data['data']);
+    if (data['message'] == "Success") {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => NavBar()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => ProfileCard(
+                    data: dataKaryawan,
+                    nip: nip.text,
+                  )));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
