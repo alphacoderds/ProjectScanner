@@ -56,13 +56,14 @@ class _ProfileCardState extends State<ProfileCard> {
   TextEditingController nipController = TextEditingController();
   TextEditingController unitKerjaController = TextEditingController();
 
+  List _listdata = [];
   bool _isLoading = true;
   String _errorMessage = 'Terjadi kesalahan saat mengambil data';
 
   Future<void> _getData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.43.50/ProjectScanner/lib/tbl_tambahstaff/profileREAD.php'));
+          'http://192.168.9.177/ProjectScanner/lib/tbl_tambahstaff/profileREAD.php'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
@@ -101,22 +102,17 @@ class _ProfileCardState extends State<ProfileCard> {
 
   @override
   void initState() {
-    _getData();
-    //print(_listdata);
     super.initState();
+    if (widget.data != null) {
+      _listdata.add(widget.data);
+      updateData();
+    }
+    _getData();
   }
 
-  Future<void> _simpan() async {
-    // Simpan data dan dapatkan data yang diperbarui
-    final updatedData = {
-      'nama': widget.data.nama,
-      'nip': widget.data.nip,
-      'unit_kerja': widget.data.unit_kerja,
-      // Data yang diperbarui
-    };
-
-    // Kirim data yang diperbarui ke halaman profil
-    Navigator.pop(context, updatedData);
+  Future<void> updateData() async {
+    await _getData();
+    setState(() {});
   }
 
   @override
@@ -179,11 +175,16 @@ class _ProfileCardState extends State<ProfileCard> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ProfilePage(
-                            data: widget.data,
-                                nip: '',
-                              )),
-                    );
+                        builder: (context) => ProfilePage(
+                          data: widget.data,
+                          nip: '',
+                        ),
+                      ),
+                    ).then((result) {
+                      if (result != null && result) {
+                        updateData();
+                      }
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
@@ -200,10 +201,10 @@ class _ProfileCardState extends State<ProfileCard> {
                   ),
                   child: const Text('Ubah Profile'),
                 ),
-                SizedBox(height: screenHeight * 0.01), // Spacer
+                // Spacer
                 ElevatedButton(
                   onPressed: () {
-                    _simpan(); // Panggil method _simpan() saat tombol "Simpan" ditekan
+                    _showLogoutConfirmationDialog();
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
@@ -218,7 +219,7 @@ class _ProfileCardState extends State<ProfileCard> {
                       right: screenWidth * 0.1,
                     ),
                   ),
-                  child: const Text('Simpan'),
+                  child: const Text('Logout'),
                 ),
               ],
             ),

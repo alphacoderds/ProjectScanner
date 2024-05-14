@@ -14,13 +14,17 @@ class ProfilePage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _ProfilePageState createState() => _ProfilePageState(data: data);
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   late double screenWidth;
   late double screenHeight;
+
+  final DataModel data;
+  _ProfilePageState({required this.data});
   final formKey = GlobalKey<FormState>();
+  TextEditingController kodestaffController = TextEditingController();
   TextEditingController namaController = TextEditingController();
   TextEditingController jabatanController = TextEditingController();
   TextEditingController unitKerjaController = TextEditingController();
@@ -34,132 +38,48 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    _getdata();
-  }
-
-  Future<void> _simpan() async {
-    final response = await http.post(
-      Uri.parse(
-          'http://192.168.43.50/ProjectScanner/lib/API/updateprofile.php'),
-      body: {
-        "kode_staff": widget.data.kode_staff,
-        "nama": namaController.text,
-        "jabatan": jabatanController.text,
-        "unit_kerja": unitKerjaController.text,
-        "departemen": departemenController.text,
-        "divisi": divisiController.text,
-        "no_telp": nomorTeleponController.text,
-       
-        "password": passwordController.text,
-        "status": statusController.text,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final newProjectData = {
-        "kode_staff": widget.data.kode_staff,
-        "nama": namaController.text,
-        "jabatan": jabatanController.text,
-        "unit_kerja": unitKerjaController.text,
-        "departemen": departemenController.text,
-        "divisi": divisiController.text,
-        "no_telp": nomorTeleponController.text,
-       
-        "password": passwordController.text,
-        "status": statusController.text,
-      };
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ProfileCard(
-                data: DataModel(
-                    departemen: departemenController.text,
-                    divisi: divisiController.text,
-                    jabatan: jabatanController.text,
-                    kode_staff: widget.data.kode_staff,
-                    nama: namaController.text,
-                    nip: nipController.text,
-                    nomorTelp: nomorTeleponController.text,
-                    status: statusController.text,
-                    unit_kerja: unitKerjaController.text),
-                nip: nipController.text)),
-      );
-    } else {
-      print('Gagal menyimpan data: ${response.statusCode}');
-    }
-  }
-
-  Future _getdata() async {
-    try {
-      final response = await http.get(Uri.parse(
-          'http://192.168.43.50/crudflutter/flutter_crud/lib/read.php'));
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        setState(() {
-          namaController.text = data['kode_staff'];
-          namaController.text = data['nama'];
-          jabatanController.text = data['jabatan'];
-          unitKerjaController.text = data['unit_kerja'];
-          departemenController.text = data['departemen'];
-          divisiController.text = data['divisi'];
-          nomorTeleponController.text = data['no_telp'];
-          nipController.text = data['nip'];
-          passwordController.text = data['password'];
-          statusController.text = data['status'];
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
+    fetchData();
+    namaController = TextEditingController(text: widget.data.nama ?? '');
+    jabatanController = TextEditingController(text: widget.data.jabatan ?? '');
+    unitKerjaController =
+        TextEditingController(text: widget.data.unit_kerja ?? '');
+    nipController = TextEditingController(text: widget.data.nip ?? '');
+    divisiController = TextEditingController(text: widget.data.divisi ?? '');
+    statusController = TextEditingController(text: widget.data.status ?? '');
+    departemenController =
+        TextEditingController(text: widget.data.departemen ?? '');
+    nomorTeleponController =
+        TextEditingController(text: widget.data.nomorTelp ?? '');
+    kodestaffController =
+        TextEditingController(text: widget.data.kode_staff ?? '');
   }
 
   Future<void> fetchData() async {
-    final response = await http.get(
-      Uri.parse(
-          'http://192.168.43.50/crudflutter/flutter_crud/lib/read.php'), // Ganti dengan URL yang sesuai untuk mendapatkan data dari database
-    );
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://192.168.9.177/ProjectScanner/lib/API/updateprofile.php?nip=${widget.data.nip}&nama=${widget.data.nama}&unit_kerja=${widget.data.unit_kerja}'),
+      );
 
-    if (response.statusCode == 200) {
-      final responseData =
-          json.decode(response.body); // Ubah respon menjadi bentuk yang sesuai
-      setState(() {
-        namaController.text = responseData['kode_staff'];
-        namaController.text = responseData['nama'];
-        jabatanController.text = responseData['jabatan'];
-        unitKerjaController.text = responseData['unit_kerja'];
-        departemenController.text = responseData['departemen'];
-        divisiController.text = responseData['divisi'];
-        nomorTeleponController.text = responseData['no_telp'];
-        nipController.text = responseData['nip'];
-        passwordController.text = responseData['password'];
-        statusController.text = responseData['status'];
-      });
-    } else {
-      print('Gagal mendapatkan data: ${response.statusCode}');
-    }
-  }
-
-  Future<void> _update() async {
-    final response = await http.post(
-      Uri.parse(
-          'http://192.168.43.50/ProjectScanner/lib/tbl_tambahstaff/create_tambahstaff.php'),
-      body: {
-        "nama": namaController.text,
-        "jabatan": jabatanController.text,
-        "unit_kerja": unitKerjaController.text,
-        "departemen": departemenController.text,
-        "divisi": divisiController.text,
-        "no_telp": nomorTeleponController.text,
-        "nip": nipController.text,
-        "password": passwordController.text,
-        "status": statusController.text,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      print('Data berhasil diperbarui');
-    } else {
-      print('Gagal memperbarui data: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        final nip = responseData['nip'];
+        setState(() {
+          kodestaffController.text = responseData['kode_staff'];
+          nipController.text = responseData['nip'];
+          namaController.text = responseData['nama'];
+          jabatanController.text = responseData['jabatan'];
+          unitKerjaController.text = responseData['unit_kerja'];
+          departemenController.text = responseData['departemen'];
+          divisiController.text = responseData['divisi'];
+          nomorTeleponController.text = responseData['no_telp'];
+          statusController.text = responseData['status'];
+        });
+      } else {
+        print('Gagal mendapatkan data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
     }
   }
 
@@ -274,6 +194,52 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  void _updateDataAndNavigateToProfile() async {
+    try {
+      final response = await http.post(
+        Uri.parse(
+            'http://192.168.9.177/ProjectScanner/lib/API/updateprofile.php'),
+        body: {
+          'kode_staff': kodestaffController.text,
+          'nama': namaController.text,
+          'jabatan': jabatanController.text,
+          'unit_kerja': unitKerjaController.text,
+          'departemen': departemenController.text,
+          'divisi': divisiController.text,
+          'no_telp': nomorTeleponController.text,
+          'status': statusController.text,
+          'nip': nipController.text,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProfileCard(
+              data: DataModel(
+                nama: namaController.text,
+                jabatan: jabatanController.text,
+                unit_kerja: unitKerjaController.text,
+                departemen: departemenController.text,
+                divisi: divisiController.text,
+                nomorTelp: nomorTeleponController.text,
+                nip: nipController.text,
+                status: statusController.text,
+                kode_staff: kodestaffController.text,
+              ),
+              nip: nipController.text,
+            ),
+          ),
+        );
+      } else {
+        print('Failed to update data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error updating data: $e');
+    }
+  }
+
   Widget _buildSubmitButton() {
     return Align(
       alignment: Alignment.center,
@@ -281,24 +247,7 @@ class _ProfilePageState extends State<ProfilePage> {
         width: double.infinity,
         child: ElevatedButton(
           onPressed: () {
-            _simpan();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ProfileCard(
-                        data: DataModel(
-                            departemen: "",
-                            divisi: "",
-                            jabatan: "",
-                            kode_staff: "",
-                            nama: "",
-                            nip: "",
-                            nomorTelp: '',
-                            status: '',
-                            unit_kerja: ''),
-                        nip: '',
-                      )),
-            );
+            _updateDataAndNavigateToProfile();
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color.fromRGBO(43, 56, 86, 1),

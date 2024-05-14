@@ -1,41 +1,12 @@
 import 'dart:convert';
 
 import 'package:RekaChain/model/data_model.dart';
+import 'package:RekaChain/open_item.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
 import 'package:RekaChain/updateprofile.dart';
 import 'package:RekaChain/login.dart';
 import 'package:http/http.dart' as http;
-
-class User {
-  final String kode_staff;
-  final String nama;
-  final String jabatan;
-  final String unit_kerja;
-  final String departemen;
-  final String divisi;
-  final String email;
-  final String no_telp;
-  final String nip;
-  final String status;
-  final String password;
-  final String konfirmasi_password;
-
-  User({
-    required this.kode_staff,
-    required this.nama,
-    required this.jabatan,
-    required this.unit_kerja,
-    required this.departemen,
-    required this.divisi,
-    required this.email,
-    required this.no_telp,
-    required this.nip,
-    required this.status,
-    required this.password,
-    required this.konfirmasi_password,
-  });
-}
 
 class TambahOpenItem extends StatefulWidget {
   final String nip;
@@ -51,9 +22,7 @@ class _TambahOpenItemState extends State<TambahOpenItem> {
   late double screenWidth = MediaQuery.of(context).size.width;
   late double screenHeight = MediaQuery.of(context).size.height;
 
-  TextEditingController namaController = TextEditingController();
-  TextEditingController nipController = TextEditingController();
-  TextEditingController unitKerjaController = TextEditingController();
+  TextEditingController keteranganController = TextEditingController();
 
   bool _isLoading = true;
   String _errorMessage = 'Terjadi kesalahan saat mengambil data';
@@ -61,7 +30,7 @@ class _TambahOpenItemState extends State<TambahOpenItem> {
   Future<void> _getData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.43.50/ProjectScanner/lib/tbl_tambahstaff/profileREAD.php'));
+          'http://192.168.9.177/ProjectScanner/lib/API/create_openlist.php'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
@@ -101,177 +70,78 @@ class _TambahOpenItemState extends State<TambahOpenItem> {
   @override
   void initState() {
     _getData();
-    //print(_listdata);
     super.initState();
   }
 
   Future<void> _simpan() async {
-    // Simpan data dan dapatkan data yang diperbarui
-    final updatedData = {
-      'nama': namaController.text,
-      'nip': nipController.text,
-      'unit_kerja': unitKerjaController.text,
-      // Data yang diperbarui
+    if (!formKey.currentState!.validate()) return;
+
+    // Create the new data entry
+    final newData = {
+      'keterangan': keteranganController.text,
     };
 
-    // Kirim data yang diperbarui ke halaman profil
-    Navigator.pop(context, updatedData);
+    // Return the new data to the calling screen
+    Navigator.pop(context, newData);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('Tambah Keterangan'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const NavBar()),
+              MaterialPageRoute(builder: (context) => const ListOpenItem()),
             );
           },
         ),
       ),
-      body: Container(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: screenHeight * 0.01,
-              left: screenWidth * 0.05,
-              right: screenWidth * 0.05,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Hallo!',
-                  style: TextStyle(
-                    color: Color.fromRGBO(43, 56, 86, 1),
-                    fontFamily: 'Donegal One',
-                    fontSize: screenWidth * 0.075,
-                    fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Placeholder untuk menampilkan data pengguna
+            // Anda dapat menambahkan ini kembali setelah menyelesaikan penambahan data
+
+            SizedBox(height: 8.0),
+            // Ganti dengan widget untuk menampilkan data user
+
+            SizedBox(height: 16.0),
+            // Form untuk menambahkan data baru
+            Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextFormField(
+                    controller: keteranganController,
+                    decoration: InputDecoration(labelText: 'Keterangan'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Keterangan tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
-                  textAlign: TextAlign.start, // Align text to the left
-                ),
-
-                _buildAvatar(),
-                SizedBox(height: screenHeight * 0.05),
-                _buildTextView('Nama',
-                    text: _userData != null
-                        ? _userData!['nama'].toString()
-                        : 'Loading...'),
-                _buildDivider(),
-                _buildTextView('NIP',
-                    text: _userData != null
-                        ? _userData!['nip'].toString()
-                        : 'Loading...'),
-                _buildDivider(),
-                _buildTextView('Unit Kerja',
-                    text: _userData != null
-                        ? _userData!['unit_kerja'].toString()
-                        : 'Loading...'),
-
-                SizedBox(height: screenHeight * 0.05),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProfilePage(
-                                data: DataModel(
-                                    departemen: "departemen",
-                                    divisi: "divisi",
-                                    jabatan: "jabatan",
-                                    kode_staff: "kode_staff",
-                                    nama: "nama",
-                                    nip: "nip",
-                                    nomorTelp: "nomorTelp",
-                                    status: "status",
-                                    unit_kerja: "unit_kerja"),
-                                nip: '',
-                              )),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    padding: EdgeInsets.only(
-                      top: screenHeight * 0.015,
-                      bottom: screenHeight * 0.015,
-                      left: screenWidth * 0.1,
-                      right: screenWidth * 0.1,
-                    ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        _simpan(); // Panggil method _simpan() saat tombol "Simpan" ditekan
+                      }
+                    },
+                    child: Text('Simpan'),
                   ),
-                  child: const Text('Ubah Profile'),
-                ),
-                SizedBox(height: screenHeight * 0.01), // Spacer
-                ElevatedButton(
-                  onPressed: () {
-                    _simpan(); // Panggil method _simpan() saat tombol "Simpan" ditekan
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    padding: EdgeInsets.only(
-                      top: screenHeight * 0.015,
-                      bottom: screenHeight * 0.015,
-                      left: screenWidth * 0.1,
-                      right: screenWidth * 0.1,
-                    ),
-                  ),
-                  child: const Text('Simpan'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHelloText() {
-    return const Text(
-      'Hallo!',
-      style: TextStyle(
-        color: Color.fromRGBO(43, 56, 86, 1),
-        fontSize: 32.0,
-        fontWeight: FontWeight.bold,
-      ),
-      textAlign: TextAlign.start,
-    );
-  }
-
-  Widget _buildAvatar() {
-    return Stack(
-      children: [
-        Container(
-          width: screenWidth * 0.35,
-          height: screenWidth * 0.35,
-          decoration: BoxDecoration(
-            border: Border.all(width: 4, color: Colors.white),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 2,
-                blurRadius: 10,
-                color: Colors.black.withOpacity(0.1),
+                ],
               ),
-            ],
-            shape: BoxShape.circle,
-            image: const DecorationImage(
-              fit: BoxFit.cover,
-              alignment: Alignment.center,
-              image: NetworkImage('assets/images/profile-illustration.png'),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
