@@ -58,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.9.177/ProjectScanner/lib/API/updateprofile.php?nip=${widget.data.nip}&nama=${widget.data.nama}&unit_kerja=${widget.data.unit_kerja}'),
+            'http://192.168.9.222/ProjectScanner/lib/API/updateprofile.php?nip=${widget.data.nip}&nama=${widget.data.nama}&unit_kerja=${widget.data.unit_kerja}'),
       );
 
       if (response.statusCode == 200) {
@@ -159,7 +159,8 @@ class _ProfilePageState extends State<ProfilePage> {
         buildDivider(),
         buildTextField('Nomor Telepon', nomorTeleponController),
         buildDivider(),
-        buildTextField('NIP', nipController),
+        buildTextField('NIP', nipController,
+            enabled: false), // NIP tidak bisa diedit
         buildDivider(),
         buildTextField('Password', passwordController, obscureText: true),
         buildDivider(),
@@ -170,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildTextField(String label, TextEditingController controller,
-      {bool obscureText = false}) {
+      {bool obscureText = false, bool enabled = true}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -180,8 +181,9 @@ class _ProfilePageState extends State<ProfilePage> {
             fontSize: 16,
           ),
         ),
-        TextField(
+        TextFormField(
           controller: controller,
+          enabled: enabled,
           obscureText: obscureText,
           style: const TextStyle(
             fontSize: 16,
@@ -198,7 +200,7 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.9.177/ProjectScanner/lib/API/updateprofile.php'),
+            'http://192.168.9.222/ProjectScanner/lib/API/updateprofile.php'),
         body: {
           'kode_staff': kodestaffController.text,
           'nama': namaController.text,
