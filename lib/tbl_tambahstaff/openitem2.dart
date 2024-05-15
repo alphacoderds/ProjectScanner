@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:RekaChain/open_item.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,7 +20,7 @@ class _ViewOpenItemState extends State<ViewOpenItem> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.43.50/ProjectScanner/lib/API/edit_openitem.php?no=${widget.selectedProject['no']}&isi=${widget.selectedProject['isi']}'),
+            'http://192.168.9.177/ProjectScanner/lib/API/edit_openitem.php?no=${widget.selectedProject['no']}&isi=${widget.selectedProject['isi']}'),
       );
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
@@ -32,6 +33,32 @@ class _ViewOpenItemState extends State<ViewOpenItem> {
       }
     } catch (e) {
       print('Error fetching data: $e');
+    }
+  }
+
+  void _updateDataAndNavigateToListProject() async {
+    try {
+      final response = await http.post(
+        Uri.parse(
+            'http://192.168.9.177/ProjectScanner/lib/API/edit_openitem.php'),
+        body: {
+          'no': widget.selectedProject['no'].toString(),
+          'isi': isiopenitemController.text,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ListOpenItem(),
+          ),
+        );
+      } else {
+        print('Failed to update data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error updating data: $e');
     }
   }
 
@@ -111,12 +138,7 @@ class _ViewOpenItemState extends State<ViewOpenItem> {
           right: 20,
           child: IconButton(
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return _oipopupsimpan1();
-                },
-              );
+              _updateDataAndNavigateToListProject();
             },
             icon: Icon(
               Icons.check_box_outlined,
@@ -159,7 +181,9 @@ class _ViewOpenItemState extends State<ViewOpenItem> {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                _updateDataAndNavigateToListProject();
+              },
               style: ElevatedButton.styleFrom(
                 foregroundColor: const Color.fromRGBO(43, 56, 86, 1),
                 backgroundColor: Colors.white,

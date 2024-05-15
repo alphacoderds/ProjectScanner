@@ -35,7 +35,7 @@ class _ListOpenItemState extends State<ListOpenItem> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.43.50/ProjectScanner/lib/API/read_openlist.php'),
+            'http://192.168.9.177/ProjectScanner/lib/API/read_openlist.php'),
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -134,9 +134,7 @@ class _ListOpenItemState extends State<ListOpenItem> {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return TambahOpenItem(
-                    nip: '',
-                  );
+                  return TambahOpenItem();
                 },
               );
             },

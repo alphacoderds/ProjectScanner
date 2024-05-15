@@ -1,214 +1,190 @@
-import 'dart:convert';
-
-import 'package:RekaChain/model/data_model.dart';
 import 'package:RekaChain/open_item.dart';
 import 'package:flutter/material.dart';
-import 'package:RekaChain/bottomnavbar.dart';
-import 'package:RekaChain/updateprofile.dart';
-import 'package:RekaChain/login.dart';
 import 'package:http/http.dart' as http;
 
 class TambahOpenItem extends StatefulWidget {
-  final String nip;
-  const TambahOpenItem({super.key, required this.nip});
+  const TambahOpenItem({super.key});
 
   @override
   State<TambahOpenItem> createState() => _TambahOpenItemState();
 }
 
 class _TambahOpenItemState extends State<TambahOpenItem> {
-  final formKey = GlobalKey<FormState>();
-  Map<String, dynamic>? _userData;
-  late double screenWidth = MediaQuery.of(context).size.width;
-  late double screenHeight = MediaQuery.of(context).size.height;
-
-  TextEditingController keteranganController = TextEditingController();
-
-  bool _isLoading = true;
-  String _errorMessage = 'Terjadi kesalahan saat mengambil data';
-
-  Future<void> _getData() async {
-    try {
-      final response = await http.get(Uri.parse(
-          'http://192.168.9.177/ProjectScanner/lib/API/create_openlist.php'));
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-
-        // Filter data berdasarkan NIP yang telah diperoleh sebelumnya
-        Map<String, dynamic>? userData;
-        for (var userDataItem in data) {
-          if (userDataItem['nip'] == widget.nip) {
-            userData = userDataItem;
-            break;
-          }
-        }
-
-        if (userData != null) {
-          // Setel state untuk menampilkan data pengguna yang sesuai
-          setState(() {
-            _userData = userData;
-            _isLoading = false;
-          });
-        } else {
-          // Tampilkan pesan jika data pengguna tidak ditemukan
-          setState(() {
-            _isLoading = false;
-            _errorMessage = 'Data pengguna tidak ditemukan';
-          });
-        }
-      }
-    } catch (e) {
-      // Tangani kesalahan yang terjadi
-      print(e);
-      setState(() {
-        _isLoading = false;
-        _errorMessage = 'Terjadi kesalahan saat mengambil data';
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    _getData();
-    super.initState();
-  }
+  TextEditingController isiopenitemController = TextEditingController();
 
   Future<void> _simpan() async {
-    if (!formKey.currentState!.validate()) return;
+    if (isiopenitemController.text.isNotEmpty) {
+      final response = await http.post(
+        Uri.parse(
+            'http://192.168.9.177/ProjectScanner/lib/API/create_openlist.php'),
+        body: {
+          "isi": isiopenitemController.text,
+        },
+      );
 
-    // Create the new data entry
-    final newData = {
-      'keterangan': keteranganController.text,
-    };
+      if (response.statusCode == 200) {
+        final newProjectData = {
+          "no": response.body,
+          "isi": isiopenitemController.text,
+        };
 
-    // Return the new data to the calling screen
-    Navigator.pop(context, newData);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ListOpenItem(newProject: newProjectData),
+          ),
+        );
+      } else {
+        print('Gagal menyimpan data: ${response.statusCode}');
+      }
+    } else {
+      print('Mohon lengkapi nama project.');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tambah Keterangan'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const ListOpenItem()),
-            );
-          },
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Placeholder untuk menampilkan data pengguna
-            // Anda dapat menambahkan ini kembali setelah menyelesaikan penambahan data
-
-            SizedBox(height: 8.0),
-            // Ganti dengan widget untuk menampilkan data user
-
-            SizedBox(height: 16.0),
-            // Form untuk menambahkan data baru
-            Form(
-              key: formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  TextFormField(
-                    controller: keteranganController,
-                    decoration: InputDecoration(labelText: 'Keterangan'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Keterangan tidak boleh kosong';
-                      }
-                      return null;
-                    },
+            Text('Open Item'),
+            SizedBox(width: 10.0),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: FractionalTranslation(
+                  translation: Offset(0.37, 0.10),
+                  child: AspectRatio(
+                    aspectRatio: 11 / 8,
+                    child: Image(
+                      image: AssetImage('assets/images/bolder31.png'),
+                      width: 170,
+                      height: 120,
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        _simpan(); // Panggil method _simpan() saat tombol "Simpan" ditekan
-                      }
-                    },
-                    child: Text('Simpan'),
-                  ),
-                ],
+                ),
               ),
             ),
           ],
         ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
-    );
-  }
-
-  Widget _buildTextView(String label, {required String text}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 8.0),
-        Text(
-          text,
-          style: const TextStyle(
-            fontSize: 16.0,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDivider() {
-    return const Divider(
-      color: Colors.grey,
-      thickness: 1.0,
-      height: 16.0,
-    );
-  }
-
-  Future<void> _showLogoutConfirmationDialog() async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Logout Confirmation'),
-          content: const SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Apakah Anda yakin ingin logout?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Batal'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Logika logout
-                Navigator.of(context).pop();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
-              },
-              child: const Text('Logout'),
+      body: Stack(children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: SizedBox(
+                width: 350,
+                child: TextField(
+                  controller: isiopenitemController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    hintText: 'Isi Open Item',
+                    filled: true,
+                    fillColor: Colors.transparent,
+                  ),
+                  minLines: 4,
+                  maxLines: null,
+                ),
+              ),
             ),
           ],
-        );
-      },
+        ),
+        Positioned(
+          bottom: 40,
+          right: 20,
+          child: IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return _oipopupsimpan1();
+                },
+              );
+            },
+            icon: Icon(
+              Icons.check_box_outlined,
+              size: 40,
+            ),
+          ),
+        ),
+      ]),
+    );
+  }
+
+//======================================Tampilan Pop Up Simpan Data 1======================================
+  Widget _oipopupsimpan1() {
+    return Dialog(
+      alignment: Alignment.center,
+      child: Container(
+        width: 500,
+        decoration: BoxDecoration(
+          color: const Color.fromRGBO(43, 56, 86, 1),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20),
+            const Icon(
+              Icons.check_circle_outline_rounded,
+              color: Colors.white,
+              size: 100,
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Menyimpan data!',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+                fontSize: 16.5,
+              ),
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () {
+                _simpan();
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: const Color.fromRGBO(43, 56, 86, 1),
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              child: const SizedBox(
+                width: 50,
+                height: 30,
+                child: Center(
+                  child: Text(
+                    "Selesai",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
     );
   }
 }
