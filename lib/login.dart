@@ -49,12 +49,7 @@ class _LoginPageState extends State<LoginPage> {
     DataModel dataKaryawan = DataModel.getDataFromJSOn(data['data']);
     if (data['message'] == "Success") {
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ProfileCard(
-                    data: dataKaryawan,
-                    nip: nip.text,
-                  )));
+          context, MaterialPageRoute(builder: (context) => NavBar()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

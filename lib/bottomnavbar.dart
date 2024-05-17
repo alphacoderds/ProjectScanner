@@ -15,15 +15,16 @@ class _NavBarState extends State<NavBar> {
   final List<Widget> _widgetOptions = <Widget>[
     const MenuUtama(),
     ProfileCard(
-      data: DataModel(departemen: "", 
-      divisi: "", 
-      jabatan: "", 
-      kode_staff: "", 
-      nama: "", 
-      nip: "", 
-      nomorTelp: "", 
-      status: "", 
-      unit_kerja: ""),
+      data: DataModel(
+          departemen: "",
+          divisi: "",
+          jabatan: "",
+          kode_staff: "",
+          nama: "",
+          nip: "",
+          nomorTelp: "",
+          status: "",
+          unit_kerja: ""),
       nip: '',
     )
   ];
