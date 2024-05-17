@@ -18,7 +18,7 @@ class _SaranState extends State<Saran> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('List Kekurangan'),
+            Text('Saran/Tindak Lanjut'),
             SizedBox(width: 10.0),
             Expanded(
               child: Align(

@@ -20,6 +20,20 @@ class DataModel {
       required this.status,
       required this.unit_kerja});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'kode_staff': kode_staff,
+      'nip': nip,
+      'no_telp': nomorTelp,
+      'nama': nama,
+      'jabatan': jabatan,
+      'unit_kerja': unit_kerja,
+      'departemen': departemen,
+      'divisi': divisi,
+      'status': status,
+    };
+  }
+
   factory DataModel.getDataFromJSOn(Map<String, dynamic> json) {
     return DataModel(
         departemen: json['departemen'],
