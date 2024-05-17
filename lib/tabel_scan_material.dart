@@ -1,18 +1,15 @@
 import 'dart:convert';
 import 'package:RekaChain/ModelClass/MD_ScanMaterial.dart';
-import 'package:RekaChain/ModelClass/MD_User.dart';
-import 'package:RekaChain/login.dart';
 import 'package:RekaChain/pop_up_materiall.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TabelScanMaterial extends StatefulWidget {
   final String kode_material;
 
-  const TabelScanMaterial({
-    Key? key,
-    required this.kode_material,
-  }) : super(key: key);
+  const TabelScanMaterial({Key? key, required this.kode_material})
+      : super(key: key);
   @override
   State<TabelScanMaterial> createState() => _TabelScanMaterialState();
 }
@@ -22,14 +19,15 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   late double screenHeight;
 
   late ScanMaterial scanmaterial;
-  late User user;
   late List _listdata;
   bool _isloading = true;
 
   TextEditingController qtyDiterima = TextEditingController();
+  TextEditingController nipDiterima = TextEditingController();
   late List<List<TextEditingController>> controllers;
 
   Map<int, String> _temporaryChanges = {};
+  String nip = '';
 
   Future<void> fetchData() async {
     setState(() {
@@ -37,7 +35,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     });
 
     final Uri url = Uri.parse(
-        'http://192.168.9.177/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
+        'http://192.168.11.24/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -56,10 +54,19 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     }
   }
 
+  // Method to fetch NIP from SharedPreferences
+  Future<void> fetchNIP() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      nip = prefs.getString('nip') ?? ''; // Set NIP from SharedPreferences
+      nipDiterima.text = nip;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-
+    fetchNIP();
     fetchData();
 
     controllers = [];
@@ -69,6 +76,12 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   void _updateQtyDiterima(int index, String newQtyDiterima) {
     setState(() {
       _temporaryChanges[index] = newQtyDiterima;
+    });
+  }
+
+  void _updateNipDiterima(int index, String newQtyDiterima) {
+    setState(() {
+      _temporaryChanges[index] = nip;
     });
   }
 
@@ -85,13 +98,17 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     final Map<String, dynamic> requestData = {
       'id': _listdata[index]['id'],
       'qty_diterima': newQtyDiterima,
+      'nip': nipDiterima
     };
 
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.9.177/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
-        body: requestData,
+            'http://192.168.11.24/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
+        body: jsonEncode(requestData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       );
 
       if (response.statusCode != 200) {
@@ -115,6 +132,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Text('NIP: $nip'),
             SizedBox(width: screenWidth * 0.6),
             Expanded(
               child: Align(
@@ -266,7 +284,8 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                             ),
                             DataCell(
                               TextFormField(
-                                initialValue: data['qty_diterima'].toString(),
+                                initialValue:
+                                    _listdata[index]['qty_diterima'].toString(),
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
                                   _updateQtyDiterima(index, value);
@@ -308,8 +327,9 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    PopUpMaterial(saveChangesCallback: _saveChanges)),
+                builder: (context) => PopUpMaterial(
+                      saveChangesCallback: _saveChanges,
+                    )),
           );
         },
       ),

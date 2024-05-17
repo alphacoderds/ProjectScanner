@@ -14,19 +14,7 @@ class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
     const MenuUtama(),
-    ProfileCard(
-      data: DataModel(
-          departemen: "",
-          divisi: "",
-          jabatan: "",
-          kode_staff: "",
-          nama: "",
-          nip: "",
-          nomorTelp: "",
-          status: "",
-          unit_kerja: ""),
-      nip: '',
-    )
+    ProfileCard()
   ];
 
   void _onItemTap(int index) {

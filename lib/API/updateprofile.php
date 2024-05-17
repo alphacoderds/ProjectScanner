@@ -15,7 +15,7 @@ $status = $_POST['status'];
 $password = $_POST['password'];
 $konfirmasi_password = $_POST['konfirmasi_password'];
 
-$data = mysqli_query($conn, "UPDATE coba SET kode_staff='$kode_staff', nama='$nama', nip='$nip', jabatan='$jabatan', unit_kerja='$unit_kerja', departemen='$departemen', divisi='$divisi', no_telp='$no_telp', status='$status', password=SHA1('$password'), konfirmasi_password= SHA1('$konfirmasi_password') WHERE nip='$nip' ");
+$data = mysqli_query($conn, "UPDATE coba SET kode_staff='$kode_staff', nama='$nama', nip='$nip', jabatan='$jabatan', unit_kerja='$unit_kerja', departemen='$departemen', divisi='$divisi', no_telp='$no_telp', status='$status' WHERE nip='$nip' ");
 
 if ($result) {
     echo json_encode([

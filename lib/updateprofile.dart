@@ -9,10 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
-  final DataModel data;
-  final String nip;
-  const ProfilePage({Key? key, required this.data, required this.nip})
-      : super(key: key);
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -41,20 +38,28 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> fetchData() async {
-    DataModel? data = await getUserDataByNip(widget.nip);
-    if (data != null) {
-      setState(() {
-        kodestaffController.text = data.kode_staff;
-        nipController.text = data.nip;
-        namaController.text = data.nama;
-        jabatanController.text = data.jabatan;
-        unitKerjaController.text = data.unit_kerja;
-        departemenController.text = data.departemen;
-        divisiController.text = data.divisi;
-        nomorTeleponController.text = data.nomorTelp;
-        statusController.text = data.status;
-      });
+    String? nip = await getNipFromSharedPreferences();
+    if (nip != null) {
+      DataModel? data = await getUserDataByNip(nip);
+      if (data != null) {
+        setState(() {
+          kodestaffController.text = data.kode_staff;
+          nipController.text = data.nip;
+          namaController.text = data.nama;
+          jabatanController.text = data.jabatan;
+          unitKerjaController.text = data.unit_kerja;
+          departemenController.text = data.departemen;
+          divisiController.text = data.divisi;
+          nomorTeleponController.text = data.nomorTelp;
+          statusController.text = data.status;
+        });
+      }
     }
+  }
+
+  Future<String?> getNipFromSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('nip');
   }
 
   Future<DataModel?> getUserDataByNip(String nip) async {
@@ -148,8 +153,6 @@ class _ProfilePageState extends State<ProfilePage> {
         buildTextField('NIP', nipController,
             enabled: false), // NIP tidak bisa diedit
         buildDivider(),
-        buildTextField('Password', passwordController, obscureText: true),
-        buildDivider(),
         buildTextField('Status', statusController),
         buildDivider(),
       ],
@@ -186,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.9.222/ProjectScanner/lib/API/updateprofile.php'),
+            'http://192.168.11.24/ProjectScanner/lib/API/updateprofile.php'),
         body: {
           'kode_staff': kodestaffController.text,
           'nama': namaController.text,
@@ -201,6 +204,7 @@ class _ProfilePageState extends State<ProfilePage> {
       );
 
       if (response.statusCode == 200) {
+        print('Update successful: ${response.body}');
         DataModel updatedData = DataModel(
           nama: namaController.text,
           jabatan: jabatanController.text,
@@ -219,16 +223,10 @@ class _ProfilePageState extends State<ProfilePage> {
         await prefs.setString('dataKaryawan', dataKaryawanJson);
 
         Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProfileCard(
-              data: updatedData,
-              nip: nipController.text,
-            ),
-          ),
-        );
+            context, MaterialPageRoute(builder: (context) => ProfileCard()));
       } else {
         print('Failed to update data: ${response.statusCode}');
+        print('Response: ${response.body}');
       }
     } catch (e) {
       print('Error updating data: $e');
