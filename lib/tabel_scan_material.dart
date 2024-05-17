@@ -37,7 +37,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     });
 
     final Uri url = Uri.parse(
-        'http://192.168.9.205/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
+        'http://192.168.9.177/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -66,8 +66,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     _scrollController = ScrollController();
   }
 
-  void _updateQtyDiterima(
-      int index, String newQtyDiterima, int loggedInUserNIP) {
+  void _updateQtyDiterima(int index, String newQtyDiterima) {
     setState(() {
       _temporaryChanges[index] = newQtyDiterima;
     });
@@ -77,23 +76,21 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     for (var entry in _temporaryChanges.entries) {
       int index = entry.key;
       String newQtyDiterima = entry.value;
-      await _updateQtyDiterimaInDatabase(
-          index, newQtyDiterima, LoginPage.loggedInUserNIP);
+      await _updateQtyDiterimaInDatabase(index, newQtyDiterima);
     }
   }
 
   Future<void> _updateQtyDiterimaInDatabase(
-      int index, String newQtyDiterima, loggedInUserNIP) async {
+      int index, String newQtyDiterima) async {
     final Map<String, dynamic> requestData = {
       'id': _listdata[index]['id'],
       'qty_diterima': newQtyDiterima,
-      'nip': LoginPage.loggedInUserNIP
     };
 
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.9.205/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
+            'http://192.168.9.177/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
         body: requestData,
       );
 
@@ -118,7 +115,6 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('${LoginPage.loggedInUserNIP}'),
             SizedBox(width: screenWidth * 0.6),
             Expanded(
               child: Align(
@@ -273,8 +269,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                                 initialValue: data['qty_diterima'].toString(),
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
-                                  _updateQtyDiterima(
-                                      index, value, LoginPage.loggedInUserNIP);
+                                  _updateQtyDiterima(index, value);
                                 },
                               ),
                             ),

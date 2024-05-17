@@ -90,8 +90,7 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const ScannerTahapSelesai(),
+                                builder: (context) => NavBar(),
                               ),
                             );
                           },
