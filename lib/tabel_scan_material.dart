@@ -23,7 +23,6 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   bool _isloading = true;
 
   TextEditingController qtyDiterima = TextEditingController();
-  TextEditingController nipDiterima = TextEditingController();
   late List<List<TextEditingController>> controllers;
 
   Map<int, String> _temporaryChanges = {};
@@ -59,15 +58,14 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       nip = prefs.getString('nip') ?? ''; // Set NIP from SharedPreferences
-      nipDiterima.text = nip;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    fetchNIP();
     fetchData();
+    fetchNIP();
 
     controllers = [];
     _scrollController = ScrollController();
@@ -76,12 +74,6 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   void _updateQtyDiterima(int index, String newQtyDiterima) {
     setState(() {
       _temporaryChanges[index] = newQtyDiterima;
-    });
-  }
-
-  void _updateNipDiterima(int index, String newQtyDiterima) {
-    setState(() {
-      _temporaryChanges[index] = nip;
     });
   }
 
@@ -98,17 +90,14 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     final Map<String, dynamic> requestData = {
       'id': _listdata[index]['id'],
       'qty_diterima': newQtyDiterima,
-      'nip': nipDiterima
+      'nip': nip, // Menggunakan NIP dari SharedPreferences
     };
 
     try {
       final response = await http.post(
         Uri.parse(
             'http://192.168.11.24/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
-        body: jsonEncode(requestData),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        body: requestData,
       );
 
       if (response.statusCode != 200) {
@@ -132,7 +121,6 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('NIP: $nip'),
             SizedBox(width: screenWidth * 0.6),
             Expanded(
               child: Align(
@@ -327,9 +315,8 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PopUpMaterial(
-                      saveChangesCallback: _saveChanges,
-                    )),
+                builder: (context) =>
+                    PopUpMaterial(saveChangesCallback: _saveChanges)),
           );
         },
       ),

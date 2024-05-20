@@ -16,7 +16,6 @@ class ScannerMaterial extends StatefulWidget {
 class _ScannerMaterialState extends State<ScannerMaterial> {
   late double screenWidth = MediaQuery.of(context).size.width;
   late double screenHeight = MediaQuery.of(context).size.height;
-  String nip = '';
 
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
@@ -40,9 +39,8 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => TabelScanMaterial(
-                    kode_material: barcodeScanRes,
-                  )),
+              builder: (context) =>
+                  TabelScanMaterial(kode_material: barcodeScanRes)),
         );
       }
     } on PlatformException {
@@ -55,14 +53,6 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
   @override
   void initState() {
     super.initState();
-    _loadNIP(); // Load NIP from local storage
-  }
-
-  Future<void> _loadNIP() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      nip = prefs.getString('nip') ?? ''; // Load NIP and set it to the state
-    });
   }
 
   @override
@@ -72,7 +62,7 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
         title: Row(
           children: [
             SizedBox(width: 8),
-            Text('NIP: $nip'),
+            Text('Reka Chain'),
           ],
         ),
       ),
