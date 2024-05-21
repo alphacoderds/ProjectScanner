@@ -282,7 +282,7 @@ class _AfterSalesDataState extends State<AfterSalesData> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Saran(),
+                      builder: (context) => const ListSaran(),
                     ),
                   );
                 },

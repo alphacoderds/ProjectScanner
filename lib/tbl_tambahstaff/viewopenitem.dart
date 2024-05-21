@@ -20,7 +20,7 @@ class _ViewOpenItemState extends State<ViewOpenItem> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.9.177/ProjectScanner/lib/API/edit_openitem.php?no=${widget.selectedProject['no']}&isi=${widget.selectedProject['isi']}'),
+            'http://192.168.8.107/ProjectScanner/lib/API/edit_openitem.php?no=${widget.selectedProject['no']}&isi=${widget.selectedProject['isi']}'),
       );
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
@@ -40,7 +40,7 @@ class _ViewOpenItemState extends State<ViewOpenItem> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.9.177/ProjectScanner/lib/API/edit_openitem.php'),
+            'http://192.168.8.107/ProjectScanner/lib/API/edit_openitem.php'),
         body: {
           'no': widget.selectedProject['no'].toString(),
           'isi': isiopenitemController.text,

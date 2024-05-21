@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:RekaChain/tbl_tambahstaff/openitem2.dart';
+import 'package:RekaChain/tbl_tambahstaff/viewopenitem.dart';
 import 'package:RekaChain/tbl_tambahstaff/tambahopenitem.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
@@ -18,8 +18,6 @@ class ListOpenItem extends StatefulWidget {
 }
 
 class _ListOpenItemState extends State<ListOpenItem> {
-  TextEditingController isiopenitemController = TextEditingController();
-
   late List<dynamic> _listdata = [];
   bool _isloading = true;
 
@@ -35,7 +33,7 @@ class _ListOpenItemState extends State<ListOpenItem> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.9.177/ProjectScanner/lib/API/read_openlist.php'),
+            'http://192.168.8.107/ProjectScanner/lib/API/read_openlist.php'),
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
