@@ -1,18 +1,15 @@
 import 'dart:convert';
 import 'package:RekaChain/ModelClass/MD_ScanMaterial.dart';
-import 'package:RekaChain/ModelClass/MD_User.dart';
-import 'package:RekaChain/login.dart';
 import 'package:RekaChain/pop_up_materiall.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TabelScanMaterial extends StatefulWidget {
   final String kode_material;
 
-  const TabelScanMaterial({
-    Key? key,
-    required this.kode_material,
-  }) : super(key: key);
+  const TabelScanMaterial({Key? key, required this.kode_material})
+      : super(key: key);
   @override
   State<TabelScanMaterial> createState() => _TabelScanMaterialState();
 }
@@ -22,7 +19,6 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   late double screenHeight;
 
   late ScanMaterial scanmaterial;
-  late User user;
   late List _listdata;
   bool _isloading = true;
 
@@ -30,6 +26,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   late List<List<TextEditingController>> controllers;
 
   Map<int, String> _temporaryChanges = {};
+  String nip = '';
 
   Future<void> fetchData() async {
     setState(() {
@@ -37,7 +34,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     });
 
     final Uri url = Uri.parse(
-        'http://192.168.9.177/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
+        'http://192.168.11.24/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -56,11 +53,19 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     }
   }
 
+  // Method to fetch NIP from SharedPreferences
+  Future<void> fetchNIP() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      nip = prefs.getString('nip') ?? ''; // Set NIP from SharedPreferences
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-
     fetchData();
+    fetchNIP();
 
     controllers = [];
     _scrollController = ScrollController();
@@ -85,12 +90,13 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     final Map<String, dynamic> requestData = {
       'id': _listdata[index]['id'],
       'qty_diterima': newQtyDiterima,
+      'nip': nip, // Menggunakan NIP dari SharedPreferences
     };
 
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.9.177/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
+            'http://192.168.11.24/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
         body: requestData,
       );
 
@@ -266,7 +272,8 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                             ),
                             DataCell(
                               TextFormField(
-                                initialValue: data['qty_diterima'].toString(),
+                                initialValue:
+                                    _listdata[index]['qty_diterima'].toString(),
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
                                   _updateQtyDiterima(index, value);

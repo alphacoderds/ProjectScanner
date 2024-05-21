@@ -6,41 +6,10 @@ import 'package:RekaChain/bottomnavbar.dart';
 import 'package:RekaChain/updateprofile.dart';
 import 'package:RekaChain/login.dart';
 import 'package:http/http.dart' as http;
-
-class User {
-  final String kode_staff;
-  final String nama;
-  final String jabatan;
-  final String unit_kerja;
-  final String departemen;
-  final String divisi;
-  final String email;
-  final String no_telp;
-  final String nip;
-  final String status;
-  final String password;
-  final String konfirmasi_password;
-
-  User({
-    required this.kode_staff,
-    required this.nama,
-    required this.jabatan,
-    required this.unit_kerja,
-    required this.departemen,
-    required this.divisi,
-    required this.email,
-    required this.no_telp,
-    required this.nip,
-    required this.status,
-    required this.password,
-    required this.konfirmasi_password,
-  });
-}
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileCard extends StatefulWidget {
-  final DataModel data;
-  final String nip;
-  const ProfileCard({super.key, required this.nip, required this.data});
+  const ProfileCard({super.key});
 
   @override
   State<ProfileCard> createState() => _ProfileCardState();
@@ -67,10 +36,14 @@ class _ProfileCardState extends State<ProfileCard> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
+        // Ambil NIP dari SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        String? nip = prefs.getString('nip');
+
         // Filter data berdasarkan NIP yang telah diperoleh sebelumnya
         Map<String, dynamic>? userData;
         for (var userDataItem in data) {
-          if (userDataItem['nip'] == widget.nip) {
+          if (userDataItem['nip'] == nip) {
             userData = userDataItem;
             break;
           }
@@ -100,20 +73,43 @@ class _ProfileCardState extends State<ProfileCard> {
     }
   }
 
+  Future<DataModel?> getUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? dataKaryawanJson = prefs.getString('dataKaryawan');
+    if (dataKaryawanJson != null) {
+      Map<String, dynamic> userMap = jsonDecode(dataKaryawanJson);
+      return DataModel.getDataFromJSOn(userMap);
+    }
+    return null;
+  }
+
+  Future<void> _getUserDataFromSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? dataKaryawanJson = prefs.getString('dataKaryawan');
+    if (dataKaryawanJson != null) {
+      Map<String, dynamic> userMap = jsonDecode(dataKaryawanJson);
+      setState(() {
+        _userData = userMap;
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+        _errorMessage = 'Data pengguna tidak ditemukan';
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    if (widget.data != null) {
-      _listdata.add(widget.data);
-      updateData();
-    }
-    _getData();
+    _getUserDataFromSharedPrefs();
   }
 
-  Future<void> updateData() async {
-    await _getData();
-    setState(() {});
-  }
+  // Future<void> updateData() async {
+  //   await _getData();
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -155,34 +151,26 @@ class _ProfileCardState extends State<ProfileCard> {
                 _buildAvatar(),
                 SizedBox(height: screenHeight * 0.05),
                 _buildTextView('Nama',
-                    text: _userData != null
-                        ? _userData!['nama'].toString()
-                        : widget.data.nama),
+                    text: _userData != null ? _userData!['nama'] ?? '' : ''),
                 _buildDivider(),
                 _buildTextView('NIP',
-                    text: _userData != null
-                        ? _userData!['nip'].toString()
-                        : widget.data.nip),
+                    text: _userData != null ? _userData!['nip'] ?? '' : ''),
                 _buildDivider(),
                 _buildTextView('Unit Kerja',
                     text: _userData != null
-                        ? _userData!['unit_kerja'].toString()
-                        : widget.data.unit_kerja),
+                        ? _userData!['unit_kerja'] ?? ''
+                        : ''),
 
                 SizedBox(height: screenHeight * 0.05),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProfilePage(
-                          data: widget.data,
-                          nip: '',
-                        ),
-                      ),
-                    ).then((result) {
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfilePage(),
+                        )).then((result) {
                       if (result != null && result) {
-                        updateData();
+                        _getUserDataFromSharedPrefs();
                       }
                     });
                   },

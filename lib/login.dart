@@ -6,6 +6,7 @@ import 'package:RekaChain/updateprofile.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -42,12 +43,19 @@ class _LoginPageState extends State<LoginPage> {
   Future loginbtn() async {
     final hashedPassword = hashPassword(password.text);
     var response = await http.post(
-        Uri.parse('http://192.168.9.177/ProjectScanner/lib/API/login.php'),
+        Uri.parse('http://192.168.11.24/ProjectScanner/lib/API/login.php'),
         body: {"nip": nip.text, "password": password.text});
     var jsonData = jsonDecode(response.body);
     dynamic data = (jsonData as Map<String, dynamic>);
     DataModel dataKaryawan = DataModel.getDataFromJSOn(data['data']);
     if (data['message'] == "Success") {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('nip', nip.text); // Menyimpan NIP ke local storage
+
+      // Mengonversi objek dataKaryawan ke JSON string
+      String dataKaryawanJson = jsonEncode(dataKaryawan.toJson());
+      await prefs.setString('dataKaryawan',
+          dataKaryawanJson); // Menyimpan dataKaryawan ke local storage
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => NavBar()));
     } else {

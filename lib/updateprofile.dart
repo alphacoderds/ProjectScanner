@@ -6,23 +6,19 @@ import 'package:RekaChain/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
-  final String nip;
-  final DataModel data;
-  const ProfilePage({Key? key, required this.nip, required this.data})
-      : super(key: key);
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState(data: data);
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   late double screenWidth;
   late double screenHeight;
 
-  final DataModel data;
-  _ProfilePageState({required this.data});
   final formKey = GlobalKey<FormState>();
   TextEditingController kodestaffController = TextEditingController();
   TextEditingController namaController = TextEditingController();
@@ -39,48 +35,43 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     fetchData();
-    namaController = TextEditingController(text: widget.data.nama ?? '');
-    jabatanController = TextEditingController(text: widget.data.jabatan ?? '');
-    unitKerjaController =
-        TextEditingController(text: widget.data.unit_kerja ?? '');
-    nipController = TextEditingController(text: widget.data.nip ?? '');
-    divisiController = TextEditingController(text: widget.data.divisi ?? '');
-    statusController = TextEditingController(text: widget.data.status ?? '');
-    departemenController =
-        TextEditingController(text: widget.data.departemen ?? '');
-    nomorTeleponController =
-        TextEditingController(text: widget.data.nomorTelp ?? '');
-    kodestaffController =
-        TextEditingController(text: widget.data.kode_staff ?? '');
   }
 
   Future<void> fetchData() async {
-    try {
-      final response = await http.get(
-        Uri.parse(
-            'http://192.168.9.222/ProjectScanner/lib/API/updateprofile.php?nip=${widget.data.nip}&nama=${widget.data.nama}&unit_kerja=${widget.data.unit_kerja}'),
-      );
-
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        final nip = responseData['nip'];
+    String? nip = await getNipFromSharedPreferences();
+    if (nip != null) {
+      DataModel? data = await getUserDataByNip(nip);
+      if (data != null) {
         setState(() {
-          kodestaffController.text = responseData['kode_staff'];
-          nipController.text = responseData['nip'];
-          namaController.text = responseData['nama'];
-          jabatanController.text = responseData['jabatan'];
-          unitKerjaController.text = responseData['unit_kerja'];
-          departemenController.text = responseData['departemen'];
-          divisiController.text = responseData['divisi'];
-          nomorTeleponController.text = responseData['no_telp'];
-          statusController.text = responseData['status'];
+          kodestaffController.text = data.kode_staff;
+          nipController.text = data.nip;
+          namaController.text = data.nama;
+          jabatanController.text = data.jabatan;
+          unitKerjaController.text = data.unit_kerja;
+          departemenController.text = data.departemen;
+          divisiController.text = data.divisi;
+          nomorTeleponController.text = data.nomorTelp;
+          statusController.text = data.status;
         });
-      } else {
-        print('Gagal mendapatkan data: ${response.statusCode}');
       }
-    } catch (e) {
-      print('Error fetching data: $e');
     }
+  }
+
+  Future<String?> getNipFromSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('nip');
+  }
+
+  Future<DataModel?> getUserDataByNip(String nip) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? dataKaryawanJson = prefs.getString('dataKaryawan');
+    if (dataKaryawanJson != null) {
+      Map<String, dynamic> userMap = jsonDecode(dataKaryawanJson);
+      if (userMap['nip'] == nip) {
+        return DataModel.getDataFromJSOn(userMap);
+      }
+    }
+    return null;
   }
 
   XFile? _selectedImage;
@@ -162,8 +153,6 @@ class _ProfilePageState extends State<ProfilePage> {
         buildTextField('NIP', nipController,
             enabled: false), // NIP tidak bisa diedit
         buildDivider(),
-        buildTextField('Password', passwordController, obscureText: true),
-        buildDivider(),
         buildTextField('Status', statusController),
         buildDivider(),
       ],
@@ -200,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.9.222/ProjectScanner/lib/API/updateprofile.php'),
+            'http://192.168.11.24/ProjectScanner/lib/API/updateprofile.php'),
         body: {
           'kode_staff': kodestaffController.text,
           'nama': namaController.text,
@@ -215,27 +204,29 @@ class _ProfilePageState extends State<ProfilePage> {
       );
 
       if (response.statusCode == 200) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProfileCard(
-              data: DataModel(
-                nama: namaController.text,
-                jabatan: jabatanController.text,
-                unit_kerja: unitKerjaController.text,
-                departemen: departemenController.text,
-                divisi: divisiController.text,
-                nomorTelp: nomorTeleponController.text,
-                nip: nipController.text,
-                status: statusController.text,
-                kode_staff: kodestaffController.text,
-              ),
-              nip: nipController.text,
-            ),
-          ),
+        print('Update successful: ${response.body}');
+        DataModel updatedData = DataModel(
+          nama: namaController.text,
+          jabatan: jabatanController.text,
+          unit_kerja: unitKerjaController.text,
+          departemen: departemenController.text,
+          divisi: divisiController.text,
+          nomorTelp: nomorTeleponController.text,
+          nip: nipController.text,
+          status: statusController.text,
+          kode_staff: kodestaffController.text,
         );
+
+        // Simpan data yang diperbarui ke SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        String dataKaryawanJson = jsonEncode(updatedData.toJson());
+        await prefs.setString('dataKaryawan', dataKaryawanJson);
+
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => ProfileCard()));
       } else {
         print('Failed to update data: ${response.statusCode}');
+        print('Response: ${response.body}');
       }
     } catch (e) {
       print('Error updating data: $e');

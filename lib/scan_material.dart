@@ -1,8 +1,10 @@
+import 'package:RekaChain/model/data_model.dart';
 import 'package:RekaChain/tabel_scan_material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
 import 'package:RekaChain/pop_up_materiall.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ScannerMaterial extends StatefulWidget {
   const ScannerMaterial({super.key});
@@ -49,10 +51,15 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           children: [
             SizedBox(width: 8),
             Text('Reka Chain'),
