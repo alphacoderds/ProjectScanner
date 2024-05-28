@@ -1,356 +1,314 @@
+import 'package:RekaChain/kerusakan.dart';
 import 'package:flutter/material.dart';
-import 'package:RekaChain/aftersales.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ListKerusakan extends StatefulWidget {
-  const ListKerusakan({super.key});
+  final Map<String, dynamic>? newProject;
+  final String id_project;
+  const ListKerusakan({Key? key, this.newProject, required this.id_project})
+      : super(key: key);
 
   @override
   State<ListKerusakan> createState() => _ListKerusakanState();
 }
 
 class _ListKerusakanState extends State<ListKerusakan> {
-  late double screenWidth = MediaQuery.of(context).size.width;
-  late double screenHeight = MediaQuery.of(context).size.height;
+  late double _screenWidth;
+  late double _screenHeight;
+  List<Map<String, dynamic>> _kerusakan = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
+  Future<void> _fetchData() async {
+    try {
+      final response = await http.get(Uri.parse(
+          'http://192.168.9.60/ProjectScanner/lib/API/get_kerusakan.php?id_project=${widget.id_project}'));
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        setState(() {
+          _kerusakan = data.cast<Map<String, dynamic>>();
+        });
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+        // Tambahkan penanganan kesalahan di sini
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+      // Tambahkan penanganan kesalahan di sini
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    _screenWidth = MediaQuery.of(context).size.width;
+    _screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('List Kerusakan'),
-            SizedBox(width: 10.0),
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: FractionalTranslation(
-                  translation: Offset(0.37, 0.10),
-                  child: AspectRatio(
-                    aspectRatio: 11 / 8,
-                    child: Image(
-                      image: AssetImage('assets/images/bolder31.png'),
-                      width: 170,
-                      height: 120,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        title: Text('List Kerusakan'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AfterSalesData()),
-            );
-          },
-        ),
-      ),
-      body: ListView.builder(
-        itemCount: 8,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => TambahKerusakan()),
-              );
-            },
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xBF2B3856),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Kerusakan ${index + 1}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now()),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: 'Inter',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.add_rounded,
-            size: 40,
-            weight: 60,
-          ),
-          backgroundColor: Colors.white,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TambahKerusakan(),
-              ),
-            );
-          }),
-    );
-  }
-}
-
-class TambahKerusakan extends StatefulWidget {
-  const TambahKerusakan({super.key});
-
-  @override
-  State<TambahKerusakan> createState() => _TambahKerusakanState();
-}
-
-class _TambahKerusakanState extends State<TambahKerusakan> {
-  late double screenWidth = MediaQuery.of(context).size.width;
-  late double screenHeight = MediaQuery.of(context).size.height;
-
-  bool _lastRowFilled = true;
-
-  // Data structure for each row
-  static Map<String, String> createDataRow() {
-    return {'no': '', 'detailKerusakan': '', 'item': '', 'keterangan': ''};
-  }
-
-  // Initial data
-  List<Map<String, String>> data = [
-    createDataRow(),
-  ];
-
-  TextEditingController KekuranganController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('Data Konsumen'),
-            SizedBox(width: 10.0),
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: FractionalTranslation(
-                  translation:
-                      Offset(0.37, 0.10), // Sesuaikan offset sesuai kebutuhan
-                  child: AspectRatio(
-                    aspectRatio: 11 / 8,
-                    child: Image(
-                      image: AssetImage('assets/images/bolder31.png'),
-                      width: 170,
-                      height: 120,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
-      body: Container(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(height: screenHeight * 0.08),
-                Text(
-                  "Isi Data Kerusakan",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: screenHeight * 0.05),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.05,
-                      vertical: screenHeight * 0.05),
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(screenWidth * 0.02),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: MediaQuery.of(context).size.height - 50,
-                      ),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                          columnSpacing: 20.0,
-                          horizontalMargin: 50.0,
-                          columns: [
-                            DataColumn(
-                              label: Center(
-                                child: Text(
-                                  "No",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                            DataColumn(
-                              label: Center(
-                                child: Text(
-                                  "Detail\nKerusakan",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                            DataColumn(
-                              label: Center(
-                                child: Text(
-                                  "Item",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                            DataColumn(
-                              label: Center(
-                                child: Text(
-                                  "Keterangan",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                          ],
-                          rows: data.map((item) {
-                            return DataRow(
-                              cells: [
-                                DataCell(SizedBox(
-                                  height: screenHeight * 0.9,
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none),
-                                    controller:
-                                        TextEditingController(text: item['no']),
-                                    maxLines: 5,
-                                    onChanged: (value) => item['no'] = value,
-                                  ),
-                                )),
-                                DataCell(SizedBox(
-                                  height: screenHeight * 0.9,
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none),
-                                    controller: TextEditingController(
-                                      text: item['detailKerusakan'],
-                                    ),
-                                    maxLines: 5,
-                                    onChanged: (value) =>
-                                        item['detailKerusakan'] = value,
-                                  ),
-                                )),
-                                DataCell(SizedBox(
-                                  height: screenHeight * 0.9,
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none),
-                                    controller: TextEditingController(
-                                        text: item['item']),
-                                    maxLines: 5,
-                                    onChanged: (value) => item['item'] = value,
-                                  ),
-                                )),
-                                DataCell(IntrinsicHeight(
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none),
-                                    controller: TextEditingController(
-                                        text: item['keterangan']),
-                                    maxLines: 5,
-                                    onChanged: (value) =>
-                                        item['keterangan'] = value,
-                                  ),
-                                )),
-                              ],
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.05),
-                ElevatedButton(
-                    onPressed: () {
-                      _saveData();
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => ListKerusakan()),
-                      // );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                    ),
-                    child: const SizedBox(
-                        width: 70,
-                        height: 40,
-                        child: Center(
-                          child: Text(
-                            "Simpan",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                        ))),
-              ],
+      body: _kerusakan.isEmpty
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: _kerusakan.length,
+              itemBuilder: (context, index) {
+                return _buildKerusakanCard(_kerusakan[index]);
+              },
             ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add_rounded, size: 40, color: Colors.white,),
+        backgroundColor: const Color.fromARGB(255, 14, 26, 44),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TambahKerusakan(
+                  onSaved: _addKerusakan, id_project: widget.id_project),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildKerusakanCard(Map<String, dynamic> kerusakanData) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        elevation: 3,
+        child: ListTile(
+          title: Text(
+            'Kode Produk: ${kerusakanData['id_project'] ?? 'Tidak Ada'}',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Detail Kerusakan: ${kerusakanData['detail_kerusakan'] ?? 'Tidak Ada'}',
+                style: TextStyle(fontSize: 14),
+              ),
+              SizedBox(height: 5),
+              Text(
+                'Item: ${kerusakanData['item'] ?? 'Tidak Ada'}',
+                style: TextStyle(fontSize: 14),
+              ),
+              SizedBox(height: 5),
+              Text(
+                'Keterangan: ${kerusakanData['keterangan'] ?? 'Tidak Ada'}',
+                style: TextStyle(fontSize: 14),
+              ),
+              SizedBox(height: 10),
+              // Text(
+              //   'Tanggal: ${DateFormat('dd/MM/yyyy HH:mm').format(DateTime.parse(kerusakanData['tanggal']!))}',
+              //   style: TextStyle(fontSize: 12),
+              // ),
+              Text(
+                'Tanggal: ${kerusakanData['waktu'] ?? 'Tidak Ada'}',
+                style: TextStyle(fontSize: 12),
+              ),
+            ],
+          ),
+          onTap: () {
+            _showKerusakanDetail(kerusakanData);
+          },
         ),
       ),
     );
   }
 
-  void _saveData() {
-    if (_lastRowFilled) {
-      // Validasi input (opsional)
-      data.add(createDataRow());
-      _lastRowFilled = false; // Baris baru akan dianggap kosong
-      setState(() {});
-      // Opsional, simpan data di database atau penyimpanan lainnya
-    } else {
-      // Tampilkan pesan peringatan atau pemberitahuan bahwa baris sebelumnya masih kosong
-    }
+  void _showKerusakanDetail(Map<String, dynamic> kerusakanDetail) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetailKerusakan(kerusakanDetail: kerusakanDetail),
+      ),
+    );
+  }
+
+  void _addKerusakan(Map<String, dynamic> newData) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    newData['tanggal'] = DateTime.now().toString();
+    _kerusakan.insert(0, newData);
+    final List<String> encodedKerusakan =
+        _kerusakan.map((item) => jsonEncode(item)).toList();
+    await prefs.setStringList('kerusakan', encodedKerusakan);
+    setState(() {});
   }
 }
+
+class DetailKerusakan extends StatelessWidget {
+  final Map<String, dynamic> kerusakanDetail;
+
+  DetailKerusakan({required this.kerusakanDetail});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Detail Kerusakan')),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Kode Produk: ${kerusakanDetail['id_project'] ?? 'Tidak Ada'}',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Detail Kerusakan: ${kerusakanDetail['detail_kerusakan'] ?? 'Tidak Ada'}',
+              style: TextStyle(fontSize: 14),
+            ),
+            SizedBox(height: 5),
+            Text(
+              'Item: ${kerusakanDetail['item'] ?? 'Tidak Ada'}',
+              style: TextStyle(fontSize: 14),
+            ),
+            SizedBox(height: 5),
+            Text(
+              'Keterangan: ${kerusakanDetail['keterangan'] ?? 'Tidak Ada'}',
+              style: TextStyle(fontSize: 14),
+            ),
+            SizedBox(height: 10),
+            // Text(
+            //   'Tanggal: ${DateFormat('dd/MM/yyyy HH:mm').format(DateTime.parse(kerusakanDetail['tanggal']!))}',
+            //   style: TextStyle(fontSize: 12),
+            // ),
+            Text(
+              'Tanggal: ${kerusakanDetail['waktu'] ?? 'Tidak Ada'}',
+              style: TextStyle(fontSize: 12),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// class TambahKerusakan extends StatefulWidget {
+//   final Function(Map<String, String> data) onSaved;
+//   final String id_project;
+//   const TambahKerusakan(
+//       {Key? key, required this.onSaved, required this.id_project})
+//       : super(key: key);
+
+//   @override
+//   State<TambahKerusakan> createState() => _TambahKerusakanState();
+// }
+
+// class _TambahKerusakanState extends State<TambahKerusakan> {
+//   late TextEditingController _noController;
+//   late TextEditingController _detailKerusakanController;
+//   late TextEditingController _itemController;
+//   late TextEditingController _keteranganController;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _noController = TextEditingController(text: widget.id_project);
+//     _detailKerusakanController = TextEditingController();
+//     _itemController = TextEditingController();
+//     _keteranganController = TextEditingController();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Tambah/Edit Kerusakan'),
+//         leading: IconButton(
+//           icon: Icon(Icons.arrow_back),
+//           onPressed: () {
+//             Navigator.pop(context);
+//           },
+//         ),
+//       ),
+//       body: SingleChildScrollView(
+//         child: Padding(
+//           padding: const EdgeInsets.all(16.0),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.stretch,
+//             children: [
+//               Text(
+//                 'Isi Data Kerusakan',
+//                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+//               ),
+//               SizedBox(height: 20.0),
+//               TextField(
+//                 controller: _noController,
+//                 decoration: InputDecoration(
+//                   labelText: 'Kode Produk',
+//                   border: OutlineInputBorder(),
+//                 ),
+//               ),
+//               SizedBox(height: 12.0),
+//               TextField(
+//                 controller: _detailKerusakanController,
+//                 decoration: InputDecoration(
+//                   labelText: 'Detail Kerusakan',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 maxLines: 5,
+//               ),
+//               SizedBox(height: 12.0),
+//               TextField(
+//                 controller: _itemController,
+//                 decoration: InputDecoration(
+//                   labelText: 'Item',
+//                   border: OutlineInputBorder(),
+//                 ),
+//               ),
+//               SizedBox(height: 12.0),
+//               TextField(
+//                 controller: _keteranganController,
+//                 decoration: InputDecoration(
+//                   labelText: 'Keterangan',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 maxLines: 5,
+//               ),
+//               SizedBox(height: 20.0),
+//               ElevatedButton(
+//                 onPressed: _saveData,
+//                 child: Text('Simpan'),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   void _saveData() {
+//     final newData = {
+//       'id_project': _noController.text,
+//       'detail_kerusakan': _detailKerusakanController.text,
+//       'item': _itemController.text,
+//       'keterangan': _keteranganController.text,
+//     };
+//     widget.onSaved(newData);
+//   }
+
+//   @override
+//   void dispose() {
+//     _noController.dispose();
+//     _detailKerusakanController.dispose();
+//     _itemController.dispose();
+//     _keteranganController.dispose();
+//     super.dispose();
+//   }
+// }

@@ -9,7 +9,9 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  final XFile? profileImage; // Tambahkan parameter untuk gambar profil
+
+  const ProfilePage({Key? key, this.profileImage}) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -92,11 +94,11 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ],
             shape: BoxShape.circle,
-            image: _selectedImage != null
+            image: widget.profileImage != null
                 ? DecorationImage(
                     fit: BoxFit.cover,
                     alignment: Alignment.center,
-                    image: FileImage(File(_selectedImage!.path)),
+                    image: FileImage(File(widget.profileImage!.path)),
                   )
                 : const DecorationImage(
                     fit: BoxFit.cover,
@@ -183,6 +185,61 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ],
     );
+  }
+
+  void _updateImageAndData() async {
+    if (_selectedImage != null) {
+      try {
+        final response = await http.post(
+          Uri.parse(
+              'http://192.168.9.60/ProjectScanner/lib/API/updateprofile.php'),
+          body: {
+            'kode_staff': kodestaffController.text,
+            'nama': namaController.text,
+            'jabatan': jabatanController.text,
+            'unit_kerja': unitKerjaController.text,
+            'departemen': departemenController.text,
+            'divisi': divisiController.text,
+            'no_telp': nomorTeleponController.text,
+            'status': statusController.text,
+            'nip': nipController.text,
+            'userprofile':
+                base64Encode(File(_selectedImage!.path).readAsBytesSync()),
+          },
+        );
+
+        if (response.statusCode == 200) {
+          print('Update successful: ${response.body}');
+          DataModel updatedData = DataModel(
+            nama: namaController.text,
+            jabatan: jabatanController.text,
+            unit_kerja: unitKerjaController.text,
+            departemen: departemenController.text,
+            divisi: divisiController.text,
+            nomorTelp: nomorTeleponController.text,
+            nip: nipController.text,
+            status: statusController.text,
+            kode_staff: kodestaffController.text,
+          );
+
+          // Simpan data yang diperbarui ke SharedPreferences
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          String dataKaryawanJson = jsonEncode(updatedData.toJson());
+          await prefs.setString('dataKaryawan', dataKaryawanJson);
+
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => ProfileCard()));
+        } else {
+          print('Failed to update data: ${response.statusCode}');
+          print('Response: ${response.body}');
+        }
+      } catch (e) {
+        print('Error updating data: $e');
+      }
+    } else {
+      // Jika gambar tidak dipilih, tetap lakukan pembaruan data tanpa gambar
+      _updateDataAndNavigateToProfile();
+    }
   }
 
   void _updateDataAndNavigateToProfile() async {

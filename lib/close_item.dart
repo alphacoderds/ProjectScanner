@@ -1,31 +1,66 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
+import 'package:http/http.dart' as http;
 
 class ListCloseItem extends StatefulWidget {
-  const ListCloseItem({super.key});
+  final String kodeLot;
+  const ListCloseItem({super.key, required this.kodeLot});
 
   @override
   State<ListCloseItem> createState() => _ListCloseItemState();
 }
 
 class _ListCloseItemState extends State<ListCloseItem> {
-  List<String> _listItems = [
-    'Open Item 1',
-    'Open Item 2',
-    'Open Item 3',
-    'Open Item 4',
-    'Open Item 5',
-    'Open Item 6',
-    'Open Item 7',
-    'Open Item 8'
-  ];
+  List<Map<String, dynamic>> _listItems = [];
 
-  void _deleteItem(int index) {
-    setState(() {
-      _listItems = _listItems
-          .where((item) => _listItems.indexOf(item) != index)
-          .toList();
-    });
+  @override
+  void initState() {
+    super.initState();
+    _fetchOpenItems();
+  }
+
+  Future<void> _fetchOpenItems() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://192.168.11.22/ProjectScanner/lib/API/read_openlist.php?kodeLot=${widget.kodeLot}'),
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as List;
+        setState(() {
+          _listItems =
+              data.map((item) => item as Map<String, dynamic>).toList();
+        });
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
+  Future<void> _markItemAsClosed(int index) async {
+    final item = _listItems[index];
+    final response = await http.post(
+      Uri.parse(
+          'http://192.168.11.22/ProjectScanner/lib/API/update_item_status.php'),
+      body: {'no': item['no'].toString()},
+    );
+
+    if (response.statusCode == 200) {
+      final result = jsonDecode(response.body);
+      if (result['success']) {
+        setState(() {
+          _listItems.removeAt(index);
+        });
+        print('Item marked as closed.');
+      } else {
+        print('Failed to update item status: ${result['error']}');
+      }
+    } else {
+      print('Failed to update item status: ${response.statusCode}');
+    }
   }
 
   @override
@@ -79,24 +114,27 @@ class _ListCloseItemState extends State<ListCloseItem> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      _listItems[index],
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 18,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
+                    Expanded(
+                      child: Text(
+                        _listItems[index]['isi'],
+                        style: const TextStyle(
+                          color: Colors.black54,
+                          fontSize: 18,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                     IconButton(
-                        alignment: Alignment.centerRight,
-                        onPressed: () {
-                          _deleteItem(index);
-                        },
-                        icon: Icon(
-                          Icons.check_box_outlined,
-                          color: Colors.green,
-                        ))
+                      alignment: Alignment.centerRight,
+                      onPressed: () {
+                        _markItemAsClosed(index);
+                      },
+                      icon: Icon(
+                        Icons.check_box_outlined,
+                        color: Colors.green,
+                      ),
+                    ),
                   ],
                 ),
               ));
@@ -106,7 +144,6 @@ class _ListCloseItemState extends State<ListCloseItem> {
           child: Icon(
             Icons.check,
             size: 40,
-            weight: 60,
             color: Color.fromRGBO(43, 56, 86, 1),
           ),
           backgroundColor: Colors.white,

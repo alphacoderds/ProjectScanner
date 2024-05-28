@@ -4,7 +4,8 @@ import 'package:RekaChain/list_kerusakan.dart';
 import 'package:RekaChain/saran_tindak_lanjut.dart';
 
 class PopUpAfterSales extends StatefulWidget {
-  const PopUpAfterSales({Key? key}) : super(key: key);
+  final String id_project;
+  const PopUpAfterSales({Key? key, required this.id_project}) : super(key: key);
 
   @override
   State<PopUpAfterSales> createState() => _PopUpAfterSalesState();
@@ -84,7 +85,8 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const AfterSalesData(),
+                                builder: (context) => AfterSalesData(
+                                    id_project: widget.id_project),
                               ),
                             );
                           },
@@ -195,7 +197,8 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
 }
 
 class AfterSalesData extends StatefulWidget {
-  const AfterSalesData({super.key});
+  final String id_project;
+  const AfterSalesData({super.key, required this.id_project});
 
   @override
   State<AfterSalesData> createState() => _AfterSalesDataState();
@@ -250,7 +253,8 @@ class _AfterSalesDataState extends State<AfterSalesData> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ListKerusakan(),
+                      builder: (context) =>
+                          ListKerusakan(id_project: widget.id_project),
                     ),
                   );
                 },
@@ -282,7 +286,7 @@ class _AfterSalesDataState extends State<AfterSalesData> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Saran(),
+                      builder: (context) => ListSaran(id_project: widget.id_project,),
                     ),
                   );
                 },

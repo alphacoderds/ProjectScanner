@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:RekaChain/model/data_model.dart';
 import 'package:RekaChain/provider/user_provider.dart';
@@ -28,16 +27,16 @@ class _ProfileCardState extends State<ProfileCard> {
   TextEditingController nipController = TextEditingController();
   TextEditingController unitKerjaController = TextEditingController();
 
+  String _selectedImage = '';
+
   List _listdata = [];
   bool _isLoading = true;
   String _errorMessage = 'Terjadi kesalahan saat mengambil data';
 
   Future<void> _getData() async {
     try {
-      final response = await http.post(
-          body: {"nip": context.read<UserProvider>().dataModel.nip},
-          Uri.parse(
-              'http://192.168.9.56/ProjectScanner/lib/tbl_tambahstaff/profileREAD.php'));
+      final response = await http.get(Uri.parse(
+          'http://192.168.9.177/ProjectScanner/lib/tbl_tambahstaff/profileREAD.php'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         dynamic dataJadi = (data as Map<String, dynamic>)['data'];
@@ -158,15 +157,19 @@ class _ProfileCardState extends State<ProfileCard> {
                 SizedBox(height: screenHeight * 0.05),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
+                    if (_selectedImage.isNotEmpty) {
+                      XFile file = XFile(_selectedImage);
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ProfilePage(),
-                        )).then((result) {
-                      if (result != null && result) {
-                        _getUserDataFromSharedPrefs();
-                      }
-                    });
+                          builder: (context) => ProfilePage(profileImage: file),
+                        ),
+                      ).then((result) {
+                        if (result != null && result) {
+                          _getUserDataFromSharedPrefs();
+                        }
+                      });
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,

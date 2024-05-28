@@ -35,7 +35,7 @@ class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
       if (barcodeScanRes != '-1') {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const PopUpTahapSelesai()),
+          MaterialPageRoute(builder: (context) => PopUpTahapSelesai(kodeLot: barcodeScanRes)),
         );
       }
     } on PlatformException {

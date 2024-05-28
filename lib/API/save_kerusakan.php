@@ -1,15 +1,16 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $no = $_POST['no'];
-    $isi = $_POST['isi'];
-    $kodeLot = $_POST['kodeLot'];
-
+    $id_project = $_POST['id_project'];
+    $item = $_POST['item'];
+    $detail_kerusakan = $_POST['detail_kerusakan'];
+    $keterangan = $_POST['keterangan'];
+    $waktu = $_POST['waktu'];
     $conn = mysqli_connect("localhost", "root", "", "db_rekachain");
 
     if ($conn) {
-        $query = "INSERT INTO tbl_openilist (no, isi, kodeLot) 
-                  VALUES ('$no', '$isi', '$kodeLot')";
+        $query = "INSERT INTO tbl_kerusakan (id_project, item, detail_kerusakan, keterangan, waktu) 
+                  VALUES ('$id_project', '$item', '$detail_kerusakan', '$keterangan', '$waktu')";
 
         if (mysqli_query($conn, $query)) {
             echo mysqli_insert_id($conn);

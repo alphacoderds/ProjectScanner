@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:RekaChain/tbl_tambahstaff/openitem2.dart';
+import 'package:RekaChain/openitemView.dart';
 import 'package:RekaChain/tbl_tambahstaff/tambahopenitem.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
@@ -8,21 +8,20 @@ import 'package:RekaChain/scan_tahap_selesai.dart';
 import 'package:http/http.dart' as http;
 
 //======================================Tampilan List Open Item======================================
-class ListOpenItem extends StatefulWidget {
+class ListOI extends StatefulWidget {
+  final String kodeLot;
   final Map<String, dynamic>? newProject;
 
-  const ListOpenItem({Key? key, this.newProject}) : super(key: key);
+  const ListOI({Key? key, this.newProject, required this.kodeLot})
+      : super(key: key);
 
   @override
-  State<ListOpenItem> createState() => _ListOpenItemState();
+  State<ListOI> createState() => _ListOIState();
 }
 
-class _ListOpenItemState extends State<ListOpenItem> {
-  TextEditingController isiopenitemController = TextEditingController();
-
+class _ListOIState extends State<ListOI> {
   late List<dynamic> _listdata = [];
   bool _isloading = true;
-
   String _searchQuery = '';
 
   void _updateSearchQuery(String query) {
@@ -35,12 +34,12 @@ class _ListOpenItemState extends State<ListOpenItem> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.9.177/ProjectScanner/lib/API/read_openlist.php'),
+            'http://192.168.11.22/ProjectScanner/lib/API/read_openlist.php?kodeLot=${widget.kodeLot}'),
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
-          _listdata = data;
+          _listdata = data.where((item) => item['status'] != 'closed').toList();
           _isloading = false;
         });
       } else {
@@ -57,6 +56,29 @@ class _ListOpenItemState extends State<ListOpenItem> {
     }
   }
 
+  Future<void> _markItemAsClosed(int index) async {
+    final item = _listdata[index];
+    final response = await http.post(
+      Uri.parse(
+          'http://192.168.11.22/ProjectScanner/lib/API/update_item_status.php'),
+      body: {'no': item['no'].toString()},
+    );
+
+    if (response.statusCode == 200) {
+      final result = jsonDecode(response.body);
+      if (result['success']) {
+        setState(() {
+          _listdata.removeAt(index);
+        });
+        print('Item marked as closed.');
+      } else {
+        print('Failed to update item status: ${result['error']}');
+      }
+    } else {
+      print('Failed to update item status: ${response.statusCode}');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -67,7 +89,7 @@ class _ListOpenItemState extends State<ListOpenItem> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -92,14 +114,28 @@ class _ListOpenItemState extends State<ListOpenItem> {
             ),
           ],
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
       ),
-      body: _ListView(),
+      body: _isloading
+          ? Center(child: CircularProgressIndicator())
+          : Column(
+              children: [
+                _searchQuery.isEmpty
+                    ? Expanded(
+                        child: ListView.builder(
+                          itemCount: _listdata.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                ListViewItem(context, index, _listdata[index]),
+                                Divider(), // Add Divider here
+                              ],
+                            );
+                          },
+                        ),
+                      )
+                    : Expanded(child: _ListView()),
+              ],
+            ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -134,9 +170,9 @@ class _ListOpenItemState extends State<ListOpenItem> {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return TambahOpenItem();
+                  return TambahOpenItem(kodeLot: widget.kodeLot);
                 },
-              );
+              ).then((_) => _getdata());
             },
           ),
         ],
@@ -313,56 +349,38 @@ class _ListOpenItemState extends State<ListOpenItem> {
   }
 
   Widget _ListView() {
-    List filteredData = _listdata.where((data) {
-      String isi = data['isi'] ?? '';
-      return isi.toLowerCase().contains(_searchQuery.toLowerCase());
+    final filteredData = _listdata.where((item) {
+      final searchLower = _searchQuery.toLowerCase();
+      final kodeLower = item['kode'].toString().toLowerCase();
+      final isiLower = item['isi'].toString().toLowerCase();
+      return kodeLower.contains(searchLower) || isiLower.contains(searchLower);
     }).toList();
 
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        return ListViewItem(context, index, filteredData[index]);
-      },
-      separatorBuilder: (context, index) {
-        return Divider(height: 0);
-      },
+    return ListView.builder(
       itemCount: filteredData.length,
+      itemBuilder: (context, index) {
+        return Column(
+          children: [
+            ListViewItem(context, index, filteredData[index]),
+            Divider(),
+          ],
+        );
+      },
     );
   }
 
-  Widget ListViewItem(BuildContext context, int index, dynamic projectData) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ViewOpenItem(
-                selectedProject: {
-                  "no": projectData['no'],
-                  "isi": projectData['isi']
-                },
-              ),
-            ),
-          );
-        },
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.only(left: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    message(context, projectData),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+  Widget ListViewItem(BuildContext context, int index, dynamic data) {
+    return ListTile(
+      title: Text(data['isi']),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ViewOI(kodeLot: widget.kodeLot, selectedProject: data),
+          ),
+        );
+      },
     );
   }
 
@@ -376,47 +394,29 @@ class _ListOpenItemState extends State<ListOpenItem> {
           SizedBox(
             height: 15,
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ViewOpenItem(
-                    selectedProject: {
-                      "no": projectData['no'],
-                      "isi": projectData['isi']
-                    },
-                  ),
-                ),
-              );
-            },
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${projectData['isi']} ',
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${projectData['isi']} ',
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
-}  
-
-
-//======================================Tampilan Menambah Open Item=====================================
+}
