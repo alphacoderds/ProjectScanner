@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:RekaChain/model/data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
@@ -25,6 +25,8 @@ class _ProfileCardState extends State<ProfileCard> {
   TextEditingController nipController = TextEditingController();
   TextEditingController unitKerjaController = TextEditingController();
 
+  String _selectedImage = '';
+
   List _listdata = [];
   bool _isLoading = true;
   String _errorMessage = 'Terjadi kesalahan saat mengambil data';
@@ -32,7 +34,7 @@ class _ProfileCardState extends State<ProfileCard> {
   Future<void> _getData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.9.177/ProjectScanner/lib/tbl_tambahstaff/profileREAD.php'));
+          'http://192.168.11.22/ProjectScanner/lib/tbl_tambahstaff/profileREAD.php'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
@@ -164,15 +166,19 @@ class _ProfileCardState extends State<ProfileCard> {
                 SizedBox(height: screenHeight * 0.05),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
+                    if (_selectedImage.isNotEmpty) {
+                      XFile file = XFile(_selectedImage);
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ProfilePage(),
-                        )).then((result) {
-                      if (result != null && result) {
-                        _getUserDataFromSharedPrefs();
-                      }
-                    });
+                          builder: (context) => ProfilePage(profileImage: file),
+                        ),
+                      ).then((result) {
+                        if (result != null && result) {
+                          _getUserDataFromSharedPrefs();
+                        }
+                      });
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,

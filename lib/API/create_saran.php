@@ -9,12 +9,11 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$kode_produk = $_POST["kode_produk"];
 $saran = $_POST["saran"];
-$waktu = $_POST["waktu"];
+$waktu_saran = $_POST["waktu_saran"];
 
-$stmt = $conn->prepare("INSERT INTO saran (kode_produk, saran, waktu) VALUES (?, ?, ?)");
-$stmt->bind_param("sss", $kode_produk, $saran, $waktu);
+$stmt = $conn->prepare("INSERT INTO tbl_lot (saran, waktu_saran) VALUES (?, ?)");
+$stmt->bind_param("ss", $saran, $waktu_saran);
 
 if ($stmt->execute()) {
     echo json_encode(['pesan' => 'Sukses']);

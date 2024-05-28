@@ -2,21 +2,30 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-// Konfigurasi koneksi database
+// Create a new database connection
 $conn = new mysqli("localhost", "root", "", "db_rekachain");
 
-// Memeriksa koneksi
+// Check the connection
 if ($conn->connect_error) {
-    die(json_encode(array("pesan" => "Koneksi gagal: " . $conn->connect_error)));
+    die(json_encode(array("message" => "Connection failed: " . $conn->connect_error)));
 }
 
-// Query untuk mengambil semua data dari tabel saran
-$query = mysqli_query($conn, "SELECT * FROM saran");
+// Execute the query to select all records from tbl_lot
+$query = $conn->query("SELECT * FROM tbl_lot");
 
-// Mengambil semua data dan mengonversinya menjadi format JSON
-$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
+// Check if the query was successful
+if (!$query) {
+    echo json_encode(array("message" => "Query execution failed: " . $conn->error));
+    $conn->close();
+    exit();
+}
+
+// Fetch all records as an associative array
+$data = $query->fetch_all(MYSQLI_ASSOC);
+
+// Output the data as a JSON response
 echo json_encode($data);
 
-// Menutup koneksi
+// Close the database connection
 $conn->close();
 ?>

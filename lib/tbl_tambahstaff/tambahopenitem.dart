@@ -1,9 +1,10 @@
-import 'package:RekaChain/open_item.dart';
+import 'package:RekaChain/listopenitem.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class TambahOpenItem extends StatefulWidget {
-  const TambahOpenItem({super.key});
+  final String kodeLot;
+  const TambahOpenItem({super.key, required this.kodeLot});
 
   @override
   State<TambahOpenItem> createState() => _TambahOpenItemState();
@@ -16,9 +17,10 @@ class _TambahOpenItemState extends State<TambahOpenItem> {
     if (isiopenitemController.text.isNotEmpty) {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.8.107/ProjectScanner/lib/API/create_openlist.php'),
+            'http://192.168.11.22/ProjectScanner/lib/API/create_openlist.php'),
         body: {
           "isi": isiopenitemController.text,
+          "kodeLot": widget.kodeLot,
         },
       );
 
@@ -26,13 +28,15 @@ class _TambahOpenItemState extends State<TambahOpenItem> {
         final newProjectData = {
           "no": response.body,
           "isi": isiopenitemController.text,
+          "kodeLot": widget.kodeLot,
         };
 
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ListOpenItem(newProject: newProjectData),
-          ),
+              builder: (context) => ListOI(
+                    kodeLot: widget.kodeLot,
+                  )),
         );
       } else {
         print('Gagal menyimpan data: ${response.statusCode}');

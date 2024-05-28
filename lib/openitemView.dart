@@ -1,32 +1,46 @@
 import 'dart:convert';
 
-import 'package:RekaChain/open_item.dart';
+import 'package:RekaChain/listopenitem.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class ViewOpenItem extends StatefulWidget {
+class ViewOI extends StatefulWidget {
+  final String kodeLot;
   final Map<String, dynamic> selectedProject;
-  const ViewOpenItem({Key? key, this.selectedProject = const {}})
+  const ViewOI(
+      {Key? key, required this.kodeLot, this.selectedProject = const {}})
       : super(key: key);
 
   @override
-  State<ViewOpenItem> createState() => _ViewOpenItemState();
+  State<ViewOI> createState() => _ViewOIState();
 }
 
-class _ViewOpenItemState extends State<ViewOpenItem> {
+class _ViewOIState extends State<ViewOI> {
   TextEditingController isiopenitemController = TextEditingController();
 
-  void fetchData() async {
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  @override
+  void dispose() {
+    isiopenitemController.dispose();
+    super.dispose();
+  }
+
+  Future<void> fetchData() async {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.8.107/ProjectScanner/lib/API/edit_openitem.php?no=${widget.selectedProject['no']}&isi=${widget.selectedProject['isi']}'),
+            'http://192.168.11.22/ProjectScanner/lib/API/edit_openitem.php?no=${widget.selectedProject['no']}&isi=${widget.selectedProject['isi']}'),
       );
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         final isi = responseData['isi'];
         setState(() {
-          isiopenitemController.text = isi;
+          isiopenitemController.text = responseData['isi'] ?? '';
         });
       } else {
         print('Failed to fetch data: ${response.statusCode}');
@@ -36,11 +50,11 @@ class _ViewOpenItemState extends State<ViewOpenItem> {
     }
   }
 
-  void _updateDataAndNavigateToListProject() async {
+  Future<void> _updateDataAndNavigateToListProject() async {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.8.107/ProjectScanner/lib/API/edit_openitem.php'),
+            'http://192.168.11.22/ProjectScanner/lib/API/edit_openitem.php'),
         body: {
           'no': widget.selectedProject['no'].toString(),
           'isi': isiopenitemController.text,
@@ -51,8 +65,9 @@ class _ViewOpenItemState extends State<ViewOpenItem> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => ListOpenItem(),
-          ),
+              builder: (context) => ListOI(
+                    kodeLot: widget.kodeLot,
+                  )),
         );
       } else {
         print('Failed to update data: ${response.statusCode}');
@@ -63,20 +78,10 @@ class _ViewOpenItemState extends State<ViewOpenItem> {
   }
 
   @override
-  void initState() {
-    super.initState();
-
-    isiopenitemController =
-        TextEditingController(text: widget.selectedProject['isi'] ?? '');
-
-    fetchData();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

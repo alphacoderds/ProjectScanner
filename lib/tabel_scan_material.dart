@@ -34,7 +34,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     });
 
     final Uri url = Uri.parse(
-        'http://192.168.11.24/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
+        'http://192.168.11.22/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -96,7 +96,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.11.24/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
+            'http://192.168.11.22/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
         body: requestData,
       );
 

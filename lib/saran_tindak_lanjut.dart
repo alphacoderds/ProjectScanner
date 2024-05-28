@@ -1,15 +1,13 @@
 import 'dart:convert';
-
-import 'package:RekaChain/tambahsaran.dart';
-import 'package:RekaChain/viewsaran.dart';
 import 'package:flutter/material.dart';
-import 'package:RekaChain/aftersales.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'tambahsaran.dart';
+import 'viewsaran.dart';
+import 'aftersales.dart';
 
 class ListSaran extends StatefulWidget {
-  final Map<String, dynamic>? newProject;
-  const ListSaran({Key? key, this.newProject}) : super(key: key);
+  const ListSaran({Key? key}) : super(key: key);
 
   @override
   State<ListSaran> createState() => _ListSaranState();
@@ -19,9 +17,8 @@ class _ListSaranState extends State<ListSaran> {
   late double screenWidth;
   late double screenHeight;
 
-  late List<dynamic> _listdata = [];
+  List<dynamic> _listdata = [];
   bool _isloading = true;
-
   String _searchQuery = '';
 
   void _updateSearchQuery(String query) {
@@ -33,7 +30,7 @@ class _ListSaranState extends State<ListSaran> {
   Future<void> _getdata() async {
     try {
       final response = await http.get(
-        Uri.parse('http://192.168.8.107/ProjectScanner/lib/API/get_saran.php'),
+        Uri.parse('http://192.168.11.22/ProjectScanner/lib/API/get_saran.php'),
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -53,6 +50,10 @@ class _ListSaranState extends State<ListSaran> {
       });
       print('Error fetching data: $e');
     }
+  }
+
+  Future<void> _refreshData() async {
+    await _getdata();
   }
 
   @override
@@ -103,88 +104,36 @@ class _ListSaranState extends State<ListSaran> {
           },
         ),
       ),
-
-      // body: ListView.builder(
-      //   itemCount: 8,
-      //   itemBuilder: (context, index) {
-      //     return GestureDetector(
-      //         onTap: () {
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(
-      //               builder: (context) => ViewSaran(
-      //                 selectedProject: {
-      //                   'id': index,
-      //                   'kode_produk': 'Kode Produk $index',
-      //                   'saran': 'Saran $index',
-      //                   'waktu': DateFormat('dd/MM/yyyy HH:mm')
-      //                       .format(DateTime.now()),
-      //                 },
-      //               ),
-      //             ),
-      //           );
-      //         },
-      //         child: Padding(
-      //           padding:
-      //               const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-      //           child: Container(
-      //             decoration: BoxDecoration(
-      //               color: const Color(0xBF2B3856),
-      //               borderRadius: BorderRadius.circular(20),
-      //             ),
-      //             padding: const EdgeInsets.all(15.0),
-      //             child: Column(
-      //               crossAxisAlignment: CrossAxisAlignment.start,
-      //               children: [
-      //                 Text(
-      //                   'Saran/Tindak Lanjut ${index + 1}',
-      //                   style: const TextStyle(
-      //                     color: Colors.white,
-      //                     fontSize: 18,
-      //                     fontFamily: 'Inter',
-      //                     fontWeight: FontWeight.w700,
-      //                   ),
-      //                 ),
-      //                 const SizedBox(height: 10),
-      //                 Text(
-      //                   DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now()),
-      //                   style: const TextStyle(
-      //                     color: Colors.white,
-      //                     fontSize: 16,
-      //                     fontFamily: 'Inter',
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //         ));
-      //   },
-      // ),
-      body: _ListView(),
+      body: _isloading
+          ? Center(child: CircularProgressIndicator())
+          : RefreshIndicator(
+              onRefresh: _refreshData,
+              child: _ListView(),
+            ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.add_rounded,
-            size: 40,
-            weight: 60,
-          ),
-          backgroundColor: Colors.white,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TambahSaran(),
-              ),
-            );
-          }),
+        child: Icon(
+          Icons.add_rounded,
+          size: 40,
+        ),
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TambahSaran(),
+            ),
+          );
+          _refreshData(); // Refresh the data after returning from TambahSaran
+        },
+      ),
     );
   }
 
   Widget _ListView() {
     List filteredData = _listdata.where((data) {
-      String kode_produk = data['kode_produk'] ?? '';
-      return kode_produk.toLowerCase().contains(_searchQuery.toLowerCase());
+      String saran = data['saran'] ?? '';
+      return saran.toLowerCase().contains(_searchQuery.toLowerCase());
     }).toList();
 
     return ListView.separated(
@@ -208,9 +157,8 @@ class _ListSaranState extends State<ListSaran> {
             MaterialPageRoute(
               builder: (context) => ViewSaran(
                 selectedProject: {
-                  "kode_produk": projectData['kode_produk'],
                   "saran": projectData['saran'],
-                  "waktu": projectData['waktu'],
+                  "waktu_saran": projectData['waktu_saran'],
                 },
               ),
             ),
@@ -244,7 +192,7 @@ class _ListSaranState extends State<ListSaran> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 15,
+            height: 2,
           ),
           GestureDetector(
             onTap: () {
@@ -253,19 +201,17 @@ class _ListSaranState extends State<ListSaran> {
                 MaterialPageRoute(
                   builder: (context) => ViewSaran(
                     selectedProject: {
-                      "kode_produk": projectData['kode_produk'],
                       "saran": projectData['saran'],
-                      "waktu": projectData['waktu'],
+                      "waktu_saran": projectData['waktu_saran'],
                     },
                   ),
                 ),
               );
             },
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 1.0, horizontal: 10.0),
+              padding: const EdgeInsets.only(top: 0, left: 0),
               child: Container(
-                width: screenWidth * 0.8,
+                width: screenWidth * 0.9,
                 decoration: BoxDecoration(
                   color: const Color(0xBF2B3856),
                   borderRadius: BorderRadius.circular(20),
@@ -284,16 +230,7 @@ class _ListSaranState extends State<ListSaran> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    Text(
-                      DateFormat('dd/MM/yyyy HH:mm')
-                          .format(DateTime.parse(projectData['waktu'])),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: 'Inter',
-                      ),
-                    ),
+                    const SizedBox(height: 1),
                   ],
                 ),
               ),

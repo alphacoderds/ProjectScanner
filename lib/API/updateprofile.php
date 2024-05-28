@@ -15,15 +15,53 @@ $status = $_POST['status'];
 $password = $_POST['password'];
 $konfirmasi_password = $_POST['konfirmasi_password'];
 
-$data = mysqli_query($conn, "UPDATE coba SET kode_staff='$kode_staff', nama='$nama', nip='$nip', jabatan='$jabatan', unit_kerja='$unit_kerja', departemen='$departemen', divisi='$divisi', no_telp='$no_telp', status='$status' WHERE nip='$nip' ");
+if (isset($_FILES['userprofile'])) {
+    $file = $_FILES['userprofile'];
+    $file_name = $file['name'];
+    $file_tmp = $file['tmp_name'];
+    $file_error = $file['error'];
 
-if ($result) {
+    if ($file_error === 0) {
+        $file_destination = 'uploads/' . $file_name;
+        move_uploaded_file($file_tmp, $file_destination);
+
+        $data = mysqli_query($conn, "UPDATE coba SET 
+        kode_staff='$kode_staff', 
+        nama='$nama', 
+        jabatan='$jabatan', 
+        unit_kerja='$unit_kerja', 
+        departemen='$departemen', 
+        divisi='$divisi', 
+        no_telp='$no_telp', 
+        status='$status', 
+        userprofile='$file_destination' 
+        WHERE nip='$nip'");
+} else {
     echo json_encode([
-        "message" => "Success"
+        "message" => "File upload error"
     ]);
-}else{
-   echo json_encode([
-    "message" => "Gagal"
-   ]);
+    exit();
+}
+} else {
+$data = mysqli_query($conn, "UPDATE coba SET 
+    kode_staff='$kode_staff', 
+    nama='$nama', 
+    jabatan='$jabatan', 
+    unit_kerja='$unit_kerja', 
+    departemen='$departemen', 
+    divisi='$divisi', 
+    no_telp='$no_telp', 
+    status='$status' 
+    WHERE nip='$nip'");
+}
+
+if ($data) {
+echo json_encode([
+    "message" => "Success"
+]);
+} else {
+echo json_encode([
+    "message" => "Failed to update data"
+]);
 }
 ?>

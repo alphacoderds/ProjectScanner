@@ -1,7 +1,8 @@
+import 'dart:convert';
 import 'package:RekaChain/saran_tindak_lanjut.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+// Import your list_saran file to navigate back to it
 
 class TambahSaran extends StatefulWidget {
   const TambahSaran({super.key});
@@ -11,7 +12,6 @@ class TambahSaran extends StatefulWidget {
 }
 
 class _TambahSaranState extends State<TambahSaran> {
-  TextEditingController kodeProdukController = TextEditingController();
   TextEditingController saranController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -22,25 +22,19 @@ class _TambahSaranState extends State<TambahSaran> {
         final currentTime = DateTime.now().toIso8601String();
         final response = await http.post(
           Uri.parse(
-              'http://192.168.8.107/ProjectScanner/lib/API/create_saran.php'),
+              'http://192.168.11.22/ProjectScanner/lib/API/create_saran.php'),
           body: {
-            'kode_produk': kodeProdukController.text,
             'saran': saranController.text,
-            'waktu': currentTime,
+            'waktu_saran': currentTime,
           },
         );
 
         final responseData = jsonDecode(response.body);
         if (response.statusCode == 200 && responseData['pesan'] == 'Sukses') {
-          Navigator.push(
+          Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(
-              builder: (context) => Saran(
-                kodeProduk: kodeProdukController.text,
-                saran: saranController.text,
-                waktu: currentTime,
-              ),
-            ),
+            MaterialPageRoute(builder: (context) => const ListSaran()),
+            (Route<dynamic> route) => false,
           );
         } else {
           print('Failed to submit data: ${responseData['pesan']}');
@@ -93,27 +87,6 @@ class _TambahSaranState extends State<TambahSaran> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 350,
-                child: TextFormField(
-                  controller: kodeProdukController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    hintText: 'Kode Produk',
-                    filled: true,
-                    fillColor: Colors.transparent,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Kode Produk tidak boleh kosong';
-                    }
-                    return null;
-                  },
-                ),
-              ),
               SizedBox(height: 10),
               SizedBox(
                 width: 350,
@@ -170,15 +143,13 @@ class _TambahSaranState extends State<TambahSaran> {
 }
 
 class Saran extends StatelessWidget {
-  final String kodeProduk;
   final String saran;
-  final String waktu;
+  final String waktu_saran;
 
   const Saran({
     super.key,
-    required this.kodeProduk,
     required this.saran,
-    required this.waktu,
+    required this.waktu_saran,
   });
 
   @override
@@ -192,11 +163,9 @@ class Saran extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Kode Produk: $kodeProduk'),
-            SizedBox(height: 10),
             Text('Saran: $saran'),
             SizedBox(height: 10),
-            Text('Waktu: $waktu'),
+            Text('Waktu_saran: $waktu_saran'),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
