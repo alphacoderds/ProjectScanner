@@ -1,18 +1,85 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+
 import 'package:RekaChain/keterangan.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-class TambahKeterangan extends StatelessWidget {
-  const TambahKeterangan({super.key});
+class TambahKeterangan extends StatefulWidget {
+  final String id_lot;
+  const TambahKeterangan({Key? key, required this.id_lot}) : super(key: key);
 
-  void _saveData(BuildContext context) {
-    print('Data saved!');
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const Keterangan()),
-    );
+  @override
+  State<TambahKeterangan> createState() => _TambahKeteranganState();
+}
+
+class _TambahKeteranganState extends State<TambahKeterangan> {
+  TextEditingController keteranganController = TextEditingController();
+  String nip = '';
+
+  void fetchData() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://192.168.9.56/ProjectScanner/lib/API/update_keterangan.php?nip=${nip}'),
+      );
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        final keterangan = responseData['keterangan_produk'];
+        setState(() {
+          keteranganController.text = keterangan;
+        });
+      } else {
+        print('Failed to fetch data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
+  Future<void> fetchNIP() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      nip = prefs.getString('nip') ?? '';
+    });
+  }
+
+  void _updateDataAndNavigateToListProject() async {
+    try {
+      final response = await http.post(
+        Uri.parse(
+            'http://192.168.43.88/ProjectScanner/lib/API/update_keterangan.php'),
+        body: {
+          'id_lot': widget.id_lot,
+          'keterangan_produk': keteranganController.text,
+          'nip': nip,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Keterangan(
+              id_lot: widget.id_lot,
+            ),
+          ),
+        );
+      } else {
+        print('Failed to update data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error updating data: $e');
+    }
   }
 
   @override
+  void initState() {
+    super.initState();
+    keteranganController = TextEditingController();
+    fetchNIP();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +88,7 @@ class TambahKeterangan extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Update Keterangan'),
+            Text('Tambah Keterangan'),
             SizedBox(width: 10.0),
             Expanded(
               child: Align(
@@ -49,54 +116,45 @@ class TambahKeterangan extends StatelessWidget {
           },
         ),
       ),
-      body: Center(
-        child: Column(
+      body: Stack(children: [
+        Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 350,
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    borderSide: BorderSide(color: Colors.black),
+            Center(
+              child: SizedBox(
+                width: 350,
+                child: TextField(
+                  controller: keteranganController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    hintText: 'Isi Keterangan',
+                    filled: true,
+                    fillColor: Colors.transparent,
                   ),
-                  hintText: 'Isi Keterangan',
-                  filled: true,
-                  fillColor: Colors.transparent,
+                  minLines: 4,
+                  maxLines: null,
                 ),
-                minLines: 4, // Mengatur jumlah baris minimum
-                maxLines: null,
               ),
             ),
-            SizedBox(height: 10),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Keterangan()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                ),
-                child: const SizedBox(
-                    width: 70,
-                    height: 40,
-                    child: Center(
-                      child: Text(
-                        "Simpan",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                    ))),
           ],
         ),
-      ),
+        Positioned(
+          bottom: 40,
+          right: 20,
+          child: IconButton(
+            onPressed: () {
+              _updateDataAndNavigateToListProject();
+            },
+            icon: Icon(
+              Icons.check_box_outlined,
+              size: 40,
+            ),
+          ),
+        ),
+      ]),
     );
   }
 }

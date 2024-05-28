@@ -3,7 +3,15 @@ import 'package:RekaChain/bottomnavbar.dart';
 import 'package:RekaChain/keterangan.dart';
 
 class PopUpProduk extends StatefulWidget {
-  const PopUpProduk({Key? key}) : super(key: key);
+  final String id_lot;
+  final String nip;
+  final Function(int) onConfirm;
+  const PopUpProduk(
+      {Key? key,
+      required this.id_lot,
+      required this.onConfirm,
+      required this.nip})
+      : super(key: key);
 
   @override
   State<PopUpProduk> createState() => _PopUpProdukState();
@@ -12,6 +20,8 @@ class PopUpProduk extends StatefulWidget {
 class _PopUpProdukState extends State<PopUpProduk> {
   late double screenWidth;
   late double screenHeight;
+
+  int currentStep = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +46,8 @@ class _PopUpProdukState extends State<PopUpProduk> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(height: 30),
-                    const Text(
-                      'Apakah produk bisa diterima?',
+                    Text(
+                      'Apakah produk ${widget.id_lot} bisa diterima?',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
@@ -159,6 +169,7 @@ class _PopUpProdukState extends State<PopUpProduk> {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    widget.onConfirm(currentStep);
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -195,7 +206,7 @@ class _PopUpProdukState extends State<PopUpProduk> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Keterangan(),
+                        builder: (context) => Keterangan(id_lot: widget.id_lot),
                       ),
                     );
                   },

@@ -69,8 +69,7 @@ class Keterangan extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => const TambahKeterangan()),
+                  MaterialPageRoute(builder: (context) => NavBar()),
                 );
               },
               backgroundColor: Colors.white,
