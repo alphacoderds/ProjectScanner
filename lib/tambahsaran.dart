@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 // Import your list_saran file to navigate back to it
 
 class TambahSaran extends StatefulWidget {
-  const TambahSaran({super.key});
+  final String id_project;
+  const TambahSaran({super.key, required this.id_project});
 
   @override
   State<TambahSaran> createState() => _TambahSaranState();
@@ -22,7 +23,7 @@ class _TambahSaranState extends State<TambahSaran> {
         final currentTime = DateTime.now().toIso8601String();
         final response = await http.post(
           Uri.parse(
-              'http://192.168.11.22/ProjectScanner/lib/API/create_saran.php'),
+              'http://192.168.9.60/ProjectScanner/lib/API/create_saran.php'),
           body: {
             'saran': saranController.text,
             'waktu_saran': currentTime,
@@ -33,7 +34,7 @@ class _TambahSaranState extends State<TambahSaran> {
         if (response.statusCode == 200 && responseData['pesan'] == 'Sukses') {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const ListSaran()),
+            MaterialPageRoute(builder: (context) =>  ListSaran(id_project: widget.id_project,)),
             (Route<dynamic> route) => false,
           );
         } else {
@@ -144,12 +145,14 @@ class _TambahSaranState extends State<TambahSaran> {
 
 class Saran extends StatelessWidget {
   final String saran;
+  final String id_project;
   final String waktu_saran;
 
   const Saran({
     super.key,
     required this.saran,
     required this.waktu_saran,
+    required this.id_project
   });
 
   @override
@@ -172,7 +175,9 @@ class Saran extends StatelessWidget {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ListSaran(),
+                    builder: (context) => ListSaran(
+                      id_project: id_project,
+                    ),
                   ),
                   (Route<dynamic> route) => false,
                 );

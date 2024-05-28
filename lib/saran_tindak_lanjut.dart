@@ -7,7 +7,8 @@ import 'viewsaran.dart';
 import 'aftersales.dart';
 
 class ListSaran extends StatefulWidget {
-  const ListSaran({Key? key}) : super(key: key);
+  final String id_project;
+  const ListSaran({Key? key, required this.id_project}) : super(key: key);
 
   @override
   State<ListSaran> createState() => _ListSaranState();
@@ -30,7 +31,7 @@ class _ListSaranState extends State<ListSaran> {
   Future<void> _getdata() async {
     try {
       final response = await http.get(
-        Uri.parse('http://192.168.11.22/ProjectScanner/lib/API/get_saran.php'),
+        Uri.parse('http://192.168.9.60/ProjectScanner/lib/API/get_saran.php'),
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -99,7 +100,10 @@ class _ListSaranState extends State<ListSaran> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AfterSalesData()),
+              MaterialPageRoute(
+                  builder: (context) => AfterSalesData(
+                        id_project: widget.id_project,
+                      )),
             );
           },
         ),
@@ -121,7 +125,9 @@ class _ListSaranState extends State<ListSaran> {
           await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => TambahSaran(),
+              builder: (context) => TambahSaran(
+                id_project: widget.id_project,
+              ),
             ),
           );
           _refreshData(); // Refresh the data after returning from TambahSaran

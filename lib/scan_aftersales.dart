@@ -35,7 +35,7 @@ class _ScannerAfterSalesState extends State<ScannerAfterSales> {
       if (barcodeScanRes != '-1') {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const PopUpAfterSales()),
+          MaterialPageRoute(builder: (context) => PopUpAfterSales(id_project: barcodeScanRes)),
         );
       }
     } on PlatformException {
