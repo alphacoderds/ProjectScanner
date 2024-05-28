@@ -6,10 +6,9 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TabelScanMaterial extends StatefulWidget {
-  final String kode_material;
+  final String kodeLot;
 
-  const TabelScanMaterial({Key? key, required this.kode_material})
-      : super(key: key);
+  const TabelScanMaterial({Key? key, required this.kodeLot}) : super(key: key);
   @override
   State<TabelScanMaterial> createState() => _TabelScanMaterialState();
 }
@@ -34,7 +33,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     });
 
     final Uri url = Uri.parse(
-        'http://192.168.11.24/ProjectScanner/lib/API/READ_ScanMaterial.php?kode_material=${widget.kode_material}');
+        'http://192.168.9.56/ProjectScanner/lib/API/READ_ScanMaterial.php?kodeLot=${widget.kodeLot}');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -88,15 +87,15 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   Future<void> _updateQtyDiterimaInDatabase(
       int index, String newQtyDiterima) async {
     final Map<String, dynamic> requestData = {
-      'id': _listdata[index]['id'],
-      'qty_diterima': newQtyDiterima,
-      'nip': nip, // Menggunakan NIP dari SharedPreferences
+      'no': _listdata[index]['no'],
+      'unit': newQtyDiterima,
+      'nip': nip
     };
 
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.11.24/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
+            'http://192.168.9.56/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
         body: requestData,
       );
 
@@ -178,7 +177,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                           DataColumn(
                             label: Center(
                               child: Text(
-                                'Kode Material',
+                                'Kode Lot',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16),
                               ),
@@ -230,7 +229,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                                 scrollDirection: Axis.horizontal,
                                 child: Container(
                                   alignment: Alignment.center,
-                                  child: Text(data['id'].toString()),
+                                  child: Text(data['no'].toString()),
                                 ),
                               ),
                             ),
@@ -239,7 +238,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                                 scrollDirection: Axis.horizontal,
                                 child: Container(
                                   alignment: Alignment.center,
-                                  child: Text(data['kode_material'].toString()),
+                                  child: Text(data['kodeLot'].toString()),
                                 ),
                               ),
                             ),
@@ -257,7 +256,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                                 scrollDirection: Axis.horizontal,
                                 child: Container(
                                   alignment: Alignment.center,
-                                  child: Text(data['satuan'].toString()),
+                                  child: Text(data['specTech'].toString()),
                                 ),
                               ),
                             ),
@@ -273,7 +272,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                             DataCell(
                               TextFormField(
                                 initialValue:
-                                    _listdata[index]['qty_diterima'].toString(),
+                                    _listdata[index]['unit'].toString(),
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
                                   _updateQtyDiterima(index, value);

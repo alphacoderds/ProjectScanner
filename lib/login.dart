@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:RekaChain/model/data_model.dart';
+import 'package:RekaChain/provider/user_provider.dart';
 import 'package:crypto/crypto.dart';
 import 'package:RekaChain/profile.dart';
 import 'package:RekaChain/updateprofile.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -43,11 +45,12 @@ class _LoginPageState extends State<LoginPage> {
   Future loginbtn() async {
     final hashedPassword = hashPassword(password.text);
     var response = await http.post(
-        Uri.parse('http://192.168.11.24/ProjectScanner/lib/API/login.php'),
+        Uri.parse('http://192.168.9.56/ProjectScanner/lib/API/login.php'),
         body: {"nip": nip.text, "password": password.text});
     var jsonData = jsonDecode(response.body);
     dynamic data = (jsonData as Map<String, dynamic>);
     DataModel dataKaryawan = DataModel.getDataFromJSOn(data['data']);
+    context.read<UserProvider>().dataModel = dataKaryawan;
     if (data['message'] == "Success") {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('nip', nip.text); // Menyimpan NIP ke local storage

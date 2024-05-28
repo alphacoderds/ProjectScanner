@@ -187,24 +187,34 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _updateDataAndNavigateToProfile() async {
     try {
-      final response = await http.post(
+      var request = http.MultipartRequest(
+        'POST',
         Uri.parse(
-            'http://192.168.11.24/ProjectScanner/lib/API/updateprofile.php'),
-        body: {
-          'kode_staff': kodestaffController.text,
-          'nama': namaController.text,
-          'jabatan': jabatanController.text,
-          'unit_kerja': unitKerjaController.text,
-          'departemen': departemenController.text,
-          'divisi': divisiController.text,
-          'no_telp': nomorTeleponController.text,
-          'status': statusController.text,
-          'nip': nipController.text,
-        },
+            'http://192.168.9.56/ProjectScanner/lib/API/updateprofile.php'),
       );
 
+      request.fields['kode_staff'] = kodestaffController.text;
+      request.fields['nama'] = namaController.text;
+      request.fields['jabatan'] = jabatanController.text;
+      request.fields['unit_kerja'] = unitKerjaController.text;
+      request.fields['departemen'] = departemenController.text;
+      request.fields['divisi'] = divisiController.text;
+      request.fields['no_telp'] = nomorTeleponController.text;
+      request.fields['status'] = statusController.text;
+      request.fields['nip'] = nipController.text;
+
+      if (_selectedImage != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'foto',
+          _selectedImage!.path,
+        ));
+      }
+
+      var response = await request.send();
+
       if (response.statusCode == 200) {
-        print('Update successful: ${response.body}');
+        var responseBody = await response.stream.bytesToString();
+        print('Update successful: $responseBody');
         DataModel updatedData = DataModel(
           nama: namaController.text,
           jabatan: jabatanController.text,
@@ -226,7 +236,8 @@ class _ProfilePageState extends State<ProfilePage> {
             context, MaterialPageRoute(builder: (context) => ProfileCard()));
       } else {
         print('Failed to update data: ${response.statusCode}');
-        print('Response: ${response.body}');
+        var responseBody = await response.stream.bytesToString();
+        print('Response: $responseBody');
       }
     } catch (e) {
       print('Error updating data: $e');

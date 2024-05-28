@@ -2,6 +2,7 @@ import 'package:RekaChain/bottomnavbar.dart';
 import 'package:RekaChain/list_kerusakan.dart';
 import 'package:RekaChain/menu_riwayat_scan.dart';
 import 'package:RekaChain/profile.dart';
+import 'package:RekaChain/provider/user_provider.dart';
 import 'package:RekaChain/riwayat_proses.dart';
 import 'package:RekaChain/riwayat_scan.dart';
 import 'package:RekaChain/tabel_scan_material.dart';
@@ -16,9 +17,14 @@ import 'package:RekaChain/pop_up_materiall.dart';
 import 'package:RekaChain/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+    )
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

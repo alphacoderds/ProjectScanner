@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:RekaChain/model/data_model.dart';
+import 'package:RekaChain/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
 import 'package:RekaChain/updateprofile.dart';
 import 'package:RekaChain/login.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileCard extends StatefulWidget {
@@ -31,31 +34,22 @@ class _ProfileCardState extends State<ProfileCard> {
 
   Future<void> _getData() async {
     try {
-      final response = await http.get(Uri.parse(
-          'http://192.168.9.177/ProjectScanner/lib/tbl_tambahstaff/profileREAD.php'));
+      final response = await http.post(
+          body: {"nip": context.read<UserProvider>().dataModel.nip},
+          Uri.parse(
+              'http://192.168.9.56/ProjectScanner/lib/tbl_tambahstaff/profileREAD.php'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+        dynamic dataJadi = (data as Map<String, dynamic>)['data'];
 
-        // Ambil NIP dari SharedPreferences
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        String? nip = prefs.getString('nip');
-
-        // Filter data berdasarkan NIP yang telah diperoleh sebelumnya
-        Map<String, dynamic>? userData;
-        for (var userDataItem in data) {
-          if (userDataItem['nip'] == nip) {
-            userData = userDataItem;
-            break;
-          }
-        }
-
-        if (userData != null) {
+        if (dataJadi['kode_staff'] != null) {
           // Setel state untuk menampilkan data pengguna yang sesuai
           setState(() {
-            _userData = userData;
+            _userData = dataJadi;
             _isLoading = false;
           });
         } else {
+          print(dataJadi['nama']);
           // Tampilkan pesan jika data pengguna tidak ditemukan
           setState(() {
             _isLoading = false;
@@ -103,7 +97,7 @@ class _ProfileCardState extends State<ProfileCard> {
   @override
   void initState() {
     super.initState();
-    _getUserDataFromSharedPrefs();
+    _getData();
   }
 
   // Future<void> updateData() async {
@@ -230,30 +224,58 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 
   Widget _buildAvatar() {
-    return Stack(
-      children: [
-        Container(
-          width: screenWidth * 0.35,
-          height: screenWidth * 0.35,
-          decoration: BoxDecoration(
-            border: Border.all(width: 4, color: Colors.white),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 2,
-                blurRadius: 10,
-                color: Colors.black.withOpacity(0.1),
-              ),
-            ],
-            shape: BoxShape.circle,
-            image: const DecorationImage(
-              fit: BoxFit.cover,
-              alignment: Alignment.center,
-              image: NetworkImage('assets/images/profile-illustration.png'),
+    if (_userData != null) {
+      return Stack(
+        children: [
+          Container(
+            width: screenWidth * 0.35,
+            height: screenWidth * 0.35,
+            decoration: BoxDecoration(
+              border: Border.all(width: 4, color: Colors.white),
+              boxShadow: [
+                BoxShadow(
+                  spreadRadius: 2,
+                  blurRadius: 10,
+                  color: Colors.black.withOpacity(0.1),
+                ),
+              ],
+              shape: BoxShape.circle,
+              image: _userData!['foto'] == ""
+                  ? DecorationImage(
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      image:
+                          AssetImage('assets/images/profile-illustration.png'),
+                    )
+                  : DecorationImage(
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      image: NetworkImage(_userData!['foto'])),
             ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    } else {
+      return Stack(
+        children: [
+          Container(
+            width: screenWidth * 0.35,
+            height: screenWidth * 0.35,
+            decoration: BoxDecoration(
+              border: Border.all(width: 4, color: Colors.white),
+              boxShadow: [
+                BoxShadow(
+                  spreadRadius: 2,
+                  blurRadius: 10,
+                  color: Colors.black.withOpacity(0.1),
+                ),
+              ],
+              shape: BoxShape.circle,
+            ),
+          ),
+        ],
+      );
+    }
   }
 
   Widget _buildTextView(String label, {required String text}) {
