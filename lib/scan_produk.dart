@@ -58,7 +58,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
 
   Future<void> _updateStatus(String id_lot, int currentStep, String nip) async {
     final response = await http.post(
-      Uri.parse('http://192.168.9.56/ProjectScanner/lib/API/update_status.php'),
+      Uri.parse('http://192.168.8.153/ProjectScanner/lib/API/update_status.php'),
       body: {
         'id_lot': id_lot,
         'nip': nip,

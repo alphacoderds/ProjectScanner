@@ -34,7 +34,7 @@ class _ViewOIState extends State<ViewOI> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.11.22/ProjectScanner/lib/API/edit_openitem.php?no=${widget.selectedProject['no']}&isi=${widget.selectedProject['isi']}'),
+            'http://192.168.8.153/ProjectScanner/lib/API/edit_openitem.php?no=${widget.selectedProject['no']}&isi=${widget.selectedProject['isi']}'),
       );
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
@@ -54,7 +54,7 @@ class _ViewOIState extends State<ViewOI> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.11.22/ProjectScanner/lib/API/edit_openitem.php'),
+            'http://192.168.8.153/ProjectScanner/lib/API/edit_openitem.php'),
         body: {
           'no': widget.selectedProject['no'].toString(),
           'isi': isiopenitemController.text,

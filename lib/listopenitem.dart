@@ -34,7 +34,7 @@ class _ListOIState extends State<ListOI> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.11.22/ProjectScanner/lib/API/read_openlist.php?kodeLot=${widget.kodeLot}'),
+            'http://192.168.8.153/ProjectScanner/lib/API/read_openlist.php?kodeLot=${widget.kodeLot}'),
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -60,7 +60,7 @@ class _ListOIState extends State<ListOI> {
     final item = _listdata[index];
     final response = await http.post(
       Uri.parse(
-          'http://192.168.11.22/ProjectScanner/lib/API/update_item_status.php'),
+          'http://192.168.8.153/ProjectScanner/lib/API/update_item_status.php'),
       body: {'no': item['no'].toString()},
     );
 
