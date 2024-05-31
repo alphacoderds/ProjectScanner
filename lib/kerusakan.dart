@@ -44,7 +44,7 @@ class _TambahKerusakanState extends State<TambahKerusakan> {
 
     final response = await http.post(
       Uri.parse(
-          'http://192.168.9.60/ProjectScanner/lib/API/save_kerusakan.php'),
+          'http://192.168.8.153/ProjectScanner/lib/API/save_kerusakan.php'),
       body: {
         "id_project": widget.id_project,
         "item": _itemController.text,
@@ -133,8 +133,13 @@ class _TambahKerusakanState extends State<TambahKerusakan> {
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: _simpan,
-                child: Text('Simpan'),
-              ),
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 21, 30, 81), // Atur warna latar belakang tombol menjadi biru dongker
+                ),
+                child: Text('Simpan',
+                    style: TextStyle(
+                        color: Colors.white)), // Atur warna teks menjadi putih
+              )
             ],
           ),
         ),

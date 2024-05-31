@@ -6,7 +6,7 @@ $nip = $_POST['nip'];
 $password = $_POST['password'];
 $hashedPassword = sha1($password); // You're hashing the password, which is good for security.
 
-$sql = "SELECT * FROM coba WHERE nip = '$nip' AND password = '$hashedPassword'"; // Using SHA1 hashed password for comparison.
+$sql = "SELECT * FROM tbl_tambahstaff WHERE nip = '$nip' AND password = '$hashedPassword'"; // Using SHA1 hashed password for comparison.
 
 $result = mysqli_query($conn, $sql);
 $count = mysqli_num_rows($result);

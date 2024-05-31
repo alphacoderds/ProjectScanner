@@ -25,7 +25,7 @@ $uploadfile = $path . $new_filename;
 
 if (move_uploaded_file($foto['tmp_name'], $uploadfile)) {
     $base_url = "http://192.168.9.56/ProjectScanner/lib/API/upload/$new_filename";
-    $query = "UPDATE `coba` SET `nama`='$nama',`jabatan`='$jabatan',`unit_kerja`='$unit_kerja',`departemen`= '$departemen',`divisi`='$divisi',`no_telp`='$no_telp',`status`='$status',`foto`='$base_url' WHERE nip = $nip";
+    $query = "UPDATE `tbl_tambahstaff` SET `nama`='$nama',`jabatan`='$jabatan',`unit_kerja`='$unit_kerja',`departemen`= '$departemen',`divisi`='$divisi',`no_telp`='$no_telp',`status`='$status',`foto`='$base_url' WHERE nip = $nip";
     $result=mysqli_query($conn, $query);
     if ($result) {
         echo json_encode([

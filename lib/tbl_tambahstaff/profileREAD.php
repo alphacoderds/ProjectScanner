@@ -6,7 +6,7 @@ $nip = $_POST['nip'];
 $conn = mysqli_connect("localhost", "root", "", "db_rekachain");
 
 // Query to retrieve data from the 'coba' table based on NIP
-$query = "SELECT * FROM coba WHERE nip = $nip";
+$query = "SELECT * FROM tbl_tambahstaff WHERE nip = $nip";
 $result = mysqli_query($conn, $query);
 
 $count = mysqli_num_rows($result);
