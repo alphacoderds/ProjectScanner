@@ -20,7 +20,7 @@ class _ViewKeteranganState extends State<ViewKeterangan> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.8.153/ProjectScanner/lib/API/update_keterangan.php?no=${widget.selectedProject['id_lot']}'),
+            'http://192.168.10.230/ProjectScanner/lib/API/update_keterangan.php?no=${widget.selectedProject['id_lot']}'),
       );
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
@@ -40,7 +40,7 @@ class _ViewKeteranganState extends State<ViewKeterangan> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.8.153/ProjectScanner/lib/API/update_keterangan.php'),
+            'http://192.168.10.230/ProjectScanner/lib/API/update_keterangan.php'),
         body: {
           'id_lot': widget.selectedProject['id_lot'],
           'keterangan_produk': keteranganController.text,

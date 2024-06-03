@@ -17,7 +17,7 @@ class _TambahOpenItemState extends State<TambahOpenItem> {
     if (isiopenitemController.text.isNotEmpty) {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.8.153/ProjectScanner/lib/API/create_openlist.php'),
+            'http://192.168.10.230/ProjectScanner/lib/API/create_openlist.php'),
         body: {
           "isi": isiopenitemController.text,
           "kodeLot": widget.kodeLot,

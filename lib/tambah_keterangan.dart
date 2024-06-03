@@ -21,7 +21,7 @@ class _TambahKeteranganState extends State<TambahKeterangan> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.8.153/ProjectScanner/lib/API/update_keterangan.php?nip=${nip}'),
+            'http://192.168.10.230/ProjectScanner/lib/API/update_keterangan.php?nip=${nip}'),
       );
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
@@ -48,7 +48,7 @@ class _TambahKeteranganState extends State<TambahKeterangan> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.8.153/ProjectScanner/lib/API/update_keterangan.php'),
+            'http://192.168.10.230/ProjectScanner/lib/API/update_keterangan.php'),
         body: {
           'id_lot': widget.id_lot,
           'keterangan_produk': keteranganController.text,
