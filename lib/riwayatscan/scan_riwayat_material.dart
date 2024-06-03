@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:RekaChain/riwayat_scan.dart';
+import 'package:RekaChain/riwayatscan/riwayat_scan.dart';
 
-class ScanRiwayatAfterSales extends StatefulWidget {
-  const ScanRiwayatAfterSales({super.key});
+class ScanRiwayatMaterial extends StatefulWidget {
+  const ScanRiwayatMaterial({super.key});
 
   @override
-  _ScanRiwayatAfterSalesState createState() => _ScanRiwayatAfterSalesState();
+  _ScanRiwayatMaterialState createState() => _ScanRiwayatMaterialState();
 }
 
-class _ScanRiwayatAfterSalesState extends State<ScanRiwayatAfterSales> {
+class _ScanRiwayatMaterialState extends State<ScanRiwayatMaterial> {
   late double screenWidth = MediaQuery.of(context).size.width;
   late double screenHeight = MediaQuery.of(context).size.height;
 
@@ -83,7 +83,7 @@ class _ScanRiwayatAfterSalesState extends State<ScanRiwayatAfterSales> {
                     size: 180,
                   ),
                   SizedBox(height: 20),
-                  Text('Scan Riwayat After Sales',
+                  Text('Scan Riwayat Material',
                       style: TextStyle(
                           color: Color.fromARGB(255, 85, 19, 19),
                           fontSize: 18)),

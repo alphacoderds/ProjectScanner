@@ -1,9 +1,9 @@
-import 'package:RekaChain/listopenitem.dart';
+import 'package:RekaChain/tahapselesai/listopenitem.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
-import 'package:RekaChain/close_item.dart';
-import 'package:RekaChain/listopenitem.dart';
-import 'package:RekaChain/scan_tahap_selesai.dart';
+import 'package:RekaChain/tahapselesai/close_item.dart';
+import 'package:RekaChain/tahapselesai/listopenitem.dart';
+import 'package:RekaChain/tahapselesai/scan_tahap_selesai.dart';
 
 class PopUpTahapSelesai extends StatefulWidget {
   final String kodeLot;

@@ -1,19 +1,16 @@
-import 'package:RekaChain/model/data_model.dart';
-import 'package:RekaChain/tabel_scan_material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:RekaChain/pop_up_materiall.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:RekaChain/tahapselesai/pop_up_tahap_selesai.dart';
 
-class ScannerMaterial extends StatefulWidget {
-  const ScannerMaterial({super.key});
+class ScannerTahapSelesai extends StatefulWidget {
+  const ScannerTahapSelesai({super.key});
 
   @override
-  _ScannerMaterialState createState() => _ScannerMaterialState();
+  _ScannerTahapSelesaiState createState() => _ScannerTahapSelesaiState();
 }
 
-class _ScannerMaterialState extends State<ScannerMaterial> {
+class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
   late double screenWidth = MediaQuery.of(context).size.width;
   late double screenHeight = MediaQuery.of(context).size.height;
 
@@ -38,8 +35,7 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
       if (barcodeScanRes != '-1') {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => TabelScanMaterial(kodeLot: barcodeScanRes)),
+          MaterialPageRoute(builder: (context) => PopUpTahapSelesai(kodeLot: barcodeScanRes)),
         );
       }
     } on PlatformException {
@@ -50,15 +46,10 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           children: [
             SizedBox(width: 8),
             Text('Reka Chain'),
@@ -76,7 +67,7 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
                 scanBarcodeNormal();
               },
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(25),
+                padding: const EdgeInsets.all(16),
                 backgroundColor: Color.fromARGB(255, 251, 249, 249),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -92,11 +83,10 @@ class _ScannerMaterialState extends State<ScannerMaterial> {
                     size: 180,
                   ),
                   SizedBox(height: 20),
-                  Text(
-                    'Scan Material',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 85, 19, 19), fontSize: 18),
-                  ),
+                  Text('Scan Tahap Selesai',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 85, 19, 19),
+                          fontSize: 18)),
                 ],
               ),
             ),

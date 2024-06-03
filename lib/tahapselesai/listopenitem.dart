@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:RekaChain/openitemView.dart';
+import 'package:RekaChain/tahapselesai/openitemView.dart';
 import 'package:RekaChain/tbl_tambahstaff/tambahopenitem.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
-import 'package:RekaChain/scan_tahap_selesai.dart';
+import 'package:RekaChain/tahapselesai/scan_tahap_selesai.dart';
 import 'package:http/http.dart' as http;
 
 //======================================Tampilan List Open Item======================================

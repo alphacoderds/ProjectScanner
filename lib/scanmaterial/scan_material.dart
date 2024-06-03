@@ -1,16 +1,19 @@
+import 'package:RekaChain/model/data_model.dart';
+import 'package:RekaChain/scanmaterial/tabel_scan_material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:RekaChain/riwayat_scan.dart';
+import 'package:RekaChain/scanmaterial/pop_up_materiall.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ScanRiwayatMaterial extends StatefulWidget {
-  const ScanRiwayatMaterial({super.key});
+class ScannerMaterial extends StatefulWidget {
+  const ScannerMaterial({super.key});
 
   @override
-  _ScanRiwayatMaterialState createState() => _ScanRiwayatMaterialState();
+  _ScannerMaterialState createState() => _ScannerMaterialState();
 }
 
-class _ScanRiwayatMaterialState extends State<ScanRiwayatMaterial> {
+class _ScannerMaterialState extends State<ScannerMaterial> {
   late double screenWidth = MediaQuery.of(context).size.width;
   late double screenHeight = MediaQuery.of(context).size.height;
 
@@ -35,7 +38,8 @@ class _ScanRiwayatMaterialState extends State<ScanRiwayatMaterial> {
       if (barcodeScanRes != '-1') {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const RiwayatScan()),
+          MaterialPageRoute(
+              builder: (context) => TabelScanMaterial(kodeLot: barcodeScanRes)),
         );
       }
     } on PlatformException {
@@ -46,10 +50,15 @@ class _ScanRiwayatMaterialState extends State<ScanRiwayatMaterial> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           children: [
             SizedBox(width: 8),
             Text('Reka Chain'),
@@ -67,7 +76,7 @@ class _ScanRiwayatMaterialState extends State<ScanRiwayatMaterial> {
                 scanBarcodeNormal();
               },
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(25),
                 backgroundColor: Color.fromARGB(255, 251, 249, 249),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -83,10 +92,11 @@ class _ScanRiwayatMaterialState extends State<ScanRiwayatMaterial> {
                     size: 180,
                   ),
                   SizedBox(height: 20),
-                  Text('Scan Riwayat Material',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 85, 19, 19),
-                          fontSize: 18)),
+                  Text(
+                    'Scan Material',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 85, 19, 19), fontSize: 18),
+                  ),
                 ],
               ),
             ),

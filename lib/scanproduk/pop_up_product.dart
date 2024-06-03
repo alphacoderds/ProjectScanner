@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
-import 'package:RekaChain/list_kerusakan.dart';
-import 'package:RekaChain/saran_tindak_lanjut.dart';
+import 'package:RekaChain/scanproduk/keterangan.dart';
 
-class PopUpAfterSales extends StatefulWidget {
-  final String id_project;
-  const PopUpAfterSales({Key? key, required this.id_project}) : super(key: key);
+class PopUpProduk extends StatefulWidget {
+  final String id_lot;
+  final String nip;
+  final Function(int) onConfirm;
+  const PopUpProduk(
+      {Key? key,
+      required this.id_lot,
+      required this.onConfirm,
+      required this.nip})
+      : super(key: key);
 
   @override
-  State<PopUpAfterSales> createState() => _PopUpAfterSalesState();
+  State<PopUpProduk> createState() => _PopUpProdukState();
 }
 
-class _PopUpAfterSalesState extends State<PopUpAfterSales> {
-  late double screenWidth = MediaQuery.of(context).size.width;
-  late double screenHeight = MediaQuery.of(context).size.height;
+class _PopUpProdukState extends State<PopUpProduk> {
+  late double screenWidth;
+  late double screenHeight;
+
+  int currentStep = 1;
 
   @override
   Widget build(BuildContext context) {
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: FutureBuilder(
         future: Future.delayed(const Duration(seconds: 1)),
@@ -25,6 +36,7 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
             return Dialog(
               alignment: Alignment.center,
               child: Container(
+                width: screenWidth * 0.8,
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(43, 56, 86, 1),
                   borderRadius: BorderRadius.circular(30),
@@ -34,8 +46,8 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(height: 30),
-                    const Text(
-                      'Apakah produk berjalan sesuai \n dengan semestinya?',
+                    Text(
+                      'Apakah produk ${widget.id_lot} bisa diterima?',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
@@ -50,10 +62,11 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
                         ElevatedButton(
                           onPressed: () {
                             showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return _dialog2();
-                                });
+                              context: context,
+                              builder: (BuildContext context) {
+                                return _dialog2();
+                              },
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor:
@@ -85,8 +98,7 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AfterSalesData(
-                                    id_project: widget.id_project),
+                                builder: (context) => const NavBar(),
                               ),
                             );
                           },
@@ -99,7 +111,7 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
                             ),
                           ),
                           child: const SizedBox(
-                            width: 45,
+                            width: 50,
                             height: 30,
                             child: Center(
                               child: Text(
@@ -131,10 +143,113 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
     return Dialog(
       alignment: Alignment.center,
       child: Container(
-        width: 500,
+        width: screenWidth * 0.99,
+        height: screenHeight * 0.25,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(43, 56, 86, 1),
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20),
+            const Text(
+              'Apakah produk dapat \nmulai dikerjakan?',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+                fontSize: 16.5,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    widget.onConfirm(currentStep);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return _dialog3();
+                      },
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: const Color.fromRGBO(43, 56, 86, 1),
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: screenHeight * 0.012,
+                      bottom: screenHeight * 0.012,
+                      left: screenWidth * 0.035,
+                      right: screenWidth * 0.05,
+                    ),
+                    child: Text(
+                      "Ya",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Keterangan(id_lot: widget.id_lot),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: const Color.fromRGBO(43, 56, 86, 1),
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: const SizedBox(
+                    width: 50,
+                    height: 30,
+                    child: Center(
+                      child: Text(
+                        "Tidak",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _dialog3() {
+    return Dialog(
+      alignment: Alignment.center,
+      child: Container(
+        width: screenWidth * 0.9,
+        height: screenHeight * 0.43,
+        decoration: BoxDecoration(
+          color: const Color.fromRGBO(43, 56, 86, 1),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -146,16 +261,16 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
               color: Colors.white,
               size: 100,
             ),
-            const SizedBox(height: 10),
             const Text(
-              'Menyimpan data!',
+              '\nSemangat memulai \npekerjaan Anda !',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,
                 fontSize: 16.5,
               ),
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
@@ -174,11 +289,11 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
                 ),
               ),
               child: const SizedBox(
-                width: 30,
-                height: 30,
+                width: 50,
+                height: 40,
                 child: Center(
                   child: Text(
-                    "OK",
+                    "Mulai",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
@@ -188,132 +303,10 @@ class _PopUpAfterSalesState extends State<PopUpAfterSales> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
           ],
         ),
       ),
     );
-  }
-}
-
-class AfterSalesData extends StatefulWidget {
-  final String id_project;
-  const AfterSalesData({super.key, required this.id_project});
-
-  @override
-  State<AfterSalesData> createState() => _AfterSalesDataState();
-}
-
-class _AfterSalesDataState extends State<AfterSalesData> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text('Data Pelanggan'),
-              SizedBox(width: 10.0),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: FractionalTranslation(
-                    translation: Offset(0.37, 0.10),
-                    child: AspectRatio(
-                      aspectRatio: 11 / 8,
-                      child: Image(
-                        image: AssetImage('assets/images/bolder31.png'),
-                        width: 170,
-                        height: 120,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => NavBar()),
-              );
-            },
-          ),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ListKerusakan(id_project: widget.id_project),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                child: const SizedBox(
-                  width: 180,
-                  height: 70,
-                  child: Center(
-                    child: Text(
-                      "List Kerusakan",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ListSaran(id_project: widget.id_project,),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color.fromRGBO(43, 56, 86, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                child: const SizedBox(
-                  width: 180,
-                  height: 70,
-                  child: Center(
-                    child: Text(
-                      "Saran / Tindak Lanjut",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ));
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart'; // Untuk mengformat tanggal dan waktu
-import 'package:RekaChain/list_kerusakan.dart'; // Impor file ListKerusakan untuk navigasi ke halaman tersebut
+import 'package:RekaChain/aftersales/list_kerusakan.dart'; // Impor file ListKerusakan untuk navigasi ke halaman tersebut
 
 class TambahKerusakan extends StatefulWidget {
   final Function onSaved;

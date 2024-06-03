@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:RekaChain/saran_tindak_lanjut.dart';
+import 'package:RekaChain/aftersales/saran_tindak_lanjut.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 // Import your list_saran file to navigate back to it

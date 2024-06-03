@@ -8,7 +8,7 @@ $conn=mysqli_connect('localhost','root','','db_rekachain');
 $kode_staff = $_POST['kode_staff'];
 $nama = $_POST['nama'];
 $nip = $_POST['nip'];
-$foto = $_FILES['foto'];
+$profile = $_FILES['profile'];
 $jabatan = $_POST['jabatan'];
 $unit_kerja = $_POST['unit_kerja'];
 $departemen = $_POST['departemen'];
@@ -24,7 +24,7 @@ $new_filename = uniqid() . '_' . time() . '.' . $extension;
 $uploadfile = $path . $new_filename;
 
 if (move_uploaded_file($foto['tmp_name'], $uploadfile)) {
-    $base_url = "http://192.168.9.56/ProjectScanner/lib/API/upload/$new_filename";
+    $base_url = "http://192.168.10.230/ProjectScanner/lib/API/upload/$new_filename";
     $query = "UPDATE `tbl_tambahstaff` SET `nama`='$nama',`jabatan`='$jabatan',`unit_kerja`='$unit_kerja',`departemen`= '$departemen',`divisi`='$divisi',`no_telp`='$no_telp',`status`='$status',`foto`='$base_url' WHERE nip = $nip";
     $result=mysqli_query($conn, $query);
     if ($result) {

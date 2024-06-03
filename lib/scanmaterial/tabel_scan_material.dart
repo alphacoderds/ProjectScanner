@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:RekaChain/ModelClass/MD_ScanMaterial.dart';
-import 'package:RekaChain/pop_up_materiall.dart';
+import 'package:RekaChain/scanmaterial/pop_up_materiall.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';

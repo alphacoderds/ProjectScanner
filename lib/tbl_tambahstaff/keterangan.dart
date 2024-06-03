@@ -1,6 +1,6 @@
 import 'package:RekaChain/bottomnavbar.dart';
 import 'package:flutter/material.dart';
-import 'package:RekaChain/tambah_keterangan.dart';
+import 'package:RekaChain/scanproduk/tambah_keterangan.dart';
 
 class Keterangan extends StatelessWidget {
   const Keterangan({super.key});

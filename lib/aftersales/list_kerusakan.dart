@@ -1,4 +1,4 @@
-import 'package:RekaChain/kerusakan.dart';
+import 'package:RekaChain/aftersales/kerusakan.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';

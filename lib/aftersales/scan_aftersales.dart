@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:RekaChain/pop_up_tahap_selesai.dart';
+import 'package:RekaChain/aftersales/aftersales.dart';
 
-class ScannerTahapSelesai extends StatefulWidget {
-  const ScannerTahapSelesai({super.key});
+class ScannerAfterSales extends StatefulWidget {
+  const ScannerAfterSales({super.key});
 
   @override
-  _ScannerTahapSelesaiState createState() => _ScannerTahapSelesaiState();
+  _ScannerAfterSalesState createState() => _ScannerAfterSalesState();
 }
 
-class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
+class _ScannerAfterSalesState extends State<ScannerAfterSales> {
   late double screenWidth = MediaQuery.of(context).size.width;
   late double screenHeight = MediaQuery.of(context).size.height;
 
@@ -35,7 +35,7 @@ class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
       if (barcodeScanRes != '-1') {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PopUpTahapSelesai(kodeLot: barcodeScanRes)),
+          MaterialPageRoute(builder: (context) => PopUpAfterSales(id_project: barcodeScanRes)),
         );
       }
     } on PlatformException {
@@ -67,8 +67,7 @@ class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
                 scanBarcodeNormal();
               },
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(16),
-                backgroundColor: Color.fromARGB(255, 251, 249, 249),
+                padding: const EdgeInsets.all(25),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -83,7 +82,7 @@ class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
                     size: 180,
                   ),
                   SizedBox(height: 20),
-                  Text('Scan Tahap Selesai',
+                  Text('Scan AfterSales',
                       style: TextStyle(
                           color: Color.fromARGB(255, 85, 19, 19),
                           fontSize: 18)),

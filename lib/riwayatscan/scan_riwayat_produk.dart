@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:RekaChain/aftersales.dart';
+import 'package:RekaChain/riwayatscan/riwayat_scan.dart';
 
-class ScannerAfterSales extends StatefulWidget {
-  const ScannerAfterSales({super.key});
+class ScanRiwayatProduk extends StatefulWidget {
+  const ScanRiwayatProduk({super.key});
 
   @override
-  _ScannerAfterSalesState createState() => _ScannerAfterSalesState();
+  _ScanRiwayatProdukState createState() => _ScanRiwayatProdukState();
 }
 
-class _ScannerAfterSalesState extends State<ScannerAfterSales> {
+class _ScanRiwayatProdukState extends State<ScanRiwayatProduk> {
   late double screenWidth = MediaQuery.of(context).size.width;
   late double screenHeight = MediaQuery.of(context).size.height;
 
@@ -35,7 +35,7 @@ class _ScannerAfterSalesState extends State<ScannerAfterSales> {
       if (barcodeScanRes != '-1') {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PopUpAfterSales(id_project: barcodeScanRes)),
+          MaterialPageRoute(builder: (context) => const RiwayatScan()),
         );
       }
     } on PlatformException {
@@ -67,7 +67,8 @@ class _ScannerAfterSalesState extends State<ScannerAfterSales> {
                 scanBarcodeNormal();
               },
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(25),
+                padding: const EdgeInsets.all(16),
+                backgroundColor: Color.fromARGB(255, 251, 249, 249),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -82,7 +83,7 @@ class _ScannerAfterSalesState extends State<ScannerAfterSales> {
                     size: 180,
                   ),
                   SizedBox(height: 20),
-                  Text('Scan AfterSales',
+                  Text('Scan Riwayat Produk',
                       style: TextStyle(
                           color: Color.fromARGB(255, 85, 19, 19),
                           fontSize: 18)),

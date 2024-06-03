@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:RekaChain/bottomnavbar.dart';
-import 'package:RekaChain/viewKeterangan.dart';
+import 'package:RekaChain/scanproduk/viewKeterangan.dart';
 import 'package:flutter/material.dart';
-import 'package:RekaChain/tambah_keterangan.dart';
+import 'package:RekaChain/scanproduk/tambah_keterangan.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 

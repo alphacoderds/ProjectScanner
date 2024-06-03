@@ -1,6 +1,6 @@
-import 'package:RekaChain/scan_riwayat_aftersales.dart';
-import 'package:RekaChain/scan_riwayat_material.dart';
-import 'package:RekaChain/scan_riwayat_produk.dart';
+import 'package:RekaChain/riwayatscan/scan_riwayat_aftersales.dart';
+import 'package:RekaChain/riwayatscan/scan_riwayat_material.dart';
+import 'package:RekaChain/riwayatscan/scan_riwayat_produk.dart';
 import 'package:flutter/material.dart';
 
 class MenuRiwayatScan extends StatefulWidget {
