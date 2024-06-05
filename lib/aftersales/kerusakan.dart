@@ -134,7 +134,8 @@ class _TambahKerusakanState extends State<TambahKerusakan> {
               ElevatedButton(
                 onPressed: _simpan,
                 style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 21, 30, 81), // Atur warna latar belakang tombol menjadi biru dongker
+                  primary: Color.fromARGB(255, 21, 30,
+                      81), // Atur warna latar belakang tombol menjadi biru dongker
                 ),
                 child: Text('Simpan',
                     style: TextStyle(

@@ -1,44 +1,47 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-$conn = new mysqli("localhost", "root", "", "db_rekachain");
 
-// $no = isset($row['no']) ? $row['no'] : '';
-// $unit = isset($row['unit']) ? $row['unit'] : '';
-// $nip = isset($row['nip']) ? $row['nip'] : '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $no = $_POST['no'];
+    $unit = $_POST['unit'];
+    $nip = $_POST['nip'];
+    $conn = mysqli_connect("localhost", "root", "", "db_rekachain");
 
-$no = $_POST["no"];
-$unit = $_POST["unit"];
-$nip = $_POST["nip"];
+    if ($conn) {
+        // Cek apakah nip sudah ada di database
+        $checkQuery = "SELECT nip FROM tbl_material WHERE no='$no'";
+        $result = mysqli_query($conn, $checkQuery);
 
-// Fetch current nip
-$query = "SELECT nip FROM tbl_material WHERE no='$no'";
-$result = mysqli_query($conn, $query);
-$row = mysqli_fetch_assoc($result);
+        if ($result && mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $existingNip = $row['nip'];
 
-// $current_nip = isset($row['nip']) ? $row['nip'] : '';
-$current_nip = $row['nip'];
+            if (empty($existingNip)) {
+                // Jika nip masih kosong, update kedua kolom
+                $updateQuery = "UPDATE tbl_material SET unit='$unit', nip='$nip' WHERE no='$no'";
+            } else {
+                if ($existingNip == $nip) {
+                    // Jika nip sudah ada dan sesuai, update hanya kolom unit
+                    $updateQuery = "UPDATE tbl_material SET unit='$unit' WHERE no='$no'";
+                } else {
+                    echo "Gagal memperbarui data: NIP tidak sesuai.";
+                    exit();
+                }
+            }
+        } else {
+            echo "Data tidak ditemukan atau gagal melakukan query.";
+            exit();
+        }
 
-if (is_null($current_nip) || $current_nip == '') {
-    // If nip is not set, set it to the current NIP
-    $updateQuery = "UPDATE tbl_material SET unit='$unit', nip='$nip' WHERE no='$no'";
-} else if ($nip == $current_nip) {
-    // If nip is set, only allow the update if the current NIP matches the stored NIP
-    $updateQuery = "UPDATE tbl_material SET unit='$unit' WHERE no='$no'";
+        if (mysqli_query($conn, $updateQuery)) {
+            echo "Data berhasil diperbarui.";
+        } else {
+            echo "Gagal memperbarui data: " . mysqli_error($conn);
+        }
+    } else {
+        echo "Gagal terhubung ke database: " . mysqli_connect_error();
+    }
 } else {
-    echo json_encode([
-        'pesan' => 'Unauthorized'
-    ]);
-    exit;
-}
-
-$data = mysqli_query($conn, $updateQuery);
-if ($data) {
-    echo json_encode([
-        'pesan' => 'Sukses'
-    ]);
-} else {
-    echo json_encode([
-        'pesan' => 'Gagal'
-    ]);
+    echo "Metode yang digunakan bukan POST.";
 }
 ?>

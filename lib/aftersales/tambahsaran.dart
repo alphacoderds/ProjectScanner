@@ -34,7 +34,10 @@ class _TambahSaranState extends State<TambahSaran> {
         if (response.statusCode == 200 && responseData['pesan'] == 'Sukses') {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) =>  ListSaran(id_project: widget.id_project,)),
+            MaterialPageRoute(
+                builder: (context) => ListSaran(
+                      id_project: widget.id_project,
+                    )),
             (Route<dynamic> route) => false,
           );
         } else {
@@ -148,12 +151,11 @@ class Saran extends StatelessWidget {
   final String id_project;
   final String waktu_saran;
 
-  const Saran({
-    super.key,
-    required this.saran,
-    required this.waktu_saran,
-    required this.id_project
-  });
+  const Saran(
+      {super.key,
+      required this.saran,
+      required this.waktu_saran,
+      required this.id_project});
 
   @override
   Widget build(BuildContext context) {

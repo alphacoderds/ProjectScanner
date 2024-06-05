@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'package:RekaChain/ModelClass/MD_ScanMaterial.dart';
+import 'package:RekaChain/provider/user_provider.dart';
 import 'package:RekaChain/scanmaterial/pop_up_materiall.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TabelScanMaterial extends StatefulWidget {
   final String kodeLot;
-
   const TabelScanMaterial({Key? key, required this.kodeLot}) : super(key: key);
   @override
   State<TabelScanMaterial> createState() => _TabelScanMaterialState();
@@ -16,7 +18,6 @@ class TabelScanMaterial extends StatefulWidget {
 class _TabelScanMaterialState extends State<TabelScanMaterial> {
   late double screenWidth;
   late double screenHeight;
-
   late ScanMaterial scanmaterial;
   late List _listdata;
   bool _isloading = true;
@@ -25,25 +26,31 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   late List<List<TextEditingController>> controllers;
 
   Map<int, String> _temporaryChanges = {};
-  String nip = '';
 
   Future<void> fetchData() async {
     setState(() {
       _isloading = true; // Set loading indicator to true while fetching data
     });
-
     final Uri url = Uri.parse(
-        'http://192.168.10.230/ProjectScanner/lib/API/READ_ScanMaterial.php?kodeLot=${widget.kodeLot}');
+        'http://192.168.10.230/ProjectScanner/lib/scanmaterial/READ_ScanMaterial.php?kodeLot=${widget.kodeLot}');
     final response = await http.get(url);
-
     if (response.statusCode == 200) {
-      final List<dynamic> responseData = jsonDecode(response.body);
-      setState(() {
-        _listdata = responseData
-            .cast<Map<String, dynamic>>(); // Update _listdata with fetched data
-        _isloading =
-            false; // Set loading indicator to false after fetching data
-      });
+      try {
+        final List<dynamic> responseData = jsonDecode(response.body);
+        setState(() {
+          _listdata = responseData.cast<
+              Map<String, dynamic>>(); // Update _listdata with fetched data
+          _isloading =
+              false; // Set loading indicator to false after fetching data
+        });
+      } catch (e) {
+        print('Error decoding JSON: $e');
+        setState(() {
+          _isloading =
+              false; // Set loading indicator to false if JSON decoding fails
+        });
+        throw Exception('Failed to parse JSON');
+      }
     } else {
       setState(() {
         _isloading = false; // Set loading indicator to false if request fails
@@ -52,19 +59,10 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     }
   }
 
-  // Method to fetch NIP from SharedPreferences
-  Future<void> fetchNIP() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      nip = prefs.getString('nip') ?? ''; // Set NIP from SharedPreferences
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     fetchData();
-    fetchNIP();
 
     controllers = [];
     _scrollController = ScrollController();
@@ -86,16 +84,19 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
 
   Future<void> _updateQtyDiterimaInDatabase(
       int index, String newQtyDiterima) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final String nip = userProvider.dataModel.nip;
+
     final Map<String, dynamic> requestData = {
       'no': _listdata[index]['no'],
       'unit': newQtyDiterima,
-      'nip': nip
+      'nip': nip,
     };
 
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.10.230/ProjectScanner/lib/API/UPDATE_ScanMaterial.php'),
+            'http://192.168.10.230/ProjectScanner/lib/scanmaterial/UPDATE_ScanMaterial.php'),
         body: requestData,
       );
 
@@ -108,18 +109,20 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   }
 
   late ScrollController _scrollController;
-
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final String nip = userProvider.dataModel.nip;
+
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Text('NIP: $nip'),
             SizedBox(width: screenWidth * 0.6),
             Expanded(
               child: Align(
@@ -177,7 +180,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                           DataColumn(
                             label: Center(
                               child: Text(
-                                'Kode Lot',
+                                'KodeLot',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16),
                               ),
@@ -304,13 +307,11 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
               print(controller.text);
             }
           }
-
           setState(() {
             controllers.add([
               for (int k = 0; k < 6; k++) TextEditingController(),
             ]);
           });
-
           Navigator.push(
             context,
             MaterialPageRoute(

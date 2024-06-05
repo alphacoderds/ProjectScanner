@@ -240,7 +240,7 @@ class _ProfileCardState extends State<ProfileCard> {
                 ),
               ],
               shape: BoxShape.circle,
-              image: _userData!['foto'] == ""
+              image: _userData!['profile'] == ""
                   ? DecorationImage(
                       fit: BoxFit.cover,
                       alignment: Alignment.center,
@@ -250,7 +250,7 @@ class _ProfileCardState extends State<ProfileCard> {
                   : DecorationImage(
                       fit: BoxFit.cover,
                       alignment: Alignment.center,
-                      image: NetworkImage(_userData!['foto'])),
+                      image: NetworkImage(_userData!['profile'])),
             ),
           ),
         ],

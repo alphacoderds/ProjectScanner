@@ -97,9 +97,7 @@ class _ListKerusakanState extends State<ListKerusakan> {
           title: Text(
             'Kode Produk: ${kerusakanData['id_project'] ?? 'Tidak Ada'}',
             style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white),
+                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,22 +175,30 @@ class DetailKerusakan extends StatelessWidget {
             SizedBox(height: 10),
             Text(
               'Detail Kerusakan: ${kerusakanDetail['detail_kerusakan'] ?? 'Tidak Ada'}',
-              style: TextStyle(fontSize: 14, color: Colors.black), // Mengubah warna teks menjadi hitam
+              style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black), // Mengubah warna teks menjadi hitam
             ),
             SizedBox(height: 5),
             Text(
               'Item: ${kerusakanDetail['item'] ?? 'Tidak Ada'}',
-              style: TextStyle(fontSize: 14, color: Colors.black), // Mengubah warna teks menjadi hitam
+              style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black), // Mengubah warna teks menjadi hitam
             ),
             SizedBox(height: 5),
             Text(
               'Keterangan: ${kerusakanDetail['keterangan'] ?? 'Tidak Ada'}',
-              style: TextStyle(fontSize: 14, color: Colors.black), // Mengubah warna teks menjadi hitam
+              style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black), // Mengubah warna teks menjadi hitam
             ),
             SizedBox(height: 10),
             Text(
               'Tanggal: ${kerusakanDetail['waktu'] ?? 'Tidak Ada'}',
-              style: TextStyle(fontSize: 12, color: Colors.black), // Mengubah warna teks menjadi hitam
+              style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.black), // Mengubah warna teks menjadi hitam
             ),
           ],
         ),
