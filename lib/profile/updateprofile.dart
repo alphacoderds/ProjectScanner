@@ -192,7 +192,7 @@ class _ProfilePageState extends State<ProfilePage> {
       try {
         final response = await http.post(
           Uri.parse(
-              'http://192.168.10.230/ProjectScanner/lib/API/updateprofile.php'),
+              'http://192.168.8.121/ProjectScanner/lib/API/updateprofile.php'),
           body: {
             'kode_staff': kodestaffController.text,
             'nama': namaController.text,
@@ -247,7 +247,7 @@ class _ProfilePageState extends State<ProfilePage> {
       var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            'http://192.168.10.230/ProjectScanner/lib/API/updateprofile.php'),
+            'http://192.168.8.121/ProjectScanner/lib/API/updateprofile.php'),
       );
 
       request.fields['kode_staff'] = kodestaffController.text;

@@ -24,7 +24,7 @@ class _ListCloseItemState extends State<ListCloseItem> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.10.230/ProjectScanner/lib/API/read_openlist.php?kodeLot=${widget.kodeLot}'),
+            'http://192.168.8.121/ProjectScanner/lib/API/read_openlist.php?kodeLot=${widget.kodeLot}'),
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as List;
@@ -44,7 +44,7 @@ class _ListCloseItemState extends State<ListCloseItem> {
     final item = _listItems[index];
     final response = await http.post(
       Uri.parse(
-          'http://192.168.10.230/ProjectScanner/lib/API/update_item_status.php'),
+          'http://192.168.8.121/ProjectScanner/lib/API/update_item_status.php'),
       body: {'no': item['no'].toString()},
     );
 

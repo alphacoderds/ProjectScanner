@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
   Future loginbtn() async {
     final hashedPassword = hashPassword(password.text);
     var response = await http.post(
-        Uri.parse('http://192.168.10.230/ProjectScanner/lib/API/login.php'),
+        Uri.parse('http://192.168.8.121/ProjectScanner/lib/API/login.php'),
         body: {"nip": nip.text, "password": password.text});
     var jsonData = jsonDecode(response.body);
     dynamic data = (jsonData as Map<String, dynamic>);

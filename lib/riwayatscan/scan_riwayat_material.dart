@@ -1,3 +1,4 @@
+import 'package:RekaChain/riwayatscan/view_RMaterial.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
@@ -35,7 +36,9 @@ class _ScanRiwayatMaterialState extends State<ScanRiwayatMaterial> {
       if (barcodeScanRes != '-1') {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const RiwayatScan()),
+          MaterialPageRoute(
+              builder: (context) =>
+                  ViewRiwayatMaterial(kodeLot: barcodeScanRes)),
         );
       }
     } on PlatformException {
