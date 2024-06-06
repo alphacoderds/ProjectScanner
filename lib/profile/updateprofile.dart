@@ -3,16 +3,15 @@ import 'dart:io';
 import 'package:RekaChain/bottomnavbar.dart';
 import 'package:RekaChain/model/data_model.dart';
 import 'package:RekaChain/profile/profile.dart';
+import 'package:RekaChain/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
-  final XFile? profileImage; // Tambahkan parameter untuk gambar profil
-
-  const ProfilePage({Key? key, this.profileImage}) : super(key: key);
-
+  const ProfilePage({Key? key}) : super(key: key);
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -20,7 +19,6 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late double screenWidth;
   late double screenHeight;
-
   final formKey = GlobalKey<FormState>();
   TextEditingController kodestaffController = TextEditingController();
   TextEditingController namaController = TextEditingController();
@@ -32,7 +30,6 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController nipController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController statusController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -40,9 +37,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> fetchData() async {
-    String? nip = await getNipFromSharedPreferences();
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final String nip = userProvider.dataModel.nip;
     if (nip != null) {
-      DataModel? data = await getUserDataByNip(nip);
+      DataModel? data = userProvider.getUserDataByNip(nip);
       if (data != null) {
         setState(() {
           kodestaffController.text = data.kode_staff;
@@ -59,25 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  Future<String?> getNipFromSharedPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('nip');
-  }
-
-  Future<DataModel?> getUserDataByNip(String nip) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? dataKaryawanJson = prefs.getString('dataKaryawan');
-    if (dataKaryawanJson != null) {
-      Map<String, dynamic> userMap = jsonDecode(dataKaryawanJson);
-      if (userMap['nip'] == nip) {
-        return DataModel.getDataFromJSOn(userMap);
-      }
-    }
-    return null;
-  }
-
   XFile? _selectedImage;
-
   Widget _buildAvatar() {
     return Stack(
       children: [
@@ -94,11 +74,11 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ],
             shape: BoxShape.circle,
-            image: widget.profileImage != null
+            image: _selectedImage != null
                 ? DecorationImage(
                     fit: BoxFit.cover,
                     alignment: Alignment.center,
-                    image: FileImage(File(widget.profileImage!.path)),
+                    image: FileImage(File(_selectedImage!.path)),
                   )
                 : const DecorationImage(
                     fit: BoxFit.cover,
@@ -187,67 +167,12 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void _updateImageAndData() async {
-    if (_selectedImage != null) {
-      try {
-        final response = await http.post(
-          Uri.parse(
-              'http://192.168.8.121/ProjectScanner/lib/API/updateprofile.php'),
-          body: {
-            'kode_staff': kodestaffController.text,
-            'nama': namaController.text,
-            'jabatan': jabatanController.text,
-            'unit_kerja': unitKerjaController.text,
-            'departemen': departemenController.text,
-            'divisi': divisiController.text,
-            'no_telp': nomorTeleponController.text,
-            'status': statusController.text,
-            'nip': nipController.text,
-            'userprofile':
-                base64Encode(File(_selectedImage!.path).readAsBytesSync()),
-          },
-        );
-
-        if (response.statusCode == 200) {
-          print('Update successful: ${response.body}');
-          DataModel updatedData = DataModel(
-            nama: namaController.text,
-            jabatan: jabatanController.text,
-            unit_kerja: unitKerjaController.text,
-            departemen: departemenController.text,
-            divisi: divisiController.text,
-            nomorTelp: nomorTeleponController.text,
-            nip: nipController.text,
-            status: statusController.text,
-            kode_staff: kodestaffController.text,
-          );
-
-          // Simpan data yang diperbarui ke SharedPreferences
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          String dataKaryawanJson = jsonEncode(updatedData.toJson());
-          await prefs.setString('dataKaryawan', dataKaryawanJson);
-
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => ProfileCard()));
-        } else {
-          print('Failed to update data: ${response.statusCode}');
-          print('Response: ${response.body}');
-        }
-      } catch (e) {
-        print('Error updating data: $e');
-      }
-    } else {
-      // Jika gambar tidak dipilih, tetap lakukan pembaruan data tanpa gambar
-      _updateDataAndNavigateToProfile();
-    }
-  }
-
   void _updateDataAndNavigateToProfile() async {
     try {
       var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            'http://192.168.8.121/ProjectScanner/lib/API/updateprofile.php'),
+            'http://192.168.8.121/ProjectScanner/lib/profile/updateprofile.php'),
       );
 
       request.fields['kode_staff'] = kodestaffController.text;
@@ -262,7 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (_selectedImage != null) {
         request.files.add(await http.MultipartFile.fromPath(
-          'foto',
+          'profile',
           _selectedImage!.path,
         ));
       }
@@ -283,12 +208,8 @@ class _ProfilePageState extends State<ProfilePage> {
           status: statusController.text,
           kode_staff: kodestaffController.text,
         );
-
-        // Simpan data yang diperbarui ke SharedPreferences
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        String dataKaryawanJson = jsonEncode(updatedData.toJson());
-        await prefs.setString('dataKaryawan', dataKaryawanJson);
-
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setUserData(updatedData);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => ProfileCard()));
       } else {
@@ -351,7 +272,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   Navigator.pop(context);
                   XFile? image =
                       await _picker.pickImage(source: ImageSource.gallery);
-
                   if (image != null) {
                     setState(() {
                       _selectedImage = image;
@@ -366,7 +286,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   Navigator.pop(context);
                   XFile? image =
                       await _picker.pickImage(source: ImageSource.camera);
-
                   if (image != null) {
                     setState(() {
                       _selectedImage = image;
@@ -385,7 +304,6 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile'),

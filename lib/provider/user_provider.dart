@@ -12,4 +12,18 @@ class UserProvider extends ChangeNotifier {
       nomorTelp: '',
       status: '',
       unit_kerja: '');
+
+  DataModel get userData => dataModel;
+
+  void setUserData(DataModel userData) {
+    dataModel = userData;
+    notifyListeners();
+  }
+
+  DataModel? getUserDataByNip(String nip) {
+    if (dataModel.nip == nip) {
+      return dataModel;
+    }
+    return null;
+  }
 }

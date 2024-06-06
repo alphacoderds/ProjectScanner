@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:RekaChain/model/data_model.dart';
+import 'package:RekaChain/profile/updateprofile.dart';
 import 'package:RekaChain/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
-import 'package:RekaChain/profile/updateprofile.dart';
 import 'package:RekaChain/login.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -13,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileCard extends StatefulWidget {
   const ProfileCard({super.key});
-
   @override
   State<ProfileCard> createState() => _ProfileCardState();
 }
@@ -23,7 +22,6 @@ class _ProfileCardState extends State<ProfileCard> {
   Map<String, dynamic>? _userData;
   late double screenWidth = MediaQuery.of(context).size.width;
   late double screenHeight = MediaQuery.of(context).size.height;
-
   TextEditingController namaController = TextEditingController();
   TextEditingController nipController = TextEditingController();
   TextEditingController unitKerjaController = TextEditingController();
@@ -37,11 +35,10 @@ class _ProfileCardState extends State<ProfileCard> {
       final response = await http.post(
           body: {"nip": context.read<UserProvider>().dataModel.nip},
           Uri.parse(
-              'http://192.168.8.121/ProjectScanner/lib/tbl_tambahstaff/profileREAD.php'));
+              'http://192.168.8.121/ProjectScanner/lib/profile/profileREAD.php'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         dynamic dataJadi = (data as Map<String, dynamic>)['data'];
-
         if (dataJadi['kode_staff'] != null) {
           // Setel state untuk menampilkan data pengguna yang sesuai
           setState(() {
@@ -67,15 +64,15 @@ class _ProfileCardState extends State<ProfileCard> {
     }
   }
 
-  Future<DataModel?> getUserData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? dataKaryawanJson = prefs.getString('dataKaryawan');
-    if (dataKaryawanJson != null) {
-      Map<String, dynamic> userMap = jsonDecode(dataKaryawanJson);
-      return DataModel.getDataFromJSOn(userMap);
-    }
-    return null;
-  }
+  // Future<DataModel?> getUserData() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String? dataKaryawanJson = prefs.getString('dataKaryawan');
+  //   if (dataKaryawanJson != null) {
+  //     Map<String, dynamic> userMap = jsonDecode(dataKaryawanJson);
+  //     return DataModel.getDataFromJSOn(userMap);
+  //   }
+  //   return null;
+  // }
 
   Future<void> _getUserDataFromSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -104,7 +101,6 @@ class _ProfileCardState extends State<ProfileCard> {
   //   await _getData();
   //   setState(() {});
   // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,7 +137,6 @@ class _ProfileCardState extends State<ProfileCard> {
                   ),
                   textAlign: TextAlign.start, // Align text to the left
                 ),
-
                 _buildAvatar(),
                 SizedBox(height: screenHeight * 0.05),
                 _buildTextView('Nama',
@@ -154,7 +149,6 @@ class _ProfileCardState extends State<ProfileCard> {
                     text: _userData != null
                         ? _userData!['unit_kerja'] ?? ''
                         : ''),
-
                 SizedBox(height: screenHeight * 0.05),
                 ElevatedButton(
                   onPressed: () {
