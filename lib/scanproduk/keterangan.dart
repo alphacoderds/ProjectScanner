@@ -34,7 +34,7 @@ class _KeteranganState extends State<Keterangan> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.8.121/ProjectScanner/lib/API/read_keterangan.php?id_lot=${widget.id_lot}'),
+            'http://192.168.10.155/ProjectScanner/lib/API/read_keterangan.php?id_lot=${widget.id_lot}'),
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);

@@ -1,11 +1,28 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-$conn=mysqli_connect('localhost','root','','db_rekachain');
+header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Headers: Content-Type");
 
-$kodeLot = $_GET['kodeLot'];
+$conn = mysqli_connect("localhost", "root", "", "db_rekachain");
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 
-$sql = $conn->query("select * from tbl_openilist where kodeLot = '$kodeLot'");
-$data = $sql->fetch_all(MYSQLI_ASSOC);
+if (!isset($_GET['id_openlist'])) {
+    echo json_encode(array('error' => 'Parameter id_openlist tidak ditemukan'));
+    exit();
+}
 
-echo json_encode($data);
+$id_openlist = mysqli_real_escape_string($conn, $_GET['id_openlist']);
+$sql = "SELECT * FROM tbl_openilist WHERE id_openlist = '$id_openlist'";
+$result = mysqli_query($conn, $sql);
+
+if ($result) {
+    $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    echo json_encode($data);
+} else {
+    echo json_encode(array('error' => 'Gagal mengambil data: ' . mysqli_error($conn)));
+}
+
+mysqli_close($conn);
 ?>

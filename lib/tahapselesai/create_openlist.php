@@ -3,13 +3,13 @@ header("Access-Control-Allow-Origin: *");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $no = $_POST['no'];
     $isi = $_POST['isi'];
-    $kodeLot = $_POST['kodeLot'];
+    $id_openlist = $_POST['id_openlist'];
 
     $conn = mysqli_connect("localhost", "root", "", "db_rekachain");
 
     if ($conn) {
-        $query = "INSERT INTO tbl_openilist (no, isi, kodeLot) 
-                  VALUES ('$no', '$isi', '$kodeLot')";
+        $query = "INSERT INTO tbl_openilist (no, isi, id_openlist) 
+                  VALUES ('$no', '$isi', '$id_openlist')";
 
         if (mysqli_query($conn, $query)) {
             echo mysqli_insert_id($conn);

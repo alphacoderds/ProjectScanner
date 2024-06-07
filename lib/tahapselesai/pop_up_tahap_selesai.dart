@@ -1,13 +1,15 @@
+import 'package:RekaChain/tahapselesai/list_close.dart';
 import 'package:RekaChain/tahapselesai/listopenitem.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
-import 'package:RekaChain/tahapselesai/close_item.dart';
+
 import 'package:RekaChain/tahapselesai/listopenitem.dart';
 import 'package:RekaChain/tahapselesai/scan_tahap_selesai.dart';
 
 class PopUpTahapSelesai extends StatefulWidget {
-  final String kodeLot;
-  const PopUpTahapSelesai({Key? key, required this.kodeLot}) : super(key: key);
+  final String id_openlist;
+  const PopUpTahapSelesai({Key? key, required this.id_openlist})
+      : super(key: key);
 
   @override
   State<PopUpTahapSelesai> createState() => _PopUpTahapSelesaiState();
@@ -165,7 +167,8 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ListOI(kodeLot: widget.kodeLot),
+                        builder: (context) =>
+                            ListOI(id_openlist: widget.id_openlist),
                       ),
                     );
                   },
@@ -297,7 +300,8 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ListCloseItem(kodeLot: widget.kodeLot),
+                        builder: (context) =>
+                            ListClose(id_openlist: widget.id_openlist),
                       ),
                     );
                   },

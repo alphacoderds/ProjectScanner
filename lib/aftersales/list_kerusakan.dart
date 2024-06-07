@@ -28,7 +28,7 @@ class _ListKerusakanState extends State<ListKerusakan> {
   Future<void> _fetchData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.8.121/ProjectScanner/lib/API/get_kerusakan.php?id_project=${widget.id_project}'));
+          'http://192.168.10.155/ProjectScanner/lib/API/get_kerusakan.php?id_project=${widget.id_project}'));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         setState(() {

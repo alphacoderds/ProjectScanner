@@ -1,18 +1,19 @@
+import 'package:RekaChain/tahapselesai/listopenitem.dart';
+import 'package:RekaChain/tahapselesai/pop_up_tahap_selesai.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:RekaChain/tahapselesai/pop_up_tahap_selesai.dart';
 
 class ScannerTahapSelesai extends StatefulWidget {
-  const ScannerTahapSelesai({super.key});
+  const ScannerTahapSelesai({Key? key}) : super(key: key);
 
   @override
   _ScannerTahapSelesaiState createState() => _ScannerTahapSelesaiState();
 }
 
 class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
-  late double screenWidth = MediaQuery.of(context).size.width;
-  late double screenHeight = MediaQuery.of(context).size.height;
+  late double screenWidth;
+  late double screenHeight;
 
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
@@ -35,7 +36,9 @@ class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
       if (barcodeScanRes != '-1') {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PopUpTahapSelesai(kodeLot: barcodeScanRes)),
+          MaterialPageRoute(
+              builder: (context) =>
+                  PopUpTahapSelesai(id_openlist: barcodeScanRes)),
         );
       }
     } on PlatformException {
@@ -47,14 +50,12 @@ class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
 
   @override
   Widget build(BuildContext context) {
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
-          children: [
-            SizedBox(width: 8),
-            Text('Reka Chain'),
-          ],
-        ),
+        title: const Text('Reka Chain'),
       ),
       body: Align(
         alignment: Alignment.topCenter,
