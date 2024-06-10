@@ -1,24 +1,41 @@
 import 'dart:convert';
-import 'package:RekaChain/model/data_model.dart';
-import 'package:RekaChain/provider/user_provider.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'package:RekaChain/model/data_model.dart';
+import 'package:RekaChain/provider/user_provider.dart';
 import 'package:RekaChain/scanproduk/pop_up_product.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ScannerProduk extends StatefulWidget {
-  const ScannerProduk({super.key});
+  const ScannerProduk({Key? key}) : super(key: key);
 
   @override
   _ScannerProdukState createState() => _ScannerProdukState();
 }
 
 class _ScannerProdukState extends State<ScannerProduk> {
-  late double screenWidth = MediaQuery.of(context).size.width;
-  late double screenHeight = MediaQuery.of(context).size.height;
+  late double screenWidth;
+  late double screenHeight;
+  late UserProvider provider;
+
+  @override
+  void initState() {
+    super.initState();
+    // Panggil _loadNip() dalam initState
+    _loadNip();
+  }
+
+  Future<void> _loadNip() async {
+    // Inisialisasi provider
+    provider = Provider.of<UserProvider>(context, listen: false);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      provider.dataModel.nip = prefs.getString('nip') ?? '';
+    });
+  }
 
   Future<void> scanBarcodeNormal(DataModel dataModel) async {
     String barcodeScanRes;
@@ -42,11 +59,16 @@ class _ScannerProdukState extends State<ScannerProduk> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => PopUpProduk(
-                  id_lot: barcodeScanRes,
-                  nip: dataModel.nip,
-                  onConfirm: (int currentStep) => _updateStatus(
-                      barcodeScanRes, currentStep, dataModel.nip))),
+            builder: (context) => PopUpProduk(
+              id_lot: barcodeScanRes,
+              nip: dataModel.nip,
+              onConfirm: (int currentStep) => _updateStatus(
+                barcodeScanRes,
+                currentStep,
+                dataModel.nip,
+              ),
+            ),
+          ),
         );
       }
     } on PlatformException {
@@ -59,7 +81,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
   Future<void> _updateStatus(String id_lot, int currentStep, String nip) async {
     final response = await http.post(
       Uri.parse(
-          'http://192.168.8.207/ProjectScanner/lib/API/update_status.php'),
+          'http://192.168.8.207/ProjectScanner/lib/scanproduk/update_status.php'),
       body: {
         'id_lot': id_lot,
         'nip': nip,
@@ -69,7 +91,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
 
     final responseData = json.decode(response.body);
 
-    if (responseData['message'] == 'Success') {
+    if (responseData['status'] == 'success') {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(responseData['message']),
@@ -86,20 +108,12 @@ class _ScannerProdukState extends State<ScannerProduk> {
     }
   }
 
-  Future<void> _loadNip(String nip) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      nip = prefs.getString('nip') ?? '';
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    // Dapatkan screenWidth dan screenHeight pada saat membangun widget
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         title: const Row(
@@ -118,7 +132,18 @@ class _ScannerProdukState extends State<ScannerProduk> {
             Consumer<UserProvider>(builder: (context, provider, child) {
               return ElevatedButton(
                 onPressed: () {
-                  scanBarcodeNormal(provider.dataModel);
+                  if (provider.dataModel.nip.isNotEmpty) {
+                    // Cek apakah NIP sudah dimuat sebelum memulai pemindaian barcode
+                    scanBarcodeNormal(provider.dataModel);
+                  } else {
+                    // Tampilkan pesan jika NIP belum dimuat
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('NIP belum dimuat'),
+                        duration: const Duration(seconds: 3),
+                      ),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(25),
@@ -139,7 +164,9 @@ class _ScannerProdukState extends State<ScannerProduk> {
                     Text(
                       'Scan Produk',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 85, 19, 19), fontSize: 18),
+                        color: Color.fromARGB(255, 85, 19, 19),
+                        fontSize: 18,
+                      ),
                     ),
                   ],
                 ),

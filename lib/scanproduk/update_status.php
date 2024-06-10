@@ -1,49 +1,53 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header('Content-Type: application/json');
-$conn=new mysqli("localhost","root","","db_rekachain");
 
+// Koneksi ke database
+$conn = new mysqli("localhost", "root", "", "db_rekachain");
 
+// Periksa koneksi
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$id_lot = $_POST['id_lot'];
-$current_step = $_POST['current_step'];  // Tahap saat ini yang akan diperbarui
-$nip = $_POST['nip'];
+// Ambil data dari permintaan POST
+$id_lot = isset($_POST['id_lot']) ? $_POST['id_lot'] : null;
+$current_step = isset($_POST['current_step']) ? $_POST['current_step'] : null;
 
-$sql = "SELECT * FROM `tbl_lot` WHERE id_lot = $id_lot";
-$resultCheck =mysqli_query($conn, $sql);
-$count=mysqli_num_rows($resultCheck);
-$data = [];
+// Logika untuk memeriksa status tahap sebelumnya
+if ($current_step > 1) { // Kecuali tahap pertama
+    $previous_step = $current_step - 1;
+    $sql_check = "SELECT status1 FROM tbl_lot WHERE id_lot = ?";
+    $stmt_check = $conn->prepare($sql_check);
+    $stmt_check->bind_param("s", $id_lot);
+    $stmt_check->execute();
+    $stmt_check->bind_result($previous_status);
+    $stmt_check->fetch();
+    $stmt_check->close();
 
-while($row = mysqli_fetch_assoc($resultCheck)){
-    $data[] = $row;
+    if ($previous_status != 'sudah dikerjakan') {
+        $response = array("status" => "error", "message" => "Tahap sebelumnya belum selesai.");
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        exit();
+    }
 }
 
-if ($data == null) {
-    $response = array("status" => "error", "message" => "Failed to update status");
-    header("HTTP/1.1 404 ERROR");
-    echo json_encode([
-        "message" => "Failed",
-    ]);
-}else{
-    $sql_check = "UPDATE `tbl_lot` SET `status1`='sedang dikerjakan',`keterangan_produk1`='',`nip1`=$nip WHERE id_lot = $id_lot";
-    $result=mysqli_query($conn, $sql_check);
+// Jika tahap pertama atau tahap sebelumnya sudah 'sudah dikerjakan', lakukan pembaruan
+$sql = "UPDATE tbl_lot SET status1 = 'sudah dikerjakan' WHERE id_lot = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $id_lot);
 
-if ($result) {
+// Eksekusi query update
+if ($stmt->execute()) {
     $response = array("status" => "success", "message" => "Status updated successfully");
-    echo json_encode([
-        "message" => "Success",
-    ]);
 } else {
-    $response = array("status" => "error", "message" => "Failed to update status");
-    header("HTTP/1.1 404 ERROR");
-    echo json_encode([
-        "message" => "Failed",
-    ]);
-}
+    $response = array("status" => "error", "message" => "Failed to update status: " . $conn->error);
 }
 
+$stmt->close();
+$conn->close();
 
+// Keluarkan respons dalam format JSON
+header('Content-Type: application/json');
+echo json_encode($response);
 ?>
