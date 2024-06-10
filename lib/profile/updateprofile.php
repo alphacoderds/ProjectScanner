@@ -24,7 +24,7 @@ $new_filename = uniqid() . '_' . time() . '.' . $extension;
 $uploadfile = $path . $new_filename;
 
 if (move_uploaded_file($profile['tmp_name'], $uploadfile)) {
-    $base_url = "http://192.168.10.155/ProjectScanner/lib/API/upload/$new_filename";
+    $base_url = "http://192.168.8.207/ProjectScanner/lib/API/upload/$new_filename";
     $query = "UPDATE `tbl_tambahstaff` SET `nama`='$nama',`jabatan`='$jabatan',`unit_kerja`='$unit_kerja',`departemen`= '$departemen',`divisi`='$divisi',`no_telp`='$no_telp',`status`='$status',`profile`='$base_url' WHERE nip = $nip";
     $result=mysqli_query($conn, $query);
     if ($result) {

@@ -172,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
       var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            'http://192.168.10.155/ProjectScanner/lib/profile/updateprofile.php'),
+            'http://192.168.8.207/ProjectScanner/lib/profile/updateprofile.php'),
       );
 
       request.fields['kode_staff'] = kodestaffController.text;

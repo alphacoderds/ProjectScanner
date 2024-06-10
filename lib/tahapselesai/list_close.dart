@@ -28,7 +28,7 @@ class _ListCloseState extends State<ListClose> {
   Future<void> _fetchData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.10.155/ProjectScanner/lib/tahapselesai/read_openlist.php?id_openlist=${widget.id_openlist}'));
+          'http://192.168.8.207/ProjectScanner/lib/tahapselesai/read_openlist.php?id_openlist=${widget.id_openlist}'));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         setState(() {
@@ -70,7 +70,7 @@ class _ListCloseState extends State<ListClose> {
 
   Widget _buildDismissibleItem(Map<String, dynamic> OpenItemData, int index) {
     return Dismissible(
-      key: Key(OpenItemData['id_openlist'].toString()),
+      key: Key(OpenItemData['no'].toString()),
       direction: DismissDirection
           .endToStart, // Change to endToStart for swipe left to delete
       background: Container(
@@ -101,7 +101,7 @@ class _ListCloseState extends State<ListClose> {
         );
       },
       onDismissed: (direction) {
-        _deleteOpenItem(OpenItemData['id_openlist'].toString());
+        _deleteOpenItem(OpenItemData['no'].toString());
       },
       child: _buildOpenItemCard(OpenItemData),
     );
@@ -136,29 +136,20 @@ class _ListCloseState extends State<ListClose> {
     );
   }
 
-  void _deleteOpenItem(String no) async {
+  void _deleteOpenItem(String id) async {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.10.155/ProjectScanner/lib/tahapselesai/delete_openlist.php'),
-        headers: <String, String>{
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
+          'http://192.168.8.207/ProjectScanner/lib/tahapselesai/delete_openlist.php',
+        ),
         body: {
-          'no': no,
-          'table': 'tbl_openlist',
+          'no': id,
         },
       );
 
+      print('Delete response: ${response.statusCode} - ${response.body}');
+
       if (response.statusCode == 200) {
-        final result = jsonDecode(response.body);
-        if (result['success'] != null) {
-          setState(() {
-            _OpenItem.removeWhere((item) => item['no'] == no);
-          });
-        } else {
-          print('Failed to delete data: ${result['error']}');
-        }
       } else {
         print('Failed to delete data: ${response.statusCode}');
       }
