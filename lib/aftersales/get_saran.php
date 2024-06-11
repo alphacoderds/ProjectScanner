@@ -12,8 +12,9 @@ if ($conn->connect_error) {
     exit();
 }
 
+$id_lot = $_GET['id_lot'];
 // Execute the query to select all records from tbl_lot
-$query = $conn->query("SELECT * FROM tbl_lot");
+$query = $conn->query("SELECT * FROM tbl_lot where id_lot = '$id_lot'");
 
 // Check if the query was successful
 if (!$query) {

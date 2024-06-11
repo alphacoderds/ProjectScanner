@@ -31,7 +31,8 @@ class _ListSaranState extends State<ListSaran> {
   Future<void> _getdata() async {
     try {
       final response = await http.get(
-        Uri.parse('http://192.168.8.207/ProjectScanner/lib/API/get_saran.php'),
+        Uri.parse(
+            'http://192.168.8.207/ProjectScanner/lib/aftersales/get_saran.php?id_lot=${widget.id_project}'),
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
