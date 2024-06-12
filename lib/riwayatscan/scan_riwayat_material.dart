@@ -2,7 +2,7 @@ import 'package:RekaChain/riwayatscan/view_RMaterial.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:RekaChain/riwayatscan/riwayat_scan.dart';
+import 'package:RekaChain/riwayatscan/list_aftersales.dart';
 
 class ScanRiwayatMaterial extends StatefulWidget {
   const ScanRiwayatMaterial({super.key});

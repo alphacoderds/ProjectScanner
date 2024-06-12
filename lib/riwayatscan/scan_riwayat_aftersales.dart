@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:RekaChain/riwayatscan/riwayat_scan.dart';
+import 'package:RekaChain/riwayatscan/list_aftersales.dart';
 
 class ScanRiwayatAfterSales extends StatefulWidget {
   const ScanRiwayatAfterSales({super.key});
@@ -35,7 +35,10 @@ class _ScanRiwayatAfterSalesState extends State<ScanRiwayatAfterSales> {
       if (barcodeScanRes != '-1') {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const RiwayatScan()),
+          MaterialPageRoute(
+              builder: (context) => ListAF(
+                    id_project: barcodeScanRes,
+                  )),
         );
       }
     } on PlatformException {

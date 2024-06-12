@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
@@ -7,15 +7,19 @@ $conn = new mysqli("localhost", "root", "", "db_rekachain");
 
 // Check the connection
 if ($conn->connect_error) {
-    die(json_encode(array("message" => "Connection failed: " . $conn->connect_error)));
+    http_response_code(500);
+    echo json_encode(["message" => "Database connection failed: " . $conn->connect_error]);
+    exit();
 }
 
+$id_lot = $_GET['id_lot'];
 // Execute the query to select all records from tbl_lot
-$query = $conn->query("SELECT * FROM tbl_lot");
+$query = $conn->query("SELECT * FROM tbl_lot where id_lot = '$id_lot'");
 
 // Check if the query was successful
 if (!$query) {
-    echo json_encode(array("message" => "Query execution failed: " . $conn->error));
+    http_response_code(500);
+    echo json_encode(["message" => "Query execution failed: " . $conn->error]);
     $conn->close();
     exit();
 }
@@ -28,4 +32,4 @@ echo json_encode($data);
 
 // Close the database connection
 $conn->close();
-?> -->
+?>
