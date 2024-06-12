@@ -50,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
           unitKerjaController.text = data.unit_kerja;
           departemenController.text = data.departemen;
           divisiController.text = data.divisi;
-          nomorTeleponController.text = data.nomorTelp;
+          nomorTeleponController.text = data.no_telp;
           statusController.text = data.status;
         });
       }
@@ -203,7 +203,7 @@ class _ProfilePageState extends State<ProfilePage> {
           unit_kerja: unitKerjaController.text,
           departemen: departemenController.text,
           divisi: divisiController.text,
-          nomorTelp: nomorTeleponController.text,
+          no_telp: nomorTeleponController.text,
           nip: nipController.text,
           status: statusController.text,
           kode_staff: kodestaffController.text,

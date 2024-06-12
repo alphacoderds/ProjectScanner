@@ -9,7 +9,7 @@ class UserProvider extends ChangeNotifier {
       kode_staff: '',
       nama: '',
       nip: '',
-      nomorTelp: '',
+      no_telp: '',
       status: '',
       unit_kerja: '');
 

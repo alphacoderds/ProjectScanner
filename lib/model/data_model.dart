@@ -5,7 +5,7 @@ class DataModel {
   String unit_kerja;
   String departemen;
   String divisi;
-  String nomorTelp;
+  String no_telp;
   String nip;
   String status;
 
@@ -16,7 +16,7 @@ class DataModel {
       required this.kode_staff,
       required this.nama,
       required this.nip,
-      required this.nomorTelp,
+      required this.no_telp,
       required this.status,
       required this.unit_kerja});
 
@@ -24,7 +24,7 @@ class DataModel {
     return {
       'kode_staff': kode_staff,
       'nip': nip,
-      'no_telp': nomorTelp,
+      'no_telp': no_telp,
       'nama': nama,
       'jabatan': jabatan,
       'unit_kerja': unit_kerja,
@@ -42,7 +42,7 @@ class DataModel {
         kode_staff: json['kode_staff'],
         nama: json['nama'],
         nip: json['nip'],
-        nomorTelp: json['no_telp'],
+        no_telp: json['no_telp'],
         status: json['status'],
         unit_kerja: json['unit_kerja']);
   }
