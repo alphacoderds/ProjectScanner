@@ -28,7 +28,7 @@ class _ListAFState extends State<ListAF> {
   Future<void> _fetchData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.8.207/ProjectScanner/lib/riwayatscan/get_afkerusakan.php?id_project=${widget.id_project}'));
+          'http://192.168.8.207/ProjectScanner/lib/riwayatscan/get_afsaran.php?id_project=${widget.id_project}'));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         setState(() {
@@ -77,22 +77,17 @@ class _ListAFState extends State<ListAF> {
         elevation: 3,
         color: Color.fromARGB(255, 23, 46, 81), // Warna biru dongker
         child: ListTile(
-          title: Text(
-            'Kode Produk: ${kerusakanData['id_project'] ?? 'Tidak Ada'}',
-            style: TextStyle(
-                fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Detail Kerusakan: ${kerusakanData['detail_kerusakan'] ?? 'Tidak Ada'}',
-                style: TextStyle(fontSize: 15, color: Colors.white),
+                style: TextStyle(fontSize: 20, color: Colors.white),
               ),
               SizedBox(height: 5),
               Text(
                 'Tanggal: ${kerusakanData['waktu'] ?? 'Tidak Ada'}',
-                style: TextStyle(fontSize: 15, color: Colors.white),
+                style: TextStyle(fontSize: 18, color: Colors.white),
               ),
             ],
           ),
@@ -145,45 +140,96 @@ class DetailKerusakan extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Kode Produk: ${kerusakanDetail['id_project'] ?? 'Tidak Ada'}',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black), // Mengubah warna teks menjadi hitam
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Detail Kerusakan: ${kerusakanDetail['detail_kerusakan'] ?? 'Tidak Ada'}',
-                style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black), // Mengubah warna teks menjadi hitam
-              ),
-              SizedBox(height: 5),
-              Text(
-                'Item: ${kerusakanDetail['item'] ?? 'Tidak Ada'}',
-                style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black), // Mengubah warna teks menjadi hitam
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Detail Kerusakan : ',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                    ),
+                    TextSpan(
+                      text:
+                          '${kerusakanDetail['detail_kerusakan'] ?? 'Tidak Ada'}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal, fontSize: 19),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: 5),
-              Text(
-                'Keterangan: ${kerusakanDetail['keterangan'] ?? 'Tidak Ada'}',
-                style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black), // Mengubah warna teks menjadi hitam
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Item : ',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                    ),
+                    TextSpan(
+                      text: '${kerusakanDetail['item'] ?? 'Tidak Ada'}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal, fontSize: 19),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: 10),
-              Text(
-                'Tanggal: ${kerusakanDetail['waktu'] ?? 'Tidak Ada'}',
-                style: TextStyle(fontSize: 17, color: Colors.black),
+              SizedBox(height: 5),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Keterangan : ',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                    ),
+                    TextSpan(
+                      text: '${kerusakanDetail['keterangan'] ?? 'Tidak Ada'}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal, fontSize: 19),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Tanggal : ',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                    ),
+                    TextSpan(
+                      text: '${kerusakanDetail['waktu'] ?? 'Tidak Ada'}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal, fontSize: 19),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
-                height: 250,
+                height: 200,
               ),
               Divider(
                 color: Colors.black,
                 thickness: 1,
+              ),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Saran : ',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                    ),
+                    TextSpan(
+                      text: '${kerusakanDetail['saran'] ?? 'Tidak Ada'}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal, fontSize: 19),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

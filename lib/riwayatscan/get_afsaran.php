@@ -1,35 +1,14 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
+$conn=mysqli_connect('localhost','root','','db_rekachain');
 
-// Create a new database connection
-$conn = new mysqli("localhost", "root", "", "db_rekachain");
+$id_project = $_GET['id_project'];
 
-// Check the connection
-if ($conn->connect_error) {
-    http_response_code(500);
-    echo json_encode(["message" => "Database connection failed: " . $conn->connect_error]);
-    exit();
-}
+$sql = $conn->query("SELECT tbl_kerusakan.*, tbl_lot.saran
+FROM tbl_kerusakan 
+JOIN tbl_lot ON tbl_kerusakan.id_project = tbl_lot.id_lot
+WHERE tbl_kerusakan.id_project = '$id_project'");
+$data = $sql->fetch_all(MYSQLI_ASSOC);
 
-$id_lot = $_GET['id_lot'];
-// Execute the query to select all records from tbl_lot
-$query = $conn->query("SELECT * FROM tbl_lot where id_lot = '$id_lot'");
-
-// Check if the query was successful
-if (!$query) {
-    http_response_code(500);
-    echo json_encode(["message" => "Query execution failed: " . $conn->error]);
-    $conn->close();
-    exit();
-}
-
-// Fetch all records as an associative array
-$data = $query->fetch_all(MYSQLI_ASSOC);
-
-// Output the data as a JSON response
 echo json_encode($data);
-
-// Close the database connection
-$conn->close();
 ?>
