@@ -8,24 +8,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn = mysqli_connect("localhost", "root", "", "db_rekachain");
 
     if ($conn) {
-        // Logika untuk memeriksa status tahap sebelumnya
         $can_update = false;
-        $current_step = 0;  // Untuk melacak tahap yang akan diperbarui
+        $current_step = 0;
 
-        // Periksa setiap kolom status dari status1 hingga status10
+        $previous_status = 'sudah dikerjakan';  // Inisialisasi awal untuk tahap pertama
+
         for ($i = 1; $i <= 10; $i++) {
             $status_column = "status$i";
-            $checkQuery = "SELECT $status_column FROM tbl_lot WHERE id_lot=?";
+            $ap_column = "ap$i";
+            $checkQuery = "SELECT $status_column, $ap_column FROM tbl_lot WHERE id_lot=?";
             $stmt = $conn->prepare($checkQuery);
             $stmt->bind_param("s", $id_lot);
             $stmt->execute();
-            $stmt->bind_result($status);
+            $stmt->bind_result($status, $ap);
             $stmt->fetch();
             $stmt->close();
 
-            if (empty($status)) {
+            // Jika status kosong dan ap tidak kosong, lanjutkan pengecekan
+            if (empty($status) && !empty($ap)) {
                 $current_step = $i;
-                if ($i == 1 || $i == 2 || ($i > 2 && $previous_status == 'sudah dikerjakan')) {
+                // Jika tahap pertama atau tahap sebelumnya sudah dikerjakan, izinkan update
+                if ($i == 1 || $previous_status == 'sudah dikerjakan') {
                     $can_update = true;
                     break;
                 }
@@ -61,7 +64,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo json_encode(array("status" => "error", "message" => "Metode yang digunakan bukan POST."));
 }
-
-// cek null kolom status
 ?>
-

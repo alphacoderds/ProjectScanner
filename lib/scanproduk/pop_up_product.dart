@@ -47,7 +47,7 @@ class _PopUpProdukState extends State<PopUpProduk> {
                   children: [
                     const SizedBox(height: 30),
                     Text(
-                      'Apakah produk ${widget.id_lot} bisa diterima?',
+                      'Apakah produk bisa diterima?',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,

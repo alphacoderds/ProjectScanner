@@ -28,12 +28,12 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController divisiController = TextEditingController();
   TextEditingController nomorTeleponController = TextEditingController();
   TextEditingController nipController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   TextEditingController statusController = TextEditingController();
   @override
   void initState() {
     super.initState();
     fetchData();
+    _getdata();
   }
 
   Future<void> fetchData() async {
@@ -54,6 +54,36 @@ class _ProfilePageState extends State<ProfilePage> {
           statusController.text = data.status;
         });
       }
+    }
+  }
+
+  Future _getdata() async {
+    try {
+      final response = await http.get(Uri.parse(
+          'http://192.168.8.207/crudflutter/flutter_crud/lib/readdataprofile.php'));
+      if (response.statusCode == 200) {
+        try {
+          final data = jsonDecode(response.body);
+          setState(() {
+            namaController.text = data['nama'] ?? '';
+            jabatanController.text = data['jabatan'] ?? '';
+            unitKerjaController.text = data['unit_kerja'] ?? '';
+            departemenController.text = data['departemen'] ?? '';
+            divisiController.text = data['divisi'] ?? '';
+            nomorTeleponController.text = data['no_telp'] ?? '';
+            nipController.text = data['nip'] ?? '';
+            statusController.text = data['status'] ?? '';
+          });
+        } catch (e) {
+          print('Error parsing JSON: $e');
+          print('Response body: ${response.body}');
+        }
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
     }
   }
 
@@ -172,7 +202,7 @@ class _ProfilePageState extends State<ProfilePage> {
       var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            'http://192.168.8.207/ProjectScanner/lib/profile/updateprofile.php'),
+            'http://192.168.8.129/ProjectScanner/lib/profile/updateprofile.php'),
       );
 
       request.fields['kode_staff'] = kodestaffController.text;
@@ -197,21 +227,28 @@ class _ProfilePageState extends State<ProfilePage> {
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         print('Update successful: $responseBody');
-        DataModel updatedData = DataModel(
-          nama: namaController.text,
-          jabatan: jabatanController.text,
-          unit_kerja: unitKerjaController.text,
-          departemen: departemenController.text,
-          divisi: divisiController.text,
-          no_telp: nomorTeleponController.text,
-          nip: nipController.text,
-          status: statusController.text,
-          kode_staff: kodestaffController.text,
-        );
-        final userProvider = Provider.of<UserProvider>(context, listen: false);
-        userProvider.setUserData(updatedData);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ProfileCard()));
+
+        var decodedResponse = jsonDecode(responseBody);
+        if (decodedResponse['status'] == 'success') {
+          DataModel updatedData = DataModel(
+            nama: namaController.text,
+            jabatan: jabatanController.text,
+            unit_kerja: unitKerjaController.text,
+            departemen: departemenController.text,
+            divisi: divisiController.text,
+            no_telp: nomorTeleponController.text,
+            nip: nipController.text,
+            status: statusController.text,
+            kode_staff: kodestaffController.text,
+          );
+          final userProvider =
+              Provider.of<UserProvider>(context, listen: false);
+          userProvider.setUserData(updatedData);
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => ProfileCard()));
+        } else {
+          print('Server error: ${decodedResponse['message']}');
+        }
       } else {
         print('Failed to update data: ${response.statusCode}');
         var responseBody = await response.stream.bytesToString();

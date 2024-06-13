@@ -5,7 +5,6 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 $conn=mysqli_connect('localhost','root','','db_rekachain');
 
-$kode_staff = $_POST['kode_staff'];
 $nama = $_POST['nama'];
 $nip = $_POST['nip'];
 $profile = $_FILES['profile'];
@@ -15,8 +14,6 @@ $departemen = $_POST['departemen'];
 $divisi = $_POST['divisi'];
 $no_telp = $_POST['no_telp'];
 $status = $_POST['status'];
-$password = $_POST['password'];
-$konfirmasi_password = $_POST['konfirmasi_password'];
 
 $path = '../API/upload/';
 $extension = pathinfo($profile['name'], PATHINFO_EXTENSION);
@@ -25,7 +22,7 @@ $uploadfile = $path . $new_filename;
 
 if (move_uploaded_file($profile['tmp_name'], $uploadfile)) {
     $base_url = "http://192.168.8.207/ProjectScanner/lib/API/upload/$new_filename";
-    $query = "UPDATE `tbl_tambahstaff` SET `nama`='$nama',`jabatan`='$jabatan',`unit_kerja`='$unit_kerja',`departemen`= '$departemen',`divisi`='$divisi',`no_telp`='$no_telp',`status`='$status',`profile`='$base_url' WHERE nip = $nip";
+    $query = "UPDATE `tbl_tambahstaff` SET `nama`='$nama',`jabatan`='$jabatan',`unit_kerja`='$unit_kerja',`departemen`= '$departemen',`divisi`='$divisi',`no_telp`='$no_telp',`status`='$status',`profile`='$base_url' WHERE nip = '$nip'";
     $result=mysqli_query($conn, $query);
     if ($result) {
         echo json_encode([
