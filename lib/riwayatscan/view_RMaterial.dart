@@ -33,7 +33,7 @@ class _ViewRiwayatMaterialState extends State<ViewRiwayatMaterial> {
       _isloading = true; // Set loading indicator to true while fetching data
     });
     final Uri url = Uri.parse(
-        'http://192.168.8.207/ProjectScanner/lib/riwayatscan/READ_RMaterial.php?kodeLot=${widget.kodeLot}');
+        'http://192.168.10.41/ProjectScanner/lib/riwayatscan/READ_RMaterial.php?kodeLot=${widget.kodeLot}');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       try {
@@ -201,16 +201,6 @@ class _ViewRiwayatMaterialState extends State<ViewRiwayatMaterial> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      'ID',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Center(
-                                    child: Text(
                                       'Kode\nMaterial',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -263,15 +253,6 @@ class _ViewRiwayatMaterialState extends State<ViewRiwayatMaterial> {
                                 final int index = entry.key;
                                 final Map<String, dynamic> data = entry.value;
                                 return DataRow(cells: [
-                                  DataCell(
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        child: Text(data['no'].toString()),
-                                      ),
-                                    ),
-                                  ),
                                   DataCell(
                                     SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,

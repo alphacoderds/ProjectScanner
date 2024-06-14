@@ -3,13 +3,18 @@ import 'package:RekaChain/tahapselesai/listopenitem.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/bottomnavbar.dart';
 
-import 'package:RekaChain/tahapselesai/listopenitem.dart';
-import 'package:RekaChain/tahapselesai/scan_tahap_selesai.dart';
-
 class PopUpTahapSelesai extends StatefulWidget {
+  final String id_lot;
+  final String nip;
+  final Function(int) onConfirm;
   final String id_openlist;
-  const PopUpTahapSelesai({Key? key, required this.id_openlist})
-      : super(key: key);
+  const PopUpTahapSelesai({
+    Key? key,
+    required this.id_lot,
+    required this.onConfirm,
+    required this.nip,
+    required this.id_openlist,
+  }) : super(key: key);
 
   @override
   State<PopUpTahapSelesai> createState() => _PopUpTahapSelesaiState();
@@ -18,6 +23,8 @@ class PopUpTahapSelesai extends StatefulWidget {
 class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
   late double screenWidth;
   late double screenHeight;
+
+  int currentStep = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +64,7 @@ class _PopUpTahapSelesaiState extends State<PopUpTahapSelesai> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
+                            widget.onConfirm(currentStep);
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {

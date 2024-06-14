@@ -1,4 +1,5 @@
 import 'package:RekaChain/bottomnavbar.dart';
+import 'package:RekaChain/riwayatscan/list_riwayatproduct.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
@@ -12,8 +13,15 @@ class ScanRiwayatProduk extends StatefulWidget {
 }
 
 class _ScanRiwayatProdukState extends State<ScanRiwayatProduk> {
-  late double screenWidth = MediaQuery.of(context).size.width;
-  late double screenHeight = MediaQuery.of(context).size.height;
+  late double screenWidth;
+  late double screenHeight;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+  }
 
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
@@ -36,7 +44,8 @@ class _ScanRiwayatProdukState extends State<ScanRiwayatProduk> {
       if (barcodeScanRes != '-1') {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const NavBar()),
+          MaterialPageRoute(
+              builder: (context) => ListProduk(id_lot: barcodeScanRes)),
         );
       }
     } on PlatformException {

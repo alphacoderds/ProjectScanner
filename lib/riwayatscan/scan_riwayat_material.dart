@@ -1,3 +1,4 @@
+import 'package:RekaChain/riwayatscan/list_riwayatproduct.dart';
 import 'package:RekaChain/riwayatscan/view_RMaterial.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -12,8 +13,15 @@ class ScanRiwayatMaterial extends StatefulWidget {
 }
 
 class _ScanRiwayatMaterialState extends State<ScanRiwayatMaterial> {
-  late double screenWidth = MediaQuery.of(context).size.width;
-  late double screenHeight = MediaQuery.of(context).size.height;
+  late double screenWidth;
+  late double screenHeight;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+  }
 
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;

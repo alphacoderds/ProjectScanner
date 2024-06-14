@@ -1,8 +1,11 @@
-import 'package:RekaChain/tahapselesai/listopenitem.dart';
+import 'dart:convert';
+import 'package:RekaChain/provider/user_provider.dart';
 import 'package:RekaChain/tahapselesai/pop_up_tahap_selesai.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class ScannerTahapSelesai extends StatefulWidget {
   const ScannerTahapSelesai({Key? key}) : super(key: key);
@@ -18,6 +21,9 @@ class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final String nip = userProvider.dataModel.nip;
+
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
         '#ff6666',
         'Cancel',
@@ -37,8 +43,14 @@ class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  PopUpTahapSelesai(id_openlist: barcodeScanRes)),
+            builder: (context) => PopUpTahapSelesai(
+              id_lot: barcodeScanRes,
+              nip: nip,
+              id_openlist: barcodeScanRes,
+              onConfirm: (int currentStep) =>
+                  _updateStatus(barcodeScanRes, nip),
+            ),
+          ),
         );
       }
     } on PlatformException {
@@ -46,6 +58,38 @@ class _ScannerTahapSelesaiState extends State<ScannerTahapSelesai> {
     }
     if (!mounted) return;
     setState(() {});
+  }
+
+  Future<void> _updateStatus(String id_lot, String nip) async {
+    final response = await http.post(
+      Uri.parse(
+          'http://192.168.10.41/ProjectScanner/lib/tahapselesai/update_tahapselesai.php'),
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: {
+        'id_lot': id_lot,
+        'nip': nip,
+      },
+    );
+
+    final responseData = json.decode(response.body);
+    debugPrint("Response: ${response.body}");
+
+    if (responseData['status'] == 'success') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              '${responseData['message']} Tahap: ${responseData['current_step']}'),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(responseData['message']),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
   }
 
   @override
