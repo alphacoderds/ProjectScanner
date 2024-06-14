@@ -64,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future _getdata() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.10.41/crudflutter/flutter_crud/lib/readdataprofile.php'));
+          'http://192.168.11.164/crudflutter/flutter_crud/lib/readdataprofile.php'));
       if (response.statusCode == 200) {
         try {
           final data = jsonDecode(response.body);
@@ -140,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
       var request = http.MultipartRequest(
           'POST',
           Uri.parse(
-              'http://192.168.10.41/ProjectScanner/lib/profile/updateprofile.php'));
+              'http://192.168.11.164/ProjectScanner/lib/profile/updateprofile.php'));
 
       request.fields['kode_staff'] = kodestaffController.text;
       request.fields['nama'] = namaController.text;

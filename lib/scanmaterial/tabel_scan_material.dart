@@ -32,7 +32,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
       _isloading = true; // Set loading indicator to true while fetching data
     });
     final Uri url = Uri.parse(
-        'http://192.168.8.207/ProjectScanner/lib/scanmaterial/READ_ScanMaterial.php?kodeLot=${widget.kodeLot}');
+        'http://192.168.11.164/ProjectScanner/lib/scanmaterial/READ_ScanMaterial.php?kodeLot=${widget.kodeLot}');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       try {
@@ -96,7 +96,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.8.207/ProjectScanner/lib/scanmaterial/UPDATE_ScanMaterial.php'),
+            'http://192.168.11.164/ProjectScanner/lib/scanmaterial/UPDATE_ScanMaterial.php'),
         body: requestData,
       );
 
