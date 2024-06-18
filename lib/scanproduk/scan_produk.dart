@@ -22,7 +22,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
     String barcodeScanRes;
     try {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
-      final String nip = userProvider.dataModel.nip;
+      final int nip = userProvider.dataModel.nip;
 
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
         '#ff6666',
@@ -45,9 +45,9 @@ class _ScannerProdukState extends State<ScannerProduk> {
           MaterialPageRoute(
               builder: (context) => PopUpProduk(
                   id_lot: barcodeScanRes,
-                  nip: nip,
+                  nip: nip.toString(),
                   onConfirm: (int currentStep) =>
-                      _updateStatus(barcodeScanRes, nip))),
+                      _updateStatus(barcodeScanRes, nip.toString()))),
         );
       }
     } on PlatformException {
@@ -60,7 +60,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
   Future<void> _updateStatus(String id_lot, String nip) async {
     final response = await http.post(
       Uri.parse(
-          'http://192.168.11.164/ProjectScanner/lib/scanproduk/update_status.php'),
+          'http://10.208.204.53/ProjectScanner/lib/scanproduk/update_status.php'),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: {
         'id_lot': id_lot,

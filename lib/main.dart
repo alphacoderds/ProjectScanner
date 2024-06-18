@@ -3,7 +3,6 @@ import 'package:RekaChain/aftersales/list_kerusakan.dart';
 import 'package:RekaChain/riwayatscan/menu_riwayat_scan.dart';
 import 'package:RekaChain/profile/profile.dart';
 import 'package:RekaChain/provider/user_provider.dart';
-import 'package:RekaChain/riwayatscan/riwayat_proses.dart';
 
 import 'package:RekaChain/scanmaterial/tabel_scan_material.dart';
 import 'package:RekaChain/profile/updateprofile.dart';

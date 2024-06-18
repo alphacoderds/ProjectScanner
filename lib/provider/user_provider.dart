@@ -8,7 +8,8 @@ class UserProvider extends ChangeNotifier {
       jabatan: '',
       kode_staff: '',
       nama: '',
-      nip: '',
+      profile:'',
+      nip: 0,
       no_telp: '',
       status: '',
       unit_kerja: '');

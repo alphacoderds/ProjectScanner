@@ -9,17 +9,23 @@ import 'package:intl/intl.dart';
 
 class Keterangan extends StatefulWidget {
   final String id_lot;
+  final String step;
   final Map<String, dynamic>? newProject;
-  const Keterangan({super.key, required this.id_lot, this.newProject});
+  const Keterangan(
+      {super.key, required this.id_lot, this.newProject, required this.step});
 
   @override
   State<Keterangan> createState() => _KeteranganState();
 }
 
 class _KeteranganState extends State<Keterangan> {
+  TextEditingController nip = TextEditingController();
+  TextEditingController password = TextEditingController();
+
   late double screenWidth;
   late double screenHeight;
   late List<dynamic> _listdata = [];
+  String keterangan = '';
   bool _isloading = true;
 
   String _searchQuery = '';
@@ -32,14 +38,18 @@ class _KeteranganState extends State<Keterangan> {
 
   Future<void> _getdata() async {
     try {
-      final response = await http.get(
+      final response = await http.post(
+        body: {"id_lot": widget.id_lot, "step": widget.step},
         Uri.parse(
-            'http://192.168.11.164/ProjectScanner/lib/API/read_keterangan.php?id_lot=${widget.id_lot}'),
+            'http://10.208.204.53/ProjectScanner/lib/scanproduk/read_keterangan.php'),
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+        print(data);
         setState(() {
-          _listdata = data;
+          String kolom = 'keterangan_produk${widget.step}';
+          keterangan = data[0][kolom];
+          print(keterangan);
           _isloading = false;
         });
       } else {
@@ -68,6 +78,19 @@ class _KeteranganState extends State<Keterangan> {
     screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => TambahKeterangan(
+                      id_lot: widget.id_lot,
+                    )),
+          );
+        },
+        backgroundColor: Colors.white,
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: const Text('Keterangan'),
         leading: IconButton(
@@ -95,23 +118,22 @@ class _KeteranganState extends State<Keterangan> {
       ),
       body: Stack(
         children: [
-          _ListView(),
-          Positioned(
-            bottom: 15,
-            right: 15,
-            child: FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => TambahKeterangan(
-                            id_lot: widget.id_lot,
-                          )),
-                );
-              },
-              backgroundColor: Colors.white,
-              child: const Icon(Icons.add),
-            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 30),
+            child: Container(
+                alignment: Alignment.topCenter,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black87, // Warna garis tepi
+                    width: 1, // Ketebalan garis tepi
+                  ),
+                  borderRadius: BorderRadius.circular(
+                      10), // Membuat sudut kontainer melengkung
+                ),
+                child: Text(
+                  keterangan,
+                  style: TextStyle(fontSize: 12),
+                )),
           ),
         ],
       ),
@@ -120,8 +142,12 @@ class _KeteranganState extends State<Keterangan> {
 
   Widget _ListView() {
     List filteredData = _listdata.where((data) {
-      String keterangan = data['keterangan_produk'] ?? '';
-      return keterangan.toLowerCase().contains(_searchQuery.toLowerCase());
+      String colom = 'keterangan_produk${widget.step}';
+      int keterangan = data[colom] ?? '';
+      return keterangan
+          .toString()
+          .toLowerCase()
+          .contains(_searchQuery.toLowerCase());
     }).toList();
 
     return ListView.separated(
@@ -139,20 +165,7 @@ class _KeteranganState extends State<Keterangan> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
       child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ViewKeterangan(
-                id_lot: widget.id_lot,
-                selectedProject: {
-                  "id_lot": projectData['id_lot'],
-                  "keterangan_produk": projectData['keterangan_produk'],
-                },
-              ),
-            ),
-          ).then((value) => _getdata());
-        },
+        onTap: () {},
         child: Container(
           margin: EdgeInsets.only(left: 10),
           child: Column(
@@ -177,19 +190,7 @@ class _KeteranganState extends State<Keterangan> {
             height: 15,
           ),
           GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ViewKeterangan(
-                      id_lot: widget.id_lot,
-                      selectedProject: {
-                        "id_lot": projectData['id_lot'],
-                        "keterangan_produk": projectData['keterangan_produk']
-                      },
-                    ),
-                  ));
-            },
+            onTap: () {},
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 0.8, horizontal: 7.0),

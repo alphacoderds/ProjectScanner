@@ -28,7 +28,7 @@ class _ListCloseState extends State<ListClose> {
   Future<void> _fetchData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.11.164/ProjectScanner/lib/tahapselesai/read_openlist.php?id_openlist=${widget.id_openlist}'));
+          'http://10.208.204.53/ProjectScanner/lib/tahapselesai/read_openlist.php?id_openlist=${widget.id_openlist}'));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         setState(() {
@@ -140,7 +140,7 @@ class _ListCloseState extends State<ListClose> {
     try {
       final response = await http.post(
         Uri.parse(
-          'http://192.168.11.164/ProjectScanner/lib/tahapselesai/delete_openlist.php',
+          'http://10.208.204.53/ProjectScanner/lib/tahapselesai/delete_openlist.php',
         ),
         body: {
           'no': id,

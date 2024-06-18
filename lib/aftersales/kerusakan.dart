@@ -44,7 +44,7 @@ class _TambahKerusakanState extends State<TambahKerusakan> {
 
     final response = await http.post(
       Uri.parse(
-          'http://192.168.11.164/ProjectScanner/lib/API/save_kerusakan.php'),
+          'http://10.208.204.53/ProjectScanner/lib/API/save_kerusakan.php'),
       body: {
         "id_project": widget.id_project,
         "item": _itemController.text,

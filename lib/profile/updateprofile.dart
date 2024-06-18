@@ -42,13 +42,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> fetchData() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final String nip = userProvider.dataModel.nip;
+    final int nip = userProvider.dataModel.nip;
     if (nip != null) {
-      DataModel? data = userProvider.getUserDataByNip(nip);
+      DataModel? data = userProvider.dataModel;
       if (data != null) {
         setState(() {
           kodestaffController.text = data.kode_staff;
-          nipController.text = data.nip;
+          nipController.text = data.nip.toString();
           namaController.text = data.nama;
           jabatanController.text = data.jabatan;
           unitKerjaController.text = data.unit_kerja;
@@ -62,12 +62,18 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future _getdata() async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
-      final response = await http.get(Uri.parse(
-          'http://192.168.11.164/crudflutter/flutter_crud/lib/readdataprofile.php'));
+      final response = await http.post(
+          body: {"nip": userProvider.dataModel.nip.toString()},
+          Uri.parse(
+              'http://10.208.204.53/ProjectScanner/lib/Profile/profileREAD.php'));
       if (response.statusCode == 200) {
         try {
           final data = jsonDecode(response.body);
+          context
+              .read<UserProvider>()
+              .setUserData(DataModel.getDataFromJSOn(data));
           setState(() {
             namaController.text = data['nama'] ?? '';
             jabatanController.text = data['jabatan'] ?? '';
@@ -140,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
       var request = http.MultipartRequest(
           'POST',
           Uri.parse(
-              'http://192.168.11.164/ProjectScanner/lib/profile/updateprofile.php'));
+              'http://10.208.204.53/ProjectScanner/lib/Profile/updateprofile.php'));
 
       request.fields['kode_staff'] = kodestaffController.text;
       request.fields['nama'] = namaController.text;
@@ -165,22 +171,26 @@ class _ProfilePageState extends State<ProfilePage> {
 
         var decodedResponse = jsonDecode(responseBody);
         if (decodedResponse['status'] == 'success') {
-          DataModel updatedData = DataModel(
-            nama: namaController.text,
-            jabatan: jabatanController.text,
-            unit_kerja: unitKerjaController.text,
-            departemen: departemenController.text,
-            divisi: divisiController.text,
-            no_telp: nomorTeleponController.text,
-            nip: nipController.text,
-            status: statusController.text,
-            kode_staff: kodestaffController.text,
-          );
           final userProvider =
               Provider.of<UserProvider>(context, listen: false);
-          userProvider.setUserData(updatedData);
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => ProfileCard()));
+          final response = await http.post(
+              body: {"nip": userProvider.dataModel.nip.toString()},
+              Uri.parse(
+                  'http://10.208.204.53/ProjectScanner/lib/Profile/profileREAD.php'));
+          print(response.body);
+          print(response.statusCode);
+          if (response.statusCode == 200) {
+            var finalData = jsonDecode(response.body);
+
+            final userProvider =
+                Provider.of<UserProvider>(context, listen: false);
+            userProvider
+                .setUserData(DataModel.getDataFromJSOn(finalData['data']));
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => ProfileCard()));
+          } else {
+            print('Server error: ${decodedResponse['message']}');
+          }
         } else {
           print('Server error: ${decodedResponse['message']}');
         }
@@ -197,32 +207,63 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _buildAvatar() {
     return Stack(
       children: [
-        Container(
-          width: screenWidth * 0.35,
-          height: screenWidth * 0.35,
-          decoration: BoxDecoration(
-            border: Border.all(width: 4, color: Colors.white),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 2,
-                blurRadius: 10,
-                color: Colors.black.withOpacity(0.1),
-              ),
-            ],
-            shape: BoxShape.circle,
-            image: _selectedImage != null
-                ? DecorationImage(
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
-                    image: FileImage(File(_selectedImage!.path)),
-                  )
-                : const DecorationImage(
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
-                    image: AssetImage('assets/images/default_image.png'),
+        Consumer<UserProvider>(builder: (context, prov, child) {
+          if (_selectedImage == null) {
+            return Container(
+              width: screenWidth * 0.35,
+              height: screenWidth * 0.35,
+              decoration: BoxDecoration(
+                border: Border.all(width: 4, color: Colors.white),
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 2,
+                    blurRadius: 10,
+                    color: Colors.black.withOpacity(0.1),
                   ),
-          ),
-        ),
+                ],
+                shape: BoxShape.circle,
+                image: prov.dataModel.profile == ''
+                    ? DecorationImage(
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                        image: AssetImage('assets/images/default_image.png'),
+                      )
+                    : DecorationImage(
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                        image: NetworkImage(prov.dataModel.profile),
+                      ),
+              ),
+            );
+          } else {
+            return Container(
+              width: screenWidth * 0.35,
+              height: screenWidth * 0.35,
+              decoration: BoxDecoration(
+                border: Border.all(width: 4, color: Colors.white),
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 2,
+                    blurRadius: 10,
+                    color: Colors.black.withOpacity(0.1),
+                  ),
+                ],
+                shape: BoxShape.circle,
+                image: prov.dataModel.profile != ''
+                    ? DecorationImage(
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                        image: FileImage(File(_selectedImage!.path)),
+                      )
+                    : const DecorationImage(
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                        image: AssetImage('assets/images/default_image.png'),
+                      ),
+              ),
+            );
+          }
+        }),
         Positioned(
           bottom: 0,
           right: 0,

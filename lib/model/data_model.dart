@@ -6,7 +6,8 @@ class DataModel {
   String departemen;
   String divisi;
   String no_telp;
-  String nip;
+  String profile;
+  int nip;
   String status;
 
   DataModel(
@@ -16,6 +17,7 @@ class DataModel {
       required this.kode_staff,
       required this.nama,
       required this.nip,
+      required this.profile,
       required this.no_telp,
       required this.status,
       required this.unit_kerja});
@@ -31,6 +33,7 @@ class DataModel {
       'departemen': departemen,
       'divisi': divisi,
       'status': status,
+      'profile': profile
     };
   }
 
@@ -41,9 +44,10 @@ class DataModel {
         jabatan: json['jabatan'],
         kode_staff: json['kode_staff'],
         nama: json['nama'],
-        nip: json['nip'],
+        nip: int.parse(json['nip']) ,
         no_telp: json['no_telp'],
         status: json['status'],
+        profile: json['profile'],
         unit_kerja: json['unit_kerja']);
   }
 }

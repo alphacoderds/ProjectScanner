@@ -32,7 +32,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
       _isloading = true; // Set loading indicator to true while fetching data
     });
     final Uri url = Uri.parse(
-        'http://192.168.11.164/ProjectScanner/lib/scanmaterial/READ_ScanMaterial.php?kodeLot=${widget.kodeLot}');
+        'http://10.208.204.53/ProjectScanner/lib/scanmaterial/READ_ScanMaterial.php?kodeLot=${widget.kodeLot}');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       try {
@@ -85,7 +85,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   Future<void> _updateQtyDiterimaInDatabase(
       int index, String newQtyDiterima) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final String nip = userProvider.dataModel.nip;
+    final int nip = userProvider.dataModel.nip;
 
     final Map<String, dynamic> requestData = {
       'no': _listdata[index]['no'],
@@ -96,7 +96,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.11.164/ProjectScanner/lib/scanmaterial/UPDATE_ScanMaterial.php'),
+            'http://10.208.204.53/ProjectScanner/lib/scanmaterial/UPDATE_ScanMaterial.php'),
         body: requestData,
       );
 
@@ -112,7 +112,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final String nip = userProvider.dataModel.nip;
+    final int nip = userProvider.dataModel.nip;
 
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;

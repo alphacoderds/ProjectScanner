@@ -27,7 +27,7 @@ class _ListRiwayatProdukState extends State<ListProduk> {
   Future<void> _fetchData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.11.164/ProjectScanner/lib/riwayatscan/get_afproduk.php?id_lot=${widget.id_lot}'));
+          'http://10.208.204.53/ProjectScanner/lib/riwayatscan/get_afproduk.php?id_lot=${widget.id_lot}'));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         List<Map<String, dynamic>> groupedData = _groupAndSortData(data);
@@ -51,8 +51,8 @@ class _ListRiwayatProdukState extends State<ListProduk> {
       for (int i = 1; i <= 10; i++) {
         String apKey = 'ap$i';
         String kategoriKey = 'kategori$i';
-        String waktuMulaiKey = 'waktu_mulai$i';
-        String waktuSelesaiKey = 'waktu_selesai$i';
+        String tanggalMulaiKey = 'tanggal_mulai$i';
+        String tanggalSelesaiKey = 'tanggal_selesai$i';
         String statusKey = 'status$i';
         String nipKey = 'nip$i';
         String namaKey = 'nama$i';
@@ -65,8 +65,8 @@ class _ListRiwayatProdukState extends State<ListProduk> {
           groupedData.add({
             'ap': item[apKey],
             'kategori': item[kategoriKey],
-            'waktu_mulai': item[waktuMulaiKey],
-            'waktu_selesai': item[waktuSelesaiKey],
+            'tanggal_mulai': item[tanggalMulaiKey],
+            'tanggal_selesai': item[tanggalSelesaiKey],
             'status': item[statusKey],
             'nip': item[nipKey],
             'nama': item[namaKey],
@@ -151,12 +151,12 @@ class _ListRiwayatProdukState extends State<ListProduk> {
               ),
               SizedBox(height: 5),
               Text(
-                'Waktu Mulai: ${RiwayatProdukData['waktu_mulai'] ?? 'Tidak Ada'}',
+                'Tanggal Mulai: ${RiwayatProdukData['tanggal_mulai'] ?? 'Tidak Ada'}',
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
               SizedBox(height: 5),
               Text(
-                'Waktu Selesai: ${RiwayatProdukData['waktu_selesai'] ?? 'Tidak Ada'}',
+                'Tanggal Selesai: ${RiwayatProdukData['tanggal_selesai'] ?? 'Tidak Ada'}',
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
               SizedBox(height: 10),

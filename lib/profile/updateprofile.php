@@ -23,14 +23,14 @@ if ($profile) {
     $uploadfile = $path . $new_filename;
 
     if (move_uploaded_file($profile['tmp_name'], $uploadfile)) {
-        $base_url = "http://192.168.11.164/ProjectScanner/lib/API/upload/$new_filename";
-        $query = "UPDATE `tbl_tambahstaff` SET `nama`='$nama',`jabatan`='$jabatan',`unit_kerja`='$unit_kerja',`departemen`= '$departemen',`divisi`='$divisi',`no_telp`='$no_telp',`status`='$status',`profile`='$base_url' WHERE nip = '$nip'";
+        $base_url = "http://10.208.204.53/ProjectScanner/lib/API/upload/$new_filename";
+        $query = "UPDATE `tbl_tambahstaff` SET `nama`='$nama',`jabatan`='$jabatan',`unit_kerja`='$unit_kerja',`departemen`= '$departemen',`divisi`='$divisi',`no_telp`='$no_telp',`status`='$status',`profile`='$base_url' WHERE nip = $nip";
     } else {
         echo json_encode(["message" => "Failed to upload image"]);
         exit();
     }
 } else {
-    $query = "UPDATE `tbl_tambahstaff` SET `nama`='$nama',`jabatan`='$jabatan',`unit_kerja`='$unit_kerja',`departemen`= '$departemen',`divisi`='$divisi',`no_telp`='$no_telp',`status`='$status' WHERE nip = '$nip'";
+    $query = "UPDATE `tbl_tambahstaff` SET `nama`='$nama',`jabatan`='$jabatan',`unit_kerja`='$unit_kerja',`departemen`= '$departemen',`divisi`='$divisi',`no_telp`='$no_telp',`status`='$status' WHERE nip = $nip";
 }
 
 $result = mysqli_query($conn, $query);

@@ -28,7 +28,7 @@ class _ListAFState extends State<ListAF> {
   Future<void> _fetchData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.11.164/ProjectScanner/lib/riwayatscan/get_afsaran.php?id_project=${widget.id_project}'));
+          'http://10.208.204.53/ProjectScanner/lib/riwayatscan/get_afsaran.php?id_project=${widget.id_project}'));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         setState(() {

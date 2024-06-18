@@ -17,26 +17,6 @@ class _TambahKeteranganState extends State<TambahKeterangan> {
   TextEditingController keteranganController = TextEditingController();
   String nip = '';
 
-  void fetchData() async {
-    try {
-      final response = await http.get(
-        Uri.parse(
-            'http://192.168.11.164/ProjectScanner/lib/API/update_keterangan.php?nip=${nip}'),
-      );
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        final keterangan = responseData['keterangan_produk'];
-        setState(() {
-          keteranganController.text = keterangan;
-        });
-      } else {
-        print('Failed to fetch data: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error fetching data: $e');
-    }
-  }
-
   Future<void> fetchNIP() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -48,19 +28,22 @@ class _TambahKeteranganState extends State<TambahKeterangan> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.11.164/ProjectScanner/lib/API/update_keterangan.php'),
+            'http://10.208.204.53/ProjectScanner/lib/scanproduk/update_keterangan.php'),
         body: {
           'id_lot': widget.id_lot,
-          'keterangan_produk': keteranganController.text,
+          'Keterangan_produk': keteranganController.text,
           'nip': nip,
         },
       );
-
+      print(response.body);
       if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => Keterangan(
+              step: data['step'],
               id_lot: widget.id_lot,
             ),
           ),
@@ -69,6 +52,8 @@ class _TambahKeteranganState extends State<TambahKeterangan> {
         print('Failed to update data: ${response.statusCode}');
       }
     } catch (e) {
+      print(int.parse(widget.id_lot).runtimeType);
+      print(nip.runtimeType);
       print('Error updating data: $e');
     }
   }

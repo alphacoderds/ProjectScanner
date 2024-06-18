@@ -33,9 +33,9 @@ class _ProfileCardState extends State<ProfileCard> {
   Future<void> _getData() async {
     try {
       final response = await http.post(
-          body: {"nip": context.read<UserProvider>().dataModel.nip},
+          body: {"nip": context.read<UserProvider>().dataModel.nip.toString()},
           Uri.parse(
-              'http://192.168.11.164/ProjectScanner/lib/profile/profileREAD.php'));
+              'http://10.208.204.53/ProjectScanner/lib/profile/profileREAD.php'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         dynamic dataJadi = (data as Map<String, dynamic>)['data'];

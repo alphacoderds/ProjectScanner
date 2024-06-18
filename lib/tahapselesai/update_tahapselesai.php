@@ -37,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($can_update && $current_step > 0) {
             // Lakukan pembaruan
             $status_column = "status$current_step";
-            $updateQuery = "UPDATE tbl_lot SET $status_column='sudah dikerjakan' WHERE id_lot=?";
+            $tgl_selesai = "tanggal_selesai$current_step";
+            $updateQuery = "UPDATE tbl_lot SET $status_column='sudah dikerjakan',$tgl_selesai=NOW() WHERE id_lot=?";
             $stmt = $conn->prepare($updateQuery);
             $stmt->bind_param("s", $id_lot);
 

@@ -41,7 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Lakukan pembaruan
             $status_column = "status$current_step";
             $nip_column = "nip$current_step";
-            $updateQuery = "UPDATE tbl_lot SET $status_column='sedang dikerjakan', $nip_column=? WHERE id_lot=?";
+            $tgl_column = "tanggal_mulai$current_step";
+            $d=mktime(11, 14, 54, 8, 12, 2014);
+            $date = date("Y-m-d h:i:s");
+            $updateQuery = "UPDATE tbl_lot SET $status_column='sedang dikerjakan', $nip_column=?, $tgl_column=NOW() WHERE id_lot=?";
             $stmt = $conn->prepare($updateQuery);
             $stmt->bind_param("ss", $nip, $id_lot);
 
