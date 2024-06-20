@@ -43,7 +43,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future loginbtn() async {
-    print("test");
     final hashedPassword = hashPassword(password.text);
     var response = await http.post(
         Uri.parse('http://192.168.10.102/ProjectScanner/lib/API/login.php'),
