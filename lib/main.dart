@@ -10,10 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:RekaChain/login.dart';
 import 'package:RekaChain/aftersales/aftersales.dart';
 import 'package:RekaChain/bottomnavbar.dart';
-import 'package:RekaChain/login.dart';
+
 import 'package:RekaChain/tahapselesai/listopenitem.dart';
 import 'package:RekaChain/scanmaterial/pop_up_materiall.dart';
-import 'package:RekaChain/login.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';

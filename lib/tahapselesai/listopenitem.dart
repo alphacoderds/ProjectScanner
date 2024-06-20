@@ -28,7 +28,7 @@ class _ListOIState extends State<ListOI> {
   Future<void> _fetchData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://10.208.204.53/ProjectScanner/lib/tahapselesai/read_openlist.php?id_openlist=${widget.id_openlist}'));
+          'http://192.168.10.102/ProjectScanner/lib/tahapselesai/read_openlist.php?id_openlist=${widget.id_openlist}'));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         setState(() {

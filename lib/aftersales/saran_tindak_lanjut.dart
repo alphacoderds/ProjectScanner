@@ -32,7 +32,7 @@ class _ListSaranState extends State<ListSaran> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://10.208.204.53/ProjectScanner/lib/aftersales/get_saran.php?id_lot=${widget.id_project}'),
+            'http://192.168.10.102/ProjectScanner/lib/aftersales/get_saran.php?id_lot=${widget.id_project}'),
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);

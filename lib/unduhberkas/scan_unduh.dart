@@ -1,29 +1,23 @@
-import 'dart:convert';
-import 'package:RekaChain/provider/user_provider.dart';
-import 'package:RekaChain/scanproduk/pop_up_product.dart';
-import 'package:http/http.dart' as http;
+import 'package:RekaChain/unduhberkas/unduh_berkas.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:RekaChain/aftersales/aftersales.dart';
 
-class ScannerProduk extends StatefulWidget {
-  const ScannerProduk({super.key});
+class ScannerUnduh extends StatefulWidget {
+  const ScannerUnduh({super.key});
 
   @override
-  _ScannerProdukState createState() => _ScannerProdukState();
+  _ScannerUnduhState createState() => _ScannerUnduhState();
 }
 
-class _ScannerProdukState extends State<ScannerProduk> {
+class _ScannerUnduhState extends State<ScannerUnduh> {
   late double screenWidth = MediaQuery.of(context).size.width;
   late double screenHeight = MediaQuery.of(context).size.height;
 
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     try {
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
-      final int nip = userProvider.dataModel.nip;
-
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
         '#ff6666',
         'Cancel',
@@ -43,11 +37,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => PopUpProduk(
-                  id_lot: barcodeScanRes,
-                  nip: nip.toString(),
-                  onConfirm: (int currentStep) =>
-                      _updateStatus(barcodeScanRes, nip.toString()))),
+              builder: (context) => Unduh(id_project: barcodeScanRes)),
         );
       }
     } on PlatformException {
@@ -55,38 +45,6 @@ class _ScannerProdukState extends State<ScannerProduk> {
     }
     if (!mounted) return;
     setState(() {});
-  }
-
-  Future<void> _updateStatus(String id_lot, String nip) async {
-    final response = await http.post(
-      Uri.parse(
-          'http://192.168.10.102/ProjectScanner/lib/scanproduk/update_status.php'),
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: {
-        'id_lot': id_lot,
-        'nip': nip,
-      },
-    );
-
-    final responseData = json.decode(response.body);
-    debugPrint("Response: ${response.body}");
-
-    if (responseData['status'] == 'success') {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-              '${responseData['message']} Tahap: ${responseData['current_step']}'),
-          duration: const Duration(seconds: 3),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(responseData['message']),
-          duration: const Duration(seconds: 3),
-        ),
-      );
-    }
   }
 
   @override
@@ -126,11 +84,10 @@ class _ScannerProdukState extends State<ScannerProduk> {
                     size: 180,
                   ),
                   SizedBox(height: 20),
-                  Text(
-                    'Scan Produk',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 85, 19, 19), fontSize: 18),
-                  ),
+                  Text('Scan AfterSales',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 85, 19, 19),
+                          fontSize: 18)),
                 ],
               ),
             ),
@@ -140,4 +97,3 @@ class _ScannerProdukState extends State<ScannerProduk> {
     );
   }
 }
-//cek null kolom status

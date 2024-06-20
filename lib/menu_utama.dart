@@ -1,3 +1,4 @@
+import 'package:RekaChain/unduhberkas/scan_unduh.dart';
 import 'package:flutter/material.dart';
 import 'package:RekaChain/riwayatscan/menu_riwayat_scan.dart';
 import 'package:RekaChain/aftersales/scan_aftersales.dart';
@@ -136,7 +137,7 @@ class _MenuUtamaState extends State<MenuUtama> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const unduh(),
+                                  builder: (context) => const ScannerUnduh(),
                                 ),
                               );
                             },

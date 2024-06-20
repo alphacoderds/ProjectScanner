@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
       final response = await http.post(
           body: {"nip": userProvider.dataModel.nip.toString()},
           Uri.parse(
-              'http://10.208.204.53/ProjectScanner/lib/Profile/profileREAD.php'));
+              'http://192.168.10.102/ProjectScanner/lib/Profile/profileREAD.php'));
       if (response.statusCode == 200) {
         try {
           final data = jsonDecode(response.body);
@@ -146,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
       var request = http.MultipartRequest(
           'POST',
           Uri.parse(
-              'http://10.208.204.53/ProjectScanner/lib/Profile/updateprofile.php'));
+              'http://192.168.10.102/ProjectScanner/lib/Profile/updateprofile.php'));
 
       request.fields['kode_staff'] = kodestaffController.text;
       request.fields['nama'] = namaController.text;
@@ -176,7 +176,7 @@ class _ProfilePageState extends State<ProfilePage> {
           final response = await http.post(
               body: {"nip": userProvider.dataModel.nip.toString()},
               Uri.parse(
-                  'http://10.208.204.53/ProjectScanner/lib/Profile/profileREAD.php'));
+                  'http://192.168.10.102/ProjectScanner/lib/Profile/profileREAD.php'));
           print(response.body);
           print(response.statusCode);
           if (response.statusCode == 200) {

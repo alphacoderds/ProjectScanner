@@ -108,7 +108,7 @@ class _TambahOpenItemState extends State<TambahOpenItem> {
   Future<void> _prosesSimpan() async {
     final response = await http.post(
       Uri.parse(
-          'http://10.208.204.53/ProjectScanner/lib/tahapselesai/create_openlist.php'),
+          'http://192.168.10.102/ProjectScanner/lib/tahapselesai/create_openlist.php'),
       body: {
         "isi": _isiController.text,
         "id_openlist": widget.id_openlist,

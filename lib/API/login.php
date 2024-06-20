@@ -6,7 +6,7 @@ $nip=$_POST['nip'];
 $password=$_POST['password'];
 $hashedPassword = sha1($password);
 
-$sql="SELECT * FROM `tbl_tambahstaff` WHERE tbl_tambahstaff.nip = $nip AND tbl_tambahstaff.password = SHA1('$password')";
+$sql="SELECT * FROM tbl_tambahstaff WHERE tbl_tambahstaff.nip = $nip AND tbl_tambahstaff.password = SHA1('$password')";
 
 $result=mysqli_query($conn, $sql);
 $count=mysqli_num_rows($result);

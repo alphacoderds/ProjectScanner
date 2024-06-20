@@ -41,7 +41,7 @@ class _KeteranganState extends State<Keterangan> {
       final response = await http.post(
         body: {"id_lot": widget.id_lot, "step": widget.step},
         Uri.parse(
-            'http://10.208.204.53/ProjectScanner/lib/scanproduk/read_keterangan.php'),
+            'http://192.168.10.102/ProjectScanner/lib/scanproduk/read_keterangan.php'),
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);

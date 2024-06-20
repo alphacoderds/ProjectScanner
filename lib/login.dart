@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
     print("test");
     final hashedPassword = hashPassword(password.text);
     var response = await http.post(
-        Uri.parse('http://10.208.204.53/ProjectScanner/lib/API/login.php'),
+        Uri.parse('http://192.168.10.102/ProjectScanner/lib/API/login.php'),
         body: {"nip": nip.text, "password": password.text});
     var jsonData = jsonDecode(response.body);
     print(jsonData);
