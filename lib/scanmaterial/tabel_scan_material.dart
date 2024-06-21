@@ -85,7 +85,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   Future<void> _updateQtyDiterimaInDatabase(
       int index, String newQtyDiterima) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final int nip = userProvider.dataModel.nip;
+    final String nip = userProvider.dataModel.nip.toString();
 
     final Map<String, dynamic> requestData = {
       'no': _listdata[index]['no'],
@@ -112,7 +112,7 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final int nip = userProvider.dataModel.nip;
+    final String nip = userProvider.dataModel.nip.toString();
 
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
@@ -122,7 +122,6 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('NIP: $nip'),
             SizedBox(width: screenWidth * 0.6),
             Expanded(
               child: Align(
@@ -168,15 +167,6 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                         columnSpacing: 20.0,
                         horizontalMargin: 20.0,
                         columns: [
-                          DataColumn(
-                            label: Center(
-                              child: Text(
-                                'ID',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 16),
-                              ),
-                            ),
-                          ),
                           DataColumn(
                             label: Center(
                               child: Text(
@@ -227,15 +217,6 @@ class _TabelScanMaterialState extends State<TabelScanMaterial> {
                           final int index = entry.key;
                           final Map<String, dynamic> data = entry.value;
                           return DataRow(cells: [
-                            DataCell(
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  child: Text(data['no'].toString()),
-                                ),
-                              ),
-                            ),
                             DataCell(
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,

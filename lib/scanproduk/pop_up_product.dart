@@ -206,7 +206,8 @@ class _PopUpProdukState extends State<PopUpProduk> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Keterangan(step: "1",id_lot: widget.id_lot),
+                        builder: (context) =>
+                            Keterangan(step: "1", id_lot: widget.id_lot),
                       ),
                     );
                   },

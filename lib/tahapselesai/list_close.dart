@@ -84,8 +84,12 @@ class _ListCloseState extends State<ListClose> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Konfirmasi"),
-              content: Text("Apakah Anda yakin ingin menghapus item ini?"),
+              title: Center(
+                child: Text("Konfirmasi"),
+              ),
+              content: Center(
+                child: Text("Apakah Anda yakin ingin menghapus item ini?"),
+              ),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(true),

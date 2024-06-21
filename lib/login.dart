@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('username atau password salah'),
+          content: Text('username atau password anda salah'),
         ),
       );
     }

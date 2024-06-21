@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $stmt->close();
         } else {
-            $response = array("status" => "error", "message" => "Tidak ada tahap yang dapat diperbarui atau tahap sebelumnya belum selesai.");
+            $response = array("status" => "error", "message" => "Tidak ada tahap yang dapat diperbarui atau tahap sebelumnya belum selesai.", "id" => "$id_lot");
         }
     } else {
         $response = array("status" => "error", "message" => "Connection failed: " . mysqli_connect_error());

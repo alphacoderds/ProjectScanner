@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (empty($status) && !empty($ap)) {
                 $current_step = $i;
                 // Jika tahap pertama atau tahap sebelumnya sudah dikerjakan, izinkan update
-                if ($i == 1 || $previous_status == '') {
+                if ($i == 1 || $previous_status == 'sudah dikerjakan') {
                     $can_update = true;
                     break;
                 }

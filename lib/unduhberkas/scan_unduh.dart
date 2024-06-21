@@ -37,7 +37,7 @@ class _ScannerUnduhState extends State<ScannerUnduh> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => Unduh(id_project: barcodeScanRes)),
+              builder: (context) => Unduh(id_lot: barcodeScanRes)),
         );
       }
     } on PlatformException {
@@ -84,7 +84,7 @@ class _ScannerUnduhState extends State<ScannerUnduh> {
                     size: 180,
                   ),
                   SizedBox(height: 20),
-                  Text('Scan AfterSales',
+                  Text('Scan Unduh Berkas',
                       style: TextStyle(
                           color: Color.fromARGB(255, 85, 19, 19),
                           fontSize: 18)),
