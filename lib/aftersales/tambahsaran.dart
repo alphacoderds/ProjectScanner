@@ -23,7 +23,7 @@ class _TambahSaranState extends State<TambahSaran> {
         final currentTime = DateTime.now().toIso8601String();
         final response = await http.post(
           Uri.parse(
-              'http://192.168.10.102/ProjectScanner/lib/aftersales/update_saran.php'),
+              'http://192.168.9.138/ProjectScanner/lib/aftersales/update_saran.php'),
           body: {
             'id_lot': widget.id_project,
             'saran': saranController.text,
@@ -110,7 +110,7 @@ class _TambahSaranState extends State<TambahSaran> {
                   maxLines: null,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Data Kekurangan tidak boleh kosong';
+                      return 'Data saran tidak boleh kosong';
                     }
                     return null;
                   },

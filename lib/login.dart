@@ -45,15 +45,14 @@ class _LoginPageState extends State<LoginPage> {
   Future loginbtn() async {
     final hashedPassword = hashPassword(password.text);
     var response = await http.post(
-        Uri.parse('http://192.168.10.102/ProjectScanner/lib/API/login.php'),
+        Uri.parse('http://192.168.9.138/ProjectScanner/lib/API/login.php'),
         body: {"nip": nip.text, "password": password.text});
     var jsonData = jsonDecode(response.body);
     print(jsonData);
     dynamic data = (jsonData as Map<String, dynamic>);
-
-    DataModel dataKaryawan = DataModel.getDataFromJSOn(data['data']);
-    context.read<UserProvider>().dataModel = dataKaryawan;
     if (data['message'] == "Success") {
+      DataModel dataKaryawan = DataModel.getDataFromJSOn(data['data']);
+      context.read<UserProvider>().dataModel = dataKaryawan;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('nip', nip.text); // Menyimpan NIP ke local storage
 

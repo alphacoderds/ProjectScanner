@@ -14,7 +14,6 @@ $divisi = $_POST['divisi'];
 $no_telp = $_POST['no_telp'];
 $status = $_POST['status'];
 
-$path = '../API/upload/';
 $profile = isset($_FILES['profile']) ? $_FILES['profile'] : null;
 
 if ($profile) {
@@ -23,7 +22,7 @@ if ($profile) {
     $uploadfile = $path . $new_filename;
 
     if (move_uploaded_file($profile['tmp_name'], $uploadfile)) {
-        $base_url = "http://192.168.10.102/ProjectScanner/lib/API/upload/$new_filename";
+        $base_url = "http://192.168.9.138/ProjectWebAdminRekaChain/lib/Project/upload/$new_filename";
         $query = "UPDATE `tbl_tambahstaff` SET `nama`='$nama',`jabatan`='$jabatan',`unit_kerja`='$unit_kerja',`departemen`= '$departemen',`divisi`='$divisi',`no_telp`='$no_telp',`status`='$status',`profile`='$base_url' WHERE nip = $nip";
     } else {
         echo json_encode(["message" => "Failed to upload image"]);

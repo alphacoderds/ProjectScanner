@@ -23,7 +23,9 @@ if($data != null ) {
         "data" => $data[0]
     ]);
 }else{
-    echo json_encode('Error');
+    echo json_encode([
+        "message" => 'Error'
+    ]);
 }
 
 ?>
