@@ -14,6 +14,7 @@ $divisi = $_POST['divisi'];
 $no_telp = $_POST['no_telp'];
 $status = $_POST['status'];
 
+$path = '../Project/upload/';
 $profile = isset($_FILES['profile']) ? $_FILES['profile'] : null;
 
 if ($profile) {
