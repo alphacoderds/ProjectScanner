@@ -23,7 +23,7 @@ class _TambahSaranState extends State<TambahSaran> {
         final currentTime = DateTime.now().toIso8601String();
         final response = await http.post(
           Uri.parse(
-              'http://192.168.9.138/ProjectScanner/lib/aftersales/update_saran.php'),
+              'http://192.168.8.26/ProjectScanner/lib/aftersales/update_saran.php'),
           body: {
             'id_lot': widget.id_project,
             'saran': saranController.text,

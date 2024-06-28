@@ -60,7 +60,7 @@ class _ScannerProdukState extends State<ScannerProduk> {
   Future<void> _updateStatus(String id_lot, String nip) async {
     final response = await http.post(
       Uri.parse(
-          'http://192.168.9.138/ProjectScanner/lib/scanproduk/update_status.php'),
+          'http://192.168.8.26/ProjectScanner/lib/scanproduk/update_status.php'),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: {
         'id_lot': id_lot,

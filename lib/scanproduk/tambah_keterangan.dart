@@ -28,7 +28,7 @@ class _TambahKeteranganState extends State<TambahKeterangan> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.9.138/ProjectScanner/lib/scanproduk/update_keterangan.php'),
+            'http://192.168.8.26/ProjectScanner/lib/scanproduk/update_keterangan.php'),
         body: {
           'id_lot': widget.id_lot,
           'Keterangan_produk': keteranganController.text,

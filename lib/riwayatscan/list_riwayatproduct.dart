@@ -27,7 +27,7 @@ class _ListRiwayatProdukState extends State<ListProduk> {
   Future<void> _fetchData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.9.138/ProjectScanner/lib/riwayatscan/get_afproduk.php?id_lot=${widget.id_lot}'));
+          'http://192.168.8.26/ProjectScanner/lib/riwayatscan/get_afproduk.php?id_lot=${widget.id_lot}'));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         List<Map<String, dynamic>> groupedData = _groupAndSortData(data);

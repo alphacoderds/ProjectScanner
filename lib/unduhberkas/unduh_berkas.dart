@@ -33,7 +33,7 @@ class _UnduhState extends State<Unduh> {
   Future<void> _fetchData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.9.138/ProjectScanner/lib/unduhberkas/get_unduh.php?id_lot=${widget.id_lot}'));
+          'http://192.168.8.26/ProjectScanner/lib/unduhberkas/get_unduh.php?id_lot=${widget.id_lot}'));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         setState(() {
@@ -160,7 +160,7 @@ class _UnduhState extends State<Unduh> {
 
       try {
         String fileUrl =
-            'http://192.168.9.138/ProjectWebAdminRekaChain/lib/Project/uploads/$fileRelativePath';
+            'http://192.168.8.26/ProjectWebAdminRekaChain/lib/Project/uploads/$fileRelativePath';
 
         //You can download a single file
         await FileDownloader.downloadFile(
