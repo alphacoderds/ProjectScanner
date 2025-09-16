@@ -26,7 +26,12 @@ Menu utama aplikasi ini menampilkan berbagai fitur penting seperti:
 2. Clone repositori ini:
    ```bash
    git clone https://github.com/username/RekaChain.git
-3. cd RekaChain
-4. flutter pub get
-flutter run
-
+3. Masuk ke folder proyek:
+   ```bash
+   cd RekaChain
+5. Install dependensi:
+   ```bash
+   flutter pub get
+7. Jalankan :
+   ```bash
+   flutter run 
