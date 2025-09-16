@@ -1,16 +1,32 @@
-# flutter_scanner
+# 📱 RekaChain – Mobile App (PKL Project)
 
-A new Flutter project.
+Proyek ini merupakan bagian dari kegiatan **Praktik Kerja Lapangan (PKL)** yang dikembangkan menggunakan **Flutter**. Aplikasi ini berfungsi sebagai sistem **tracking dan scanning** untuk kebutuhan manajemen material dan produk di PT Rekaindo Global Jasa.
 
-## Getting Started
+## 📝 Deskripsi Proyek  
+Aplikasi **RekaChain** dirancang untuk mempermudah proses pengelolaan dan pelacakan material/produk melalui pemindaian QR Code, unduhan berkas, pencatatan riwayat scan, serta layanan after sales.  
 
-This project is a starting point for a Flutter application.
+Menu utama aplikasi ini menampilkan berbagai fitur penting seperti:
 
-A few resources to get you started if this is your first Flutter project:
+- **Scan Material**: Pemindaian QR Code untuk material.  
+- **Scan Produk**: Pemindaian QR Code untuk produk.  
+- **Riwayat Scan**: Menampilkan daftar riwayat pemindaian.  
+- **Unduh Berkas**: Mengunduh dokumen penting terkait material/produk.  
+- **After Sales**: Layanan purna jual.  
+- **Tahap Selesai**: Fitur untuk menandai proses selesai.  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🛠️ Teknologi yang Digunakan  
+- **Flutter** (Dart)
+- **Material Design** untuk UI
+- **Navigator** untuk perpindahan antarhalaman
+- **Asset management** (ikon & gambar)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  
+## 🚀 Cara Menjalankan Proyek  
+1. Pastikan Flutter sudah terinstal (`flutter --version`).
+2. Clone repositori ini:
+   ```bash
+   git clone https://github.com/username/RekaChain.git
+3. cd RekaChain
+4. flutter pub get
+flutter run
+
